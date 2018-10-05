@@ -1,0 +1,23 @@
+{
+  "name": "talk-to-me",
+  "version": "0.0.1",
+  "description": "A simple HTTP and socket server library that facilitates clear and error-free API design.",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tannerntannern/talk-to-me.git"
+  },
+  "keywords": [
+    "typescript",
+    "http",
+    "socket",
+    "server",
+    "talk-to-me"
+  ],
+  "author": "Tanner Nielsen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tannerntannern/talk-to-me/issues"
+  },
+  "homepage": "https://github.com/tannerntannern/talk-to-me#readme"
+}
