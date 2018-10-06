@@ -4,14 +4,9 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as socketio from 'socket.io';
 import {Mixin} from '../lib/util/mixins';
-import {ObjectOf} from "../lib/util/types";
-import {HttpInterface, HttpInterfaceMixin} from "../lib/http-interface";
-import {ServerSocketHandler, ServerSocketInterface, SocketInterfaceMixin} from "../lib/socket-interface";
-
-export type AbstractServerConfig = {
-	host?: string,
-	port?: number
-};
+import {ObjectOf} from "./util";
+import {HttpInterface, HttpInterfaceMixin} from "./http-interface";
+import {ServerSocketHandler, ServerSocketInterface, SocketInterfaceMixin} from "./socket-interface";
 
 export type SocketServerConfig = {
 	ioOptions?: { path?: string, serveClient?: boolean, adapter?: object, origins?: string, parser?: object },
@@ -19,84 +14,7 @@ export type SocketServerConfig = {
 	namespaceConfig?: (namespace, server) => void
 } & AbstractServerConfig;
 
-export type ExpressServerConfig = {
-	expressConfig?: (expressApp, server) => void,
-	serveStaticDir?: string | null
-} & AbstractServerConfig;
-
 export type ExpressSocketServerConfig = ExpressServerConfig & SocketServerConfig;
-
-/**
- * Defines the common interface and shared functionality that all Servers should have.
- */
-export abstract class AbstractServer {
-	/**
-	 * For keeping track of whether or not the server is running.
-	 */
-	protected running: boolean = false;
-
-	/**
-	 * Where the AbstractServer configurations are stored.
-	 */
-	protected config;
-
-	/**
-	 * Constructs and configures a new AbstractServer.
-	 */
-	constructor(options?: AbstractServerConfig) {
-		// Apply configurations
-		this.configure(options);
-
-		// Add default configurations
-		this.fillDefaults({
-			host: 'localhost',
-			port: 3000
-		});
-	}
-
-	/**
-	 * Applies default options to the AbstractServer if the options aren't already specified.
-	 */
-	protected fillDefaults(options: AbstractServerConfig) {
-		if (this.running) throw new Error('Cannot make configuration changes while the server is running!');
-
-		if (this.config === undefined) this.config = {};
-		_.defaults(this.config, options);
-	}
-
-	/**
-	 * Applies configurations to the AbstractServer.
-	 */
-	public configure(options: AbstractServerConfig) {
-		if (this.running) throw new Error('Cannot make configuration changes while the server is running!');
-
-		if (this.config === undefined) this.config = {};
-		_.extend(this.config, options);
-	}
-
-	/**
-	 * Returns whether or not the server is running.
-	 */
-	public isRunning(): boolean {
-		return this.running;
-	}
-
-	/**
-	 * Simply returns the name that the server should use to refer to itself.
-	 * @deprecated TODO: replace with a static property
-	 */
-	protected abstract getName(): string;
-
-	/**
-	 * Starts the AbstractServer, and calls an optional callback function when it's ready.
-	 */
-	public abstract start(callback?: Function);
-
-	/**
-	 * Stops the AbstractServer, and calls and optional callback function when it's done.
-	 */
-	public abstract stop(callback?: Function);
-}
 
 /**
  * Specifies additional shared functionality for SocketServers.
@@ -349,120 +267,6 @@ export class SocketServer extends Mixin<AbstractServer & SocketServerMixin>(Abst
 				that.running = false;
 				callback();
 			});
-		});
-	}
-}
-
-/**
- * A simple AbstractServer-compatible ExpressServer.
- */
-export class ExpressServer extends Mixin<AbstractServer & HttpInterfaceMixin>(AbstractServer, HttpInterfaceMixin) {
-	/**
-	 * Express instance for handling standard HTTP requests.
-	 */
-	protected expressApp = null;
-
-	/**
-	 * Http server that underlies Express.
-	 */
-	protected httpServer = null;
-
-	/**
-	 * Constructs a new ExpressServer.
-	 */
-	constructor(options?: ExpressServerConfig) {
-		super(options);
-
-		// Add defaults
-		this.fillDefaults({
-			expressConfig: function(expressApp, server) {
-				expressApp.get('/', function(req, res){
-					res.send(
-						'<h1>It Works!</h1>' +
-						'<p>The next step is to configure the server for your needs.</p>'
-					);
-				});
-			},
-			serveStaticDir: null
-		});
-	}
-
-	/**
-	 * Override to allow the options object to be of type ExpressServerConfig.
-	 */
-	protected fillDefaults(options: ExpressServerConfig){
-		super.fillDefaults(options);
-	}
-
-	/**
-	 * Override to allow the options object to be of type ExpressServerConfig.
-	 */
-	public configure(options: ExpressServerConfig){
-		super.configure(options);
-	}
-
-	/**
-	 * Simply returns the name that the server should use to refer to itself.
-	 */
-	protected getName(): string {
-		return 'ExpressServer';
-	}
-
-	/**
-	 * Starts the ExpressServer.
-	 */
-	public start(callback?: Function) {
-		// Create express instance
-		this.expressApp = express();
-		let that = this,
-			app = this.expressApp,
-			cfg = this.config;
-
-		// Add default callback if not defined
-		if (_.isUndefined(callback))
-			callback = function () {
-				console.info(that.getName() + ' listening on port ' + cfg.port);
-			};
-
-		// Add middleware for parsing post requests
-		app.use(bodyParser.json());
-		app.use(bodyParser.urlencoded({ extended: true }));
-
-		// Add user Express configurations
-		cfg.expressConfig(app, this);
-
-		// Add httpInterfaces to expressApp
-		this.initHttpInterfaces();
-
-		// Add config for serving a static directory
-		if (cfg.serveStaticDir !== null)
-			app.use(express.static(cfg.serveStaticDir));
-
-		// Start listening
-		this.httpServer = app.listen(cfg.port, function () {
-			that.running = true;
-			callback();
-		});
-	}
-
-	/**
-	 * Stops the ExpressServer.
-	 */
-	public stop(callback?: Function) {
-		let that = this;
-
-		// Add default callback if not defined
-		if (_.isUndefined(callback))
-			callback = function() {
-				console.info('Stopped ' + that.getName() + ' on port ' + that.config.port);
-			};
-
-		// Stop listening
-		that.httpServer.close(function(){
-			that.running = false;
-			that.expressApp = null;
-			that.httpServer = null;
-			callback();
 		});
 	}
 }
