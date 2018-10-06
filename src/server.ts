@@ -1,12 +1,8 @@
 import * as _ from 'lodash';
 import * as http from 'http';
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
 import * as socketio from 'socket.io';
-import {Mixin} from '../lib/util/mixins';
-import {ObjectOf} from "./util";
-import {HttpInterface, HttpInterfaceMixin} from "./http-interface";
-import {ServerSocketHandler, ServerSocketInterface, SocketInterfaceMixin} from "./socket-interface";
+import {HttpInterface, HttpInterfaceMixin} from "./interface/http-interface";
+import {ServerSocketHandler, ServerSocketInterface, SocketInterfaceMixin} from "./interface/socket-interface";
 
 export type SocketServerConfig = {
 	ioOptions?: { path?: string, serveClient?: boolean, adapter?: object, origins?: string, parser?: object },

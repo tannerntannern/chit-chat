@@ -2,7 +2,16 @@
   "name": "talk-to-me",
   "version": "0.0.1",
   "description": "A simple HTTP and socket server library that facilitates clear and error-free API design.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "tsc",
+    "watch": "npm run build -- -w",
+    "lint": "eslint src/**/*.ts",
+    "version": "npm run build",
     "changelog": "auto-changelog"
   },
   "dependencies": {

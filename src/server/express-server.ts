@@ -1,18 +1,24 @@
 import * as express from 'express';
+import * as core from "express-serve-static-core";
 import * as bodyParser from 'body-parser';
 import {AbstractServer, AbstractServerConfig} from "./abstract-server";
-import {HttpInterface} from "../http-interface";
+import {HttpInterface} from "../interface/http-interface";
 
 /**
  * Defines how an ExpressServer may be configured.
  */
 export type ExpressServerConfig = {
-	expressConfig?: (expressApp, server) => void,
+	expressConfig?: (expressApp: core.Express, server: typeof ExpressServer) => void,
 	serveStaticDir?: string | null
 } & AbstractServerConfig;
 
 /**
- * A simple AbstractServer-compatible ExpressServer.
+ * A simple HTTP API server, built on Express.
+ *
+ * It should be noted that although this server is powered by Express, little effort is made to elegantly wrap around
+ * the numerous features that Express provides.  The goal of this server is to provide basic bootstrapping for express
+ * and to implement an interface that can also be implemented by an ExpressClient to ensure that both communicate with
+ * each other properly.
  */
 export abstract class ExpressServer<Interface extends HttpInterface> extends AbstractServer {
 	/**
@@ -33,7 +39,7 @@ export abstract class ExpressServer<Interface extends HttpInterface> extends Abs
 	/**
 	 * Express instance for handling standard HTTP requests.
 	 */
-	protected expressApp = null;
+	protected expressApp: core.Express = null;
 
 	/**
 	 * Http server that underlies Express.
@@ -41,7 +47,7 @@ export abstract class ExpressServer<Interface extends HttpInterface> extends Abs
 	protected httpServer = null;
 
 	/**
-	 * TODO...
+	 * Defines how the server should react to each request.
 	 */
 	protected handlers: {
 		[Method in keyof Interface]: {
@@ -54,22 +60,6 @@ export abstract class ExpressServer<Interface extends HttpInterface> extends Abs
 	 */
 	constructor(options?: ExpressServerConfig) {
 		super(options);
-
-		// Init the handlers
-		let that = this, app = this.expressApp;
-		for (let methodName in this.handlers){
-			let methodGroup = this.handlers[methodName];
-			for (let handlerName in methodGroup) {
-				app[methodName](handlerName, function(req, res, next) {
-					let handler = methodGroup[handlerName],
-						ctx = { req: req, res: res, server: that };
-
-					let response = handler.call(ctx, req.body);
-
-					res.send(response);
-				});
-			}
-		}
 	}
 
 	/**
@@ -84,36 +74,44 @@ export abstract class ExpressServer<Interface extends HttpInterface> extends Abs
 	 * Starts the ExpressServer.
 	 */
 	public start(): Promise<boolean> {
-		// Create express instance
-		this.expressApp = express();
-		let that = this,
-			app = this.expressApp,
-			cfg = this.config;
+		return new Promise<boolean>((resolve, reject) => {
+			// Create express instance
+			this.expressApp = express();
+			let app = this.expressApp,
+				cfg = this.config;
 
-		// Add default callback if not defined
-		if (_.isUndefined(callback))
-			callback = function () {
-				console.info(that.getName() + ' listening on port ' + cfg.port);
-			};
+			// Add middleware for parsing post requests
+			app.use(bodyParser.json());
+			app.use(bodyParser.urlencoded({ extended: true }));
 
-		// Add middleware for parsing post requests
-		app.use(bodyParser.json());
-		app.use(bodyParser.urlencoded({ extended: true }));
+			// Add user Express configurations
+			cfg.expressConfig(app, this);
 
-		// Add user Express configurations
-		cfg.expressConfig(app, this);
+			// Init the handlers
+			let that = this;
+			for (let methodName in this.handlers){
+				let methodGroup = this.handlers[methodName];
+				for (let handlerName in methodGroup) {
+					(<any>app)[methodName](handlerName, function(req, res, next) {
+						let handler = methodGroup[handlerName],
+							ctx = { req: req, res: res, server: that };
 
-		// Add httpInterfaces to expressApp
-		this.initHttpInterfaces();
+						let response = handler.call(ctx, req.body);
 
-		// Add config for serving a static directory
-		if (cfg.serveStaticDir !== null)
-			app.use(express.static(cfg.serveStaticDir));
+						res.send(response);
+					});
+				}
+			}
 
-		// Start listening
-		this.httpServer = app.listen(cfg.port, function () {
-			that.running = true;
-			callback();
+			// Add config for serving a static directory
+			if (cfg.serveStaticDir !== null)
+				app.use(express.static(cfg.serveStaticDir));
+
+			// Start listening
+			this.httpServer = app.listen(cfg.port, () => {
+				this.running = true;
+				resolve(true);
+			});
 		});
 	}
 
@@ -121,20 +119,13 @@ export abstract class ExpressServer<Interface extends HttpInterface> extends Abs
 	 * Stops the ExpressServer.
 	 */
 	public stop(): Promise<boolean> {
-		let that = this;
-
-		// Add default callback if not defined
-		if (_.isUndefined(callback))
-			callback = function() {
-				console.info('Stopped ' + that.getName() + ' on port ' + that.config.port);
-			};
-
-		// Stop listening
-		that.httpServer.close(function(){
-			that.running = false;
-			that.expressApp = null;
-			that.httpServer = null;
-			callback();
+		return new Promise<boolean>((resolve, reject) => {
+			this.httpServer.close(() => {
+				this.running = false;
+				this.expressApp = null;
+				this.httpServer = null;
+				resolve(true);
+			});
 		});
 	}
 }
