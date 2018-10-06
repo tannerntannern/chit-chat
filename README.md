@@ -6,7 +6,7 @@ structure between the server and client: every message that is sent needs to hav
 other side, all messages should have a well-defined format, etc.  With that said, this library lends itself very well
 to building HTTP and/or socket APIs.
 
-More information to come...
+__More information to come...__
 
 # Author
 Tanner Nielsen <tannerntannern@gmail.com>
