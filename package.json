@@ -2,7 +2,9 @@
   "name": "talk-to-me",
   "version": "0.0.1",
   "description": "A simple HTTP and socket server library that facilitates clear and error-free API design.",
-  "scripts": {},
+  "scripts": {
+    "changelog": "auto-changelog"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tannerntannern/talk-to-me.git"
