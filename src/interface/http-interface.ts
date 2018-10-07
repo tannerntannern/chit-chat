@@ -1,18 +1,28 @@
 import {ObjectOf} from "../lib/util";
 
 /**
- * TODO
+ * Describes the most basic kind of Endpoint.  Essentially just specifies a return type.
  */
-type Endpoint = {args: any[], return: any};
+type Endpoint = {return: any};
 
 /**
- * TODO
+ * Describes a slightly more complex kind of Endpoint, which has the ability to specify arguments.
  */
-export type HttpInterface = {
-	get?: ObjectOf<Endpoint>,
-	delete?: ObjectOf<Endpoint>,
-	head?: ObjectOf<Endpoint>,
-	post?: ObjectOf<Endpoint>,
-	put?: ObjectOf<Endpoint>,
-	patch?: ObjectOf<Endpoint>
-};
+type EndpointWithArgs = Endpoint & {args?: object};
+
+/**
+ * Defines which HTTP methods don't accept extra arguments.
+ */
+type MethodWithoutArgs = 'get' | 'delete' | 'head';
+
+/**
+ * Defines with HTTP methods do accept extra arguments.
+ */
+type MethodWithArgs = 'post' | 'put' | 'patch';
+
+/**
+ * Defines the format for an HttpInterface.
+ */
+export type HttpInterface =
+	{[Method in MethodWithArgs]?: ObjectOf<EndpointWithArgs>} &
+	{[Method in MethodWithoutArgs]?: ObjectOf<Endpoint>};

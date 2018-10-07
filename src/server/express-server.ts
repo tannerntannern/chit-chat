@@ -13,6 +13,11 @@ export type ExpressServerConfig = {
 } & AbstractServerConfig;
 
 /**
+ * The shape of the context that will be available in every ExpressServer handler.
+ */
+type HandlerCtx = {req: any, res: any, server: ExpressServer<{}>};
+
+/**
  * A simple HTTP API server, built on Express.
  *
  * It should be noted that although this server is powered by Express, little effort is made to elegantly wrap around
@@ -20,7 +25,7 @@ export type ExpressServerConfig = {
  * and to implement an interface that can also be implemented by an ExpressClient to ensure that both communicate with
  * each other properly.
  */
-export abstract class ExpressServer<Interface extends HttpInterface> extends AbstractServer {
+export abstract class ExpressServer<API extends HttpInterface> extends AbstractServer {
 	/**
 	 * Default configuration values for all ExpressServers.
 	 */
@@ -50,8 +55,9 @@ export abstract class ExpressServer<Interface extends HttpInterface> extends Abs
 	 * Defines how the server should react to each request.
 	 */
 	protected handlers: {
-		[Method in keyof Interface]: {
-			[EP in keyof Interface[Method]]: (...args: Interface[Method][EP]['args']) => Interface[Method][EP]['return']
+		[Method in keyof API]: {
+			// @ts-ignore: Not sure why the compiler is complaining about this
+			[EP in keyof API[Method]]: (this: HandlerCtx, data: API[Method][EP]['args']) => API[Method][EP]['return']
 		}
 	};
 
@@ -94,7 +100,7 @@ export abstract class ExpressServer<Interface extends HttpInterface> extends Abs
 				for (let handlerName in methodGroup) {
 					(<any>app)[methodName](handlerName, function(req, res, next) {
 						let handler = methodGroup[handlerName],
-							ctx = { req: req, res: res, server: that };
+							ctx: HandlerCtx = { req: req, res: res, server: that };
 
 						let response = handler.call(ctx, req.body);
 
