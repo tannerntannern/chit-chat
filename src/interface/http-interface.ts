@@ -13,12 +13,12 @@ type EndpointWithArgs = Endpoint & {args?: object};
 /**
  * Defines which HTTP methods don't accept extra arguments.
  */
-type MethodWithoutArgs = 'get' | 'delete' | 'head';
+export type MethodWithoutArgs = 'get' | 'delete' | 'head';
 
 /**
  * Defines with HTTP methods do accept extra arguments.
  */
-type MethodWithArgs = 'post' | 'put' | 'patch';
+export type MethodWithArgs = 'post' | 'put' | 'patch';
 
 /**
  * Defines the format for an HttpInterface.

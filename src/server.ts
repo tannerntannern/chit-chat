@@ -1,7 +1,6 @@
 import * as _ from 'lodash';
 import * as http from 'http';
 import * as socketio from 'socket.io';
-import {HttpInterface, HttpInterfaceMixin} from "./interface/http-interface";
 import {ServerSocketHandler, ServerSocketInterface, SocketInterfaceMixin} from "./interface/socket-interface";
 
 export type SocketServerConfig = {
