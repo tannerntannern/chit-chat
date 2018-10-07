@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as core from "express-serve-static-core";
 import * as bodyParser from 'body-parser';
 import {AbstractServer, AbstractServerConfig} from "./abstract-server";
-import {HttpInterface} from "../interface/http-interface";
+import {HttpInterface, MethodWithoutArgs} from "../interface/http-interface";
 
 /**
  * Defines how an ExpressServer may be configured.
@@ -56,8 +56,11 @@ export abstract class ExpressServer<API extends HttpInterface> extends AbstractS
 	 */
 	protected handlers: {
 		[Method in keyof API]: {
-			// @ts-ignore: Not sure why the compiler is complaining about this
-			[EP in keyof API[Method]]: (this: HandlerCtx, data: API[Method][EP]['args']) => API[Method][EP]['return']
+			[EP in keyof API[Method]]: API[Method] extends MethodWithoutArgs ?
+				// @ts-ignore: Not sure why the compiler is complaining about this
+				(this: HandlerCtx) => API[Method][EP]['return'] :
+				// @ts-ignore: Not sure why the compiler is complaining about this
+				(this: HandlerCtx, data: API[Method][EP]['args']) => API[Method][EP]['return'];
 		}
 	};
 
