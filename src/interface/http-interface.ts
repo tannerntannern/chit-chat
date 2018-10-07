@@ -1,4 +1,4 @@
-import {ObjectOf} from "../lib/util";
+import {ObjectOf} from '../lib/util';
 
 /**
  * Describes the most basic kind of Endpoint.  Essentially just specifies a return type.

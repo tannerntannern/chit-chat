@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {HttpInterface, MethodWithArgs, MethodWithoutArgs} from "../interface/http-interface";
+import {HttpInterface, MethodWithArgs, MethodWithoutArgs} from '../interface/http-interface';
 
 /**
  * Basic AJAX class than can be used in Node or the browser.  Essentially just wraps around some axios methods and

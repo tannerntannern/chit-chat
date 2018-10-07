@@ -1,8 +1,8 @@
 import * as express from 'express';
-import * as core from "express-serve-static-core";
+import * as core from 'express-serve-static-core';
 import * as bodyParser from 'body-parser';
-import {AbstractServer, AbstractServerConfig} from "./abstract-server";
-import {HttpInterface, MethodWithoutArgs} from "../interface/http-interface";
+import {AbstractServer, AbstractServerConfig} from './abstract-server';
+import {HttpInterface, MethodWithoutArgs} from '../interface/http-interface';
 
 /**
  * Defines how an ExpressServer may be configured.
