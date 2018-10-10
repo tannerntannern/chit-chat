@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A simple HTTP and socket server library that facilitates clear and error-free API design.",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
