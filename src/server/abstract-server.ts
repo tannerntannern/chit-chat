@@ -1,3 +1,5 @@
+import * as http from 'http';
+
 /**
  * Defines how an AbstractServer may be configured.
  */
@@ -19,6 +21,11 @@ export abstract class AbstractServer {
 	};
 
 	/**
+	 * Http server instance that all servers, regardless of type, must make use of.
+	 */
+	protected httpServer: http.Server = null;
+
+	/**
 	 * For keeping track of whether or not the server is running.
 	 */
 	protected running: boolean = false;
@@ -31,7 +38,7 @@ export abstract class AbstractServer {
 	/**
 	 * Constructs and configures a new AbstractServer.
 	 */
-	constructor(options?: AbstractServerConfig) {
+	protected constructor(options?: AbstractServerConfig) {
 		// Apply default configurations
 		this.configure((<typeof AbstractServer>this.constructor).DEFAULT_CONFIG);
 
