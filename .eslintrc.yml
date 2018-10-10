@@ -11,6 +11,7 @@ parserOptions:
 rules:
   no-undef: off
   no-dupe-class-members: off
+  no-unused-vars: off
   indent:
     - error
     - tab
