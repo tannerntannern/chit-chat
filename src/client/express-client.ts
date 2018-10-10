@@ -14,7 +14,7 @@ export class ExpressClient<API extends HttpInterface> {
 	/**
 	 * Constructs a new ExpressClient.
 	 */
-	constructor(host: string){
+	constructor(host: string = ''){
 		this.host = host;
 	}
 
