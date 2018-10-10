@@ -7,15 +7,15 @@ import {HttpInterface, MethodWithoutArgs} from '../interface/http-interface';
 /**
  * Defines how an ExpressServer may be configured.
  */
-export type ExpressServerConfig = {
-	expressConfig?: (expressApp: core.Express, server: typeof ExpressServer) => void,
+export type ExpressServerConfig<API extends HttpInterface> = {
+	expressConfig?: (expressApp: core.Express, server: ExpressServer<API>) => void,
 	serveStaticDir?: string | null
 } & AbstractServerConfig;
 
 /**
  * The shape of the context that will be available in every ExpressServer handler.
  */
-type HandlerCtx = {req: any, res: any, server: ExpressServer<{}>};
+type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server: ExpressServer<API>};
 
 /**
  * A simple HTTP API server, built on Express.
@@ -29,7 +29,7 @@ export abstract class ExpressServer<API extends HttpInterface> extends AbstractS
 	/**
 	 * Default configuration values for all ExpressServers.
 	 */
-	protected static DEFAULT_CONFIG: ExpressServerConfig = Object.assign(AbstractServer.DEFAULT_CONFIG, {
+	protected static DEFAULT_CONFIG: ExpressServerConfig<{}> = Object.assign(AbstractServer.DEFAULT_CONFIG, {
 		expressConfig: function(expressApp, server) {
 			expressApp.get('/', function(req, res){
 				res.send(
@@ -54,7 +54,7 @@ export abstract class ExpressServer<API extends HttpInterface> extends AbstractS
 	/**
 	 * Defines how the server should react to each request.
 	 */
-	protected handlers: {
+	protected httpHandlers: {
 		[Method in keyof API]: {
 			[EP in keyof API[Method]]: API[Method] extends MethodWithoutArgs ?
 				// @ts-ignore: Not sure why the compiler is complaining about this
@@ -67,14 +67,14 @@ export abstract class ExpressServer<API extends HttpInterface> extends AbstractS
 	/**
 	 * Constructs a new ExpressServer.
 	 */
-	constructor(options?: ExpressServerConfig) {
+	constructor(options?: ExpressServerConfig<API>) {
 		super(options);
 	}
 
 	/**
 	 * Override to allow the options object to be of type ExpressServerConfig.
 	 */
-	public configure(options: ExpressServerConfig): this {
+	public configure(options: ExpressServerConfig<API>): this {
 		super.configure(options);
 		return this;
 	}
@@ -98,12 +98,12 @@ export abstract class ExpressServer<API extends HttpInterface> extends AbstractS
 
 			// Init the handlers
 			let that = this;
-			for (let methodName in this.handlers){
-				let methodGroup = this.handlers[methodName];
+			for (let methodName in this.httpHandlers){
+				let methodGroup = this.httpHandlers[methodName];
 				for (let handlerName in methodGroup) {
 					(<any>app)[methodName](handlerName, function(req, res, next) {
 						let handler = methodGroup[handlerName],
-							ctx: HandlerCtx = { req: req, res: res, server: that };
+							ctx: HandlerCtx<API> = { req: req, res: res, server: that };
 
 						let response = handler.call(ctx, req.body);
 
