@@ -47,11 +47,6 @@ export abstract class ExpressServer<API extends HttpInterface> extends AbstractS
 	protected expressApp: core.Express = null;
 
 	/**
-	 * Http server that underlies Express.
-	 */
-	protected httpServer = null;
-
-	/**
 	 * Defines how the server should react to each request.
 	 */
 	protected httpHandlers: {
