@@ -13,12 +13,12 @@ export type ExpressServerConfig<API extends HttpInterface> = {
 } & AbstractServerConfig;
 
 /**
- * The shape of the context that will be available in every ExpressServer handler.
+ * Describes the shape of the `this` context that will be available in every ExpressServer handler.
  */
 type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server: ExpressServer<API>};
 
 /**
- * A simple HTTP API server, built on Express.
+ * A simple HTTP built on Express, with an API protected by TypeScript.
  *
  * It should be noted that although this server is powered by Express, little effort is made to elegantly wrap around
  * the numerous features that Express provides.  The goal of this server is to provide basic bootstrapping for express
