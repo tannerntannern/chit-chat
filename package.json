@@ -18,6 +18,18 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "version": "npm run build-clean && auto-changelog"
   },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "./src/**/*.ts"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
+  },
   "dependencies": {
     "@types/express": "^4.16.0",
     "@types/socket.io": "^1.4.38",
