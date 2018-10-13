@@ -19,7 +19,7 @@ type TransmitterMap = {[event: string]: EventTransmitter};
 /**
  * Describes all of the EventTransmitters within a server-client relationship.
  */
-export type TransmitterStructure = {
+export type SocketInterface = {
 	server: TransmitterMap,
 	client: TransmitterMap
 };
@@ -53,9 +53,9 @@ type EventHandlers<Transmitters extends TransmitterMap, RemoteTransmitters exten
 };
 
 /**
- * Utility type for generating EventHandlers given a TransmitterStructure and a SocketLocation.
+ * Utility type for generating EventHandlers given a SocketInterface and a SocketLocation.
  */
-export type SocketInterface<TS extends TransmitterStructure, SL extends SocketLocation, HandlerContext> =
+export type SocketHandlers<TS extends SocketInterface, SL extends SocketLocation, HandlerContext> =
 	SL extends 'server' ?
 		EventHandlers<TS['server'], TS['client'], SL, HandlerContext> :
 		EventHandlers<TS['client'], TS['server'], SL, HandlerContext>;

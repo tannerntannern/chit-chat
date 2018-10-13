@@ -26,3 +26,16 @@ export type MethodWithArgs = 'post' | 'put' | 'patch';
 export type HttpInterface =
 	{[Method in MethodWithArgs]?: ObjectOf<EndpointWithArgs>} &
 	{[Method in MethodWithoutArgs]?: ObjectOf<Endpoint>};
+
+/**
+ * Utility type for generating http handlers given an HttpInterface.
+ */
+export type HttpHandlers<API extends HttpInterface, HandlerCtx> = {
+	[Method in keyof API]: {
+		[EP in keyof API[Method]]: API[Method] extends MethodWithoutArgs ?
+			// @ts-ignore: Not sure why the compiler is complaining about this
+			(this: HandlerCtx) => API[Method][EP]['return'] :
+			// @ts-ignore: Not sure why the compiler is complaining about this
+			(this: HandlerCtx, data: API[Method][EP]['args']) => API[Method][EP]['return'];
+	}
+};

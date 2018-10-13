@@ -1,8 +1,9 @@
+import * as http from 'http';
 import * as express from 'express';
 import * as core from 'express-serve-static-core';
 import * as bodyParser from 'body-parser';
-import {AbstractServer, AbstractServerConfig} from './abstract-server';
-import {HttpInterface, MethodWithoutArgs} from '../interface/http-interface';
+import {HttpServer, HttpServerConfig} from './http-server';
+import {HttpHandlers, HttpInterface} from '../interface/http-interface';
 
 /**
  * Defines how an ExpressServer may be configured.
@@ -10,12 +11,12 @@ import {HttpInterface, MethodWithoutArgs} from '../interface/http-interface';
 export type ExpressServerConfig<API extends HttpInterface> = {
 	expressConfig?: (expressApp: core.Express, server: ExpressServer<API>) => void,
 	serveStaticDir?: string | null
-} & AbstractServerConfig;
+} & HttpServerConfig;
 
 /**
  * Describes the shape of the `this` context that will be available in every ExpressServer handler.
  */
-type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server: ExpressServer<API>};
+export type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server: ExpressServer<API>};
 
 /**
  * A simple HTTP built on Express, with an API protected by TypeScript.
@@ -25,11 +26,11 @@ type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server: Expres
  * and to implement an interface that can also be implemented by an ExpressClient to ensure that both communicate with
  * each other properly.
  */
-export abstract class ExpressServer<API extends HttpInterface> extends AbstractServer {
+export abstract class ExpressServer<API extends HttpInterface> extends HttpServer {
 	/**
 	 * Default configuration values for all ExpressServers.
 	 */
-	protected static DEFAULT_CONFIG: ExpressServerConfig<{}> = Object.assign(AbstractServer.DEFAULT_CONFIG, {
+	public static DEFAULT_CONFIG: ExpressServerConfig<{}> = Object.assign({}, HttpServer.DEFAULT_CONFIG, {
 		expressConfig: function(expressApp, server) {
 			expressApp.get('/', function(req, res){
 				res.send(
@@ -42,27 +43,14 @@ export abstract class ExpressServer<API extends HttpInterface> extends AbstractS
 	});
 
 	/**
-	 * Express instance for handling standard HTTP requests.
-	 */
-	protected expressApp: core.Express = null;
-
-	/**
 	 * Defines how the server should react to each request.
 	 */
-	protected httpHandlers: {
-		[Method in keyof API]: {
-			[EP in keyof API[Method]]: API[Method] extends MethodWithoutArgs ?
-				// @ts-ignore: Not sure why the compiler is complaining about this
-				(this: HandlerCtx) => API[Method][EP]['return'] :
-				// @ts-ignore: Not sure why the compiler is complaining about this
-				(this: HandlerCtx, data: API[Method][EP]['args']) => API[Method][EP]['return'];
-		}
-	};
+	protected httpHandlers: HttpHandlers<API, HandlerCtx<API>>;
 
 	/**
 	 * Constructs a new ExpressServer.
 	 */
-	constructor(options?: ExpressServerConfig<API>) {
+	protected constructor(options?: ExpressServerConfig<API>) {
 		super(options);
 	}
 
@@ -75,61 +63,48 @@ export abstract class ExpressServer<API extends HttpInterface> extends AbstractS
 	}
 
 	/**
-	 * Starts the ExpressServer.
+	 * Configures an Express instance and attaches it to the given httpServer.
 	 */
-	public start(): Promise<boolean> {
-		return new Promise<boolean>((resolve, reject) => {
-			// Create express instance
-			this.expressApp = express();
-			let app = this.expressApp,
-				cfg = this.config;
+	public setup(httpServer: http.Server) {
+		// Create express instance
+		let app = express(),
+			cfg = this.config;
 
-			// Add middleware for parsing post requests
-			app.use(bodyParser.json());
-			app.use(bodyParser.urlencoded({ extended: true }));
+		// Add middleware for parsing post requests
+		app.use(bodyParser.json());
+		app.use(bodyParser.urlencoded({ extended: true }));
 
-			// Add user Express configurations
-			cfg.expressConfig(app, this);
+		// Add user Express configurations
+		cfg.expressConfig(app, this);
 
-			// Init the handlers
-			let that = this;
-			for (let methodName in this.httpHandlers){
-				let methodGroup = this.httpHandlers[methodName];
-				for (let handlerName in methodGroup) {
-					(<any>app)[methodName](handlerName, function(req, res, next) {
-						let handler = methodGroup[handlerName],
-							ctx: HandlerCtx<API> = { req: req, res: res, server: that };
+		// Init the handlers
+		let that = this;
+		for (let methodName in this.httpHandlers){
+			let methodGroup = this.httpHandlers[methodName];
+			for (let handlerName in methodGroup) {
+				(<any>app)[methodName](handlerName, function(req, res, next) {
+					let handler = methodGroup[handlerName],
+						ctx: HandlerCtx<API> = { req: req, res: res, server: that };
 
-						let response = handler.call(ctx, req.body);
+					let response = handler.call(ctx, req.body);
 
-						res.send(response);
-					});
-				}
+					res.send(response);
+				});
 			}
+		}
 
-			// Add config for serving a static directory
-			if (cfg.serveStaticDir !== null)
-				app.use(express.static(cfg.serveStaticDir));
+		// Add config for serving a static directory
+		if (cfg.serveStaticDir !== null)
+			app.use(express.static(cfg.serveStaticDir));
 
-			// Start listening
-			this.httpServer = app.listen(cfg.port, () => {
-				this.running = true;
-				resolve(true);
-			});
-		});
+		// Attach the express app to the httpServer
+		httpServer.on('request', app);
 	}
 
 	/**
-	 * Stops the ExpressServer.
+	 * Performs any necessary cleanup.
 	 */
-	public stop(): Promise<boolean> {
-		return new Promise<boolean>((resolve, reject) => {
-			this.httpServer.close(() => {
-				this.running = false;
-				this.expressApp = null;
-				this.httpServer = null;
-				resolve(true);
-			});
-		});
+	public takedown(){
+		// Nothing to clean up
 	}
 }

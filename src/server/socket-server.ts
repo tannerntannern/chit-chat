@@ -1,20 +1,20 @@
 import * as http from 'http';
 import * as socketio from 'socket.io';
-import {AbstractServer, AbstractServerConfig} from './abstract-server';
-import {SocketInterface, TransmitterStructure} from '../interface/socket-interface';
+import {HttpServer, HttpServerConfig} from './http-server';
+import {SocketHandlers, SocketInterface} from '../interface/socket-interface';
 
 /**
  * Defines how SocketServer may be configured.
  */
-export type SocketServerConfig<API extends TransmitterStructure> = {
+export type SocketServerConfig<API extends SocketInterface> = {
 	serverOptions?: socketio.ServerOptions,
 	namespaceConfig?: (namespace: socketio.Namespace, server: SocketServer<API>) => void
-} & AbstractServerConfig;
+} & HttpServerConfig;
 
 /**
  * Describes the shape of the `this` context that will be available in every SocketServer handler.
  */
-type HandlerCtx<API extends TransmitterStructure> = {
+export type HandlerCtx<API extends SocketInterface> = {
 	server: SocketServer<API>,
 	socket: socketio.Socket,
 	nsp: socketio.Namespace
@@ -23,7 +23,15 @@ type HandlerCtx<API extends TransmitterStructure> = {
 /**
  * A simple SocketServer with an API protected by TypeScript.
  */
-export abstract class SocketServer<API extends TransmitterStructure> extends AbstractServer {
+export abstract class SocketServer<API extends SocketInterface> extends HttpServer {
+	/**
+	 * Default configuration values for all SocketServers.
+	 */
+	public static DEFAULT_CONFIG: SocketServerConfig<{server:{}, client:{}}> = Object.assign({}, HttpServer.DEFAULT_CONFIG, {
+		serverOptions: {},
+		namespaceConfig: function(namespace, server) {}
+	});
+
 	/**
 	 * Socket.io server instance for managing socket communication.
 	 */
@@ -33,12 +41,12 @@ export abstract class SocketServer<API extends TransmitterStructure> extends Abs
 	 * Contains implementations for the events described by the API.  This guarantees compatibility with any
 	 * SocketClient that implements the same API.
 	 */
-	protected abstract socketHandlers: SocketInterface<API, 'server', HandlerCtx<API>>;
+	protected abstract socketHandlers: SocketHandlers<API, 'server', HandlerCtx<API>>;
 
 	/**
 	 * Constructs a new SocketServer.
 	 */
-	constructor(options?: SocketServerConfig<API>) {
+	protected constructor(options?: SocketServerConfig<API>) {
 		super(options);
 	}
 
@@ -152,41 +160,18 @@ export abstract class SocketServer<API extends TransmitterStructure> extends Abs
 	}
 
 	/**
-	 * Starts the SocketServer.
+	 * Attaches a socket.io server to the internal Node http server.
 	 */
-	public start(): Promise<boolean> {
-		return new Promise<boolean>((resolve, reject) => {
-			// Initialize Socket.io server
-			let cfg = this.config,
-				httpServer = new http.Server(),
-				io = socketio(httpServer, cfg.ioOptions);
-
-			this.httpServer = httpServer;
-			this.io = io;
-
-			// Configure socket.io
-			cfg.ioConfig(io, this);
-			this.attachSocketHandlers(io.nsps['/']);
-
-			// Start listening
-			httpServer.listen(cfg.port, () => {
-				this.running = true;
-				resolve(true);
-			});
-		});
+	public setup(httpServer: http.Server) {
+		this.io = socketio(httpServer, this.config.ioOptions);
+		this.config.ioConfig(this.io, this);
+		this.attachSocketHandlers(this.io.nsps['/']);
 	}
 
 	/**
-	 * Stops the SocketServer.
+	 * Cleans up any socket-related junk.
 	 */
-	public stop(): Promise<boolean> {
-		return new Promise<boolean>((resolve, reject) => {
-			this.io.close(() => {
-				this.io = null;
-				this.httpServer = null;
-				this.running = false;
-				resolve(true);
-			});
-		});
+	public takedown() {
+		this.io = null;
 	}
 }
