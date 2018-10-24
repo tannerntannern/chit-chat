@@ -19,7 +19,7 @@ export type ExpressServerConfig<API extends HttpInterface> = {
 export type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server: ExpressServer<API>};
 
 /**
- * A simple HTTP built on Express, with an API protected by TypeScript.
+ * A simple HTTP server built on Express, with an API protected by TypeScript.
  *
  * It should be noted that although this server is powered by Express, little effort is made to elegantly wrap around
  * the numerous features that Express provides.  The goal of this server is to provide basic bootstrapping for express
@@ -27,21 +27,6 @@ export type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server:
  * each other properly.
  */
 export abstract class ExpressServer<API extends HttpInterface> extends HttpServer {
-	/**
-	 * Default configuration values for all ExpressServers.
-	 */
-	public static DEFAULT_CONFIG: ExpressServerConfig<{}> = Object.assign({}, HttpServer.DEFAULT_CONFIG, {
-		expressConfig: function(expressApp, server) {
-			expressApp.get('/', function(req, res){
-				res.send(
-					'<h1>It Works!</h1>' +
-					'<p>The next step is to configure the server for your needs.</p>'
-				);
-			});
-		},
-		serveStaticDir: null
-	});
-
 	/**
 	 * Defines how the server should react to each request.
 	 */
@@ -52,6 +37,27 @@ export abstract class ExpressServer<API extends HttpInterface> extends HttpServe
 	 */
 	protected constructor(options?: ExpressServerConfig<API>) {
 		super(options);
+	}
+
+	/**
+	 * Default configuration values for all ExpressServers.
+	 */
+	public getDefaultConfig() {
+		let baseConfig = super.getDefaultConfig();
+
+		Object.assign(baseConfig, {
+			expressConfig: function(expressApp, server) {
+				expressApp.get('/', function(req, res){
+					res.send(
+						'<h1>It Works!</h1>' +
+						'<p>The next step is to configure the server for your needs.</p>'
+					);
+				});
+			},
+			serveStaticDir: null
+		});
+
+		return baseConfig;
 	}
 
 	/**

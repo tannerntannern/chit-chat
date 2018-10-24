@@ -25,14 +25,6 @@ export type HandlerCtx<API extends SocketInterface> = {
  */
 export abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 	/**
-	 * Default configuration values for all SocketServers.
-	 */
-	public static DEFAULT_CONFIG: SocketServerConfig<{server:{}, client:{}}> = Object.assign({}, HttpServer.DEFAULT_CONFIG, {
-		serverOptions: {},
-		namespaceConfig: function(namespace, server) {}
-	});
-
-	/**
 	 * Socket.io server instance for managing socket communication.
 	 */
 	protected io: socketio.Server = null;
@@ -48,6 +40,20 @@ export abstract class SocketServer<API extends SocketInterface> extends HttpServ
 	 */
 	protected constructor(options?: SocketServerConfig<API>) {
 		super(options);
+	}
+
+	/**
+	 * Default configuration values for all SocketServers.
+	 */
+	public getDefaultConfig() {
+		let baseConfig = super.getDefaultConfig();
+
+		Object.assign(baseConfig, {
+			serverOptions: {},
+			namespaceConfig: function(namespace, server) {}
+		});
+
+		return baseConfig;
 	}
 
 	/**

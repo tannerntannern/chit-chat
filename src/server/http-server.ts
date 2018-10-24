@@ -13,14 +13,6 @@ export type HttpServerConfig = {
  */
 export abstract class HttpServer {
 	/**
-	 * Default configuration values for all HttpServers.
-	 */
-	public static DEFAULT_CONFIG: HttpServerConfig = {
-		host: 'localhost',
-		port: 3000
-	};
-
-	/**
 	 * Internal Node.js http server.
 	 */
 	private httpServer: http.Server = null;
@@ -35,10 +27,20 @@ export abstract class HttpServer {
 	 */
 	protected constructor(options?: HttpServerConfig) {
 		// Apply default configurations
-		this.configure((<typeof HttpServer>this.constructor).DEFAULT_CONFIG);
+		this.config = this.getDefaultConfig();
 
 		// Then apply configurations given to constructor
 		this.configure(options);
+	}
+
+	/**
+	 * Default configuration values for all HttpServers.
+	 */
+	protected getDefaultConfig(): HttpServerConfig {
+		return {
+			host: 'localhost',
+			port: 3000
+		};
 	}
 
 	/**
@@ -51,10 +53,9 @@ export abstract class HttpServer {
 	/**
 	 * Applies configurations to the HttpServer.
 	 */
-	public configure(options: HttpServerConfig): this {
+	public configure<Config extends HttpServerConfig>(options: Config): this {
 		if (this.isRunning()) throw new Error('Cannot make configuration changes while the server is running!');
 
-		if (this.config === undefined) this.config = {};
 		Object.assign(this.config, options);
 
 		return this;

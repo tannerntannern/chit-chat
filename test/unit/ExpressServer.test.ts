@@ -1,6 +1,6 @@
 import 'mocha';
 import {expect} from 'chai';
-import {ExpressServer} from '../../src';
+import {ExpressServerMixin} from '../../src';
 
 describe('ExpressServer', function(){
 	// TODO: ...
