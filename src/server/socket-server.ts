@@ -7,7 +7,7 @@ import {SocketHandlers, SocketInterface} from '../interface/socket-interface';
  * Defines how SocketServer may be configured.
  */
 export type SocketServerConfig<API extends SocketInterface> = {
-	serverOptions?: socketio.ServerOptions,
+	ioOptions?: socketio.ServerOptions,
 	namespaceConfig?: (namespace: socketio.Namespace, server: SocketServer<API>) => void
 } & HttpServerConfig;
 
@@ -38,7 +38,7 @@ export abstract class SocketServer<API extends SocketInterface> extends HttpServ
 	/**
 	 * Constructs a new SocketServer.
 	 */
-	protected constructor(options?: SocketServerConfig<API>) {
+	constructor(options?: SocketServerConfig<API>) {
 		super(options);
 	}
 
@@ -49,7 +49,7 @@ export abstract class SocketServer<API extends SocketInterface> extends HttpServ
 		let baseConfig = super.getDefaultConfig();
 
 		Object.assign(baseConfig, {
-			serverOptions: {},
+			ioOptions: {},
 			namespaceConfig: function(namespace, server) {}
 		});
 
@@ -168,7 +168,7 @@ export abstract class SocketServer<API extends SocketInterface> extends HttpServ
 	/**
 	 * Attaches a socket.io server to the internal Node http server.
 	 */
-	public setup(httpServer: http.Server) {
+	protected setup(httpServer: http.Server) {
 		this.io = socketio(httpServer, this.config.ioOptions);
 		this.config.ioConfig(this.io, this);
 		this.attachSocketHandlers(this.io.nsps['/']);
@@ -177,7 +177,7 @@ export abstract class SocketServer<API extends SocketInterface> extends HttpServ
 	/**
 	 * Cleans up any socket-related junk.
 	 */
-	public takedown() {
+	protected takedown() {
 		this.io = null;
 	}
 }

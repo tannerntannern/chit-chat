@@ -30,12 +30,12 @@ export abstract class ExpressServer<API extends HttpInterface> extends HttpServe
 	/**
 	 * Defines how the server should react to each request.
 	 */
-	protected httpHandlers: HttpHandlers<API, HandlerCtx<API>>;
+	protected abstract httpHandlers: HttpHandlers<API, HandlerCtx<API>>;
 
 	/**
 	 * Constructs a new ExpressServer.
 	 */
-	protected constructor(options?: ExpressServerConfig<API>) {
+	constructor(options?: ExpressServerConfig<API>) {
 		super(options);
 	}
 
@@ -71,7 +71,7 @@ export abstract class ExpressServer<API extends HttpInterface> extends HttpServe
 	/**
 	 * Configures an Express instance and attaches it to the given httpServer.
 	 */
-	public setup(httpServer: http.Server) {
+	protected setup(httpServer: http.Server) {
 		// Create express instance
 		let app = express(),
 			cfg = this.config;
@@ -110,7 +110,7 @@ export abstract class ExpressServer<API extends HttpInterface> extends HttpServe
 	/**
 	 * Performs any necessary cleanup.
 	 */
-	public takedown(){
+	protected takedown(){
 		// Nothing to clean up
 	}
 }
