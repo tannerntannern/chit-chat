@@ -14,7 +14,7 @@ All of these things are guaranteed by the clever typing system.
 `npm i --save talk-to-me`
 
 ## Documentation
-Detailed documentation can be found at [tannerntannern.github.io/talk-to-me](https://tannerntannern.github.io/talk-to-me).
+Detailed documentation can be found at [tannerntannern.github.io/talk-to-me](https://tannerntannern.github.io/talk-to-me/).
 For help getting started, keep reading.
 
 ## Examples
