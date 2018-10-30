@@ -1,4 +1,4 @@
-import * as http from "http";
+import * as http from 'http';
 import {SocketInterface} from '../interface/socket-interface';
 import {HttpInterface} from '../interface/http-interface';
 import {SocketServer, SocketServerConfig} from './socket-server';
@@ -25,7 +25,7 @@ abstract class SocketExpressServer<SocketAPI extends SocketInterface, HttpAPI ex
 	 */
 	constructor(options?: SocketExpressServerConfig<SocketAPI, HttpAPI>) {
 		// @ts-ignore: we know there is a super
-		super(options);
+		super(options); // eslint-disable-line
 	}
 
 	/**
@@ -51,4 +51,4 @@ abstract class SocketExpressServer<SocketAPI extends SocketInterface, HttpAPI ex
 
 export {
 	SocketExpressServer // Export both class and interface under one name
-}
+};
