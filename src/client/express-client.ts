@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosRequestConfig} from 'axios';
 import {HttpInterface, MethodWithArgs, MethodWithoutArgs} from '../interface/http-interface';
 
 /**
@@ -21,15 +21,16 @@ export class ExpressClient<API extends HttpInterface> {
 	/**
 	 * General HTTP request method.
 	 */
-	public request<M extends MethodWithoutArgs, EP extends keyof API[M]>(method: M, endpoint: EP): Promise<API[M][EP]['return']>;
-	public request<M extends MethodWithArgs, EP extends keyof API[M]>(method: M, endpoint: EP, args: API[M][EP]['args']): Promise<API[M][EP]['return']>;
-	public request<M extends MethodWithoutArgs, EP extends keyof API[M]>(method, endpoint, args?): Promise<API[M][EP]['return']> {
-		let config: any = {
-			method: method,
+	public request<M extends MethodWithArgs | MethodWithoutArgs, EP extends keyof API[M]>(
+		endpoint: EP,
+		config: AxiosRequestConfig & {
+			method: M,
+			data?: M extends MethodWithArgs ? API[M][EP]['args'] : any
+		}
+	): Promise<API[M][EP]['return']> {
+		Object.assign(config, {
 			url: this.host + endpoint
-		};
-
-		if (args !== undefined) config.data = args;
+		});
 
 		return axios.request(config);
 	}
@@ -37,42 +38,42 @@ export class ExpressClient<API extends HttpInterface> {
 	/**
 	 * Sends a GET request to the given endpoint.
 	 */
-	public get<EP extends keyof API['get']>(endpoint: EP): Promise<API['get'][EP]['return']> {
-		return axios.get(this.host + endpoint);
+	public get<EP extends keyof API['get']>(endpoint: EP, config?: AxiosRequestConfig): Promise<API['get'][EP]['return']> {
+		return axios.get(this.host + endpoint, config);
 	}
 
 	/**
 	 * Sends a DELETE request to the given endpoint.
 	 */
-	public delete<EP extends keyof API['delete']>(endpoint: EP): Promise<API['delete'][EP]['return']> {
-		return axios.delete(this.host + endpoint);
+	public delete<EP extends keyof API['delete']>(endpoint: EP, config?: AxiosRequestConfig): Promise<API['delete'][EP]['return']> {
+		return axios.delete(this.host + endpoint, config);
 	}
 
 	/**
 	 * Sends a HEAD request to the given endpoint.
 	 */
-	public head<EP extends keyof API['head']>(endpoint: EP): Promise<API['head'][EP]['return']> {
-		return axios.head(this.host + endpoint);
+	public head<EP extends keyof API['head']>(endpoint: EP, config?: AxiosRequestConfig): Promise<API['head'][EP]['return']> {
+		return axios.head(this.host + endpoint, config);
 	}
 
 	/**
 	 * Sends a POST request to the given endpoint with the given arguments.
 	 */
-	public post<EP extends keyof API['post']>(endpoint: EP, args: API['post'][EP]['args']): Promise<API['post'][EP]['return']> {
-		return axios.post(this.host + endpoint, args);
+	public post<EP extends keyof API['post']>(endpoint: EP, args: API['post'][EP]['args'], config?: AxiosRequestConfig): Promise<API['post'][EP]['return']> {
+		return axios.post(this.host + endpoint, args, config);
 	}
 
 	/**
 	 * Sends a PUT request to the given endpoint with the given arguments.
 	 */
-	public put<EP extends keyof API['put']>(endpoint: EP, args: API['put'][EP]['args']): Promise<API['put'][EP]['return']> {
-		return axios.put(this.host + endpoint, args);
+	public put<EP extends keyof API['put']>(endpoint: EP, args: API['put'][EP]['args'], config?: AxiosRequestConfig): Promise<API['put'][EP]['return']> {
+		return axios.put(this.host + endpoint, args, config);
 	}
 
 	/**
 	 * Sends a PATCH request to the given endpoint with the given arguments.
 	 */
-	public patch<EP extends keyof API['patch']>(endpoint: EP, args: API['patch'][EP]['args']): Promise<API['patch'][EP]['return']> {
-		return axios.patch(this.host + endpoint, args);
+	public patch<EP extends keyof API['patch']>(endpoint: EP, args: API['patch'][EP]['args'], config?: AxiosRequestConfig): Promise<API['patch'][EP]['return']> {
+		return axios.patch(this.host + endpoint, args, config);
 	}
 }
