@@ -47,7 +47,7 @@ export abstract class HttpServer {
 	 * Returns whether or not the server is running.
 	 */
 	public isRunning(): boolean {
-		return this.httpServer && this.httpServer.address() !== null;
+		return this.httpServer !== null && this.httpServer.address() !== null;
 	}
 
 	/**
