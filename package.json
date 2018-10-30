@@ -11,12 +11,13 @@
   "scripts": {
     "build": "tsc",
     "build-clean": "rm -rf ./dist && npm run build && git add ./dist",
-    "watch": "npm run build -- -w",
+    "docs": "typedoc --out ./docs --mode modules ./src",
+    "docs-clean": "rm -rf ./docs && npm run docs && touch ./docs/.nojekyll && git add ./docs",
     "lint": "eslint src/**/*.ts",
     "test": "cross-env TS_NODE_COMPILER_OPTIONS=\"{\\\"module\\\":\\\"commonjs\\\"}\" nyc mocha --recursive -r ts-node/register test/**/*.test.*",
     "coverage": "nyc report",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "version": "npm run build-clean && auto-changelog"
+    "version": "npm run build-clean && docs-clean && auto-changelog"
   },
   "nyc": {
     "extension": [
@@ -38,7 +39,7 @@
     "express": "^4.16.4",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
-    "ts-mixer": "^2.0.2"
+    "ts-mixer": "^2.0.3"
   },
   "devDependencies": {
     "@types/chai": "^4.1.6",
@@ -52,6 +53,7 @@
     "mocha": "^5.2.0",
     "nyc": "^12.x.x",
     "ts-node": "^7.0.1",
+    "typedoc": "^0.13.0",
     "typescript": "^3.1.3",
     "typescript-eslint-parser": "^19.0.2"
   },
@@ -64,7 +66,7 @@
     "http",
     "socket",
     "server",
-    "talk-to-me"
+    "api"
   ],
   "author": "Tanner Nielsen",
   "license": "MIT",

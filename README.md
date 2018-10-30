@@ -9,7 +9,16 @@ communication structure between the server and client:
 
 All of these things are guaranteed by the clever typing system.
 
-**More information to come...**
+# Getting Started
+## Installation
+`npm i --save talk-to-me`
+
+## Documentation
+Detailed documentation can be found at [tannerntannern.github.io/talk-to-me](https://tannerntannern.github.io/talk-to-me).
+For help getting started, keep reading.
+
+## Examples
+...
 
 # Author
 Tanner Nielsen <tannerntannern@gmail.com>
