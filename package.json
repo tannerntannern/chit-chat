@@ -21,6 +21,7 @@
   },
   "standard-version": {
     "scripts": {
+      "prerelease": "npm run test && npm run lint",
       "precommit": "npm run build-clean && npm run docs-clean"
     }
   },
