@@ -50,6 +50,10 @@ type EventHandlers<Transmitters extends TransmitterMap, RemoteTransmitters exten
 			EventResponse<RemoteTransmitters[RT]['expect'], Transmitters, Location> :
 			// Otherwise, the handler may return any EventResponse available in Transmitters, or nothing at all.
 			EventResponse<Extract<keyof Transmitters, string>, Transmitters, Location> | void;
+} & {
+	// There may be any number of additional handlers that the server or client may wish to include that are not necessarily
+	// the direct result of a message from the other.  These handlers may respond with an event response or nothing at all
+	[extraHandler: string]: (this: HandlerContext, ...args: any[]) => EventResponse<Extract<keyof Transmitters, string>, Transmitters, Location> | void
 };
 
 /**

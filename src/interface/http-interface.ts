@@ -21,6 +21,11 @@ export type MethodWithoutArgs = 'get' | 'delete' | 'head';
 export type MethodWithArgs = 'post' | 'put' | 'patch';
 
 /**
+ * All supported HTTP methods.
+ */
+export type Method =  MethodWithArgs | MethodWithoutArgs;
+
+/**
  * Defines the format for an HttpInterface.
  */
 export type HttpInterface =
@@ -39,3 +44,20 @@ export type HttpHandlers<API extends HttpInterface, HandlerCtx> = {
 			(this: HandlerCtx, data: API[Method][EP]['args']) => API[Method][EP]['return'];
 	}
 };
+
+// TODO
+// export type HttpHandlers<API extends HttpInterface, HandlerCtx> = {
+// 	[Method in keyof API]: {
+// 	[EP in keyof API[Method]]: API[Method] extends MethodWithoutArgs ?
+// 		// @ts-ignore: Not sure why the compiler is complaining about this
+// 		(this: HandlerCtx) => API[Method][EP]['return'] :
+// 		// @ts-ignore: Not sure why the compiler is complaining about this
+// 		(this: HandlerCtx, data: API[Method][EP]['args']) => API[Method][EP]['return'];
+// } & {
+// 	[extraHandler: string]: (this: HandlerCtx, data?: object) => any
+// }
+// } & {
+// 	[Method in Exclude<keyof Method, keyof API>]?: {
+// 		[extraHandler: string]: (this: HandlerCtx, data?: object) => any
+// 	}
+// };
