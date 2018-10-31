@@ -25,4 +25,4 @@ deploy:
     tags: true
     branch: master
     node: '8'
-    repo: tannerntannern/talk-to-me
+    repo: tannerntannern/chit-chat
