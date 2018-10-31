@@ -1,7 +1,7 @@
-# chit-chat
-[![Build Status](https://travis-ci.org/tannerntannern/chit-chat.svg?branch=master)](https://travis-ci.org/tannerntannern/chit-chat)
-[![Coverage Status](https://coveralls.io/repos/github/tannerntannern/chit-chat/badge.svg?branch=master)](https://coveralls.io/github/tannerntannern/chit-chat?branch=master)
-[![Dependencies Status](https://david-dm.org/tannerntannern/chit-chat/status.svg)](https://david-dm.org/tannerntannern/chit-chat)
+# table-talk
+[![Build Status](https://travis-ci.org/tannerntannern/table-talk.svg?branch=master)](https://travis-ci.org/tannerntannern/table-talk)
+[![Coverage Status](https://coveralls.io/repos/github/tannerntannern/table-talk/badge.svg?branch=master)](https://coveralls.io/github/tannerntannern/table-talk?branch=master)
+[![Dependencies Status](https://david-dm.org/tannerntannern/table-talk/status.svg)](https://david-dm.org/tannerntannern/table-talk)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 A simple HTTP and socket server library built for TypeScript on Node.js.
@@ -16,12 +16,12 @@ All of these things are guaranteed by the clever typing system.
 
 # Getting Started
 ## Installation
-Via [npm](https://npmjs.com/chit-chat):
+Via [npm](https://npmjs.com/table-talk):
 
-`npm install chit-chat`
+`npm install table-talk`
 
 ## Documentation
-Detailed documentation can be found at [tannerntannern.github.io/chit-chat](https://tannerntannern.github.io/chit-chat/).
+Detailed documentation can be found at [tannerntannern.github.io/table-talk](https://tannerntannern.github.io/table-talk/).
 For help getting started, keep reading.
 
 ## Examples
