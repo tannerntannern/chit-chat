@@ -23,10 +23,7 @@ export class ExpressClient<API extends HttpInterface> {
 	 */
 	public request<M extends MethodWithArgs | MethodWithoutArgs, EP extends keyof API[M]>(
 		endpoint: EP,
-		config: AxiosRequestConfig & {
-			method: M,
-			data?: M extends MethodWithArgs ? API[M][EP]['args'] : any
-		}
+		config: AxiosRequestConfig & { method: M, data?: M extends MethodWithArgs ? API[M][EP]['args'] : any }
 	): Promise<API[M][EP]['return']> {
 		Object.assign(config, {
 			url: this.host + endpoint
