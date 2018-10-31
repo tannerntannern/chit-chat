@@ -1,4 +1,7 @@
 # talk-to-me
+[![Build Status](https://travis-ci.org/tannerntannern/talk-to-me.svg?branch=master)](https://travis-ci.org/tannerntannern/talk-to-me)
+[![Coverage Status](https://coveralls.io/repos/github/tannerntannern/talk-to-me/badge.svg?branch=master)](https://coveralls.io/github/tannerntannern/talk-to-me?branch=master)
+[![Dependencies Status](https://david-dm.org/tannerntannern/talk-to-me/status.svg)](https://david-dm.org/tannerntannern/talk-to-me)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 A simple HTTP and socket server library built for TypeScript on Node.js.
