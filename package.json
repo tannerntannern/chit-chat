@@ -25,15 +25,9 @@
     }
   },
   "nyc": {
-    "extension": [
-      ".ts"
-    ],
-    "include": [
-      "./src/**/*.ts"
-    ],
-    "reporter": [
-      "html"
-    ],
+    "extension": [".ts"],
+    "include": ["./src/**/*.ts"],
+    "reporter": ["html", "lcov"],
     "all": true
   },
   "dependencies": {
