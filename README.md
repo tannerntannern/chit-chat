@@ -1,4 +1,6 @@
 # talk-to-me
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
+
 A simple HTTP and socket server library built for TypeScript on Node.js.
 
 The primary goal of this library is to provide a framework that facilitates the design of a clear and error-free
@@ -11,7 +13,9 @@ All of these things are guaranteed by the clever typing system.
 
 # Getting Started
 ## Installation
-`npm i --save talk-to-me`
+Via [npm](https://npmjs.com/talk-to-me):
+
+`npm install talk-to-me`
 
 ## Documentation
 Detailed documentation can be found at [tannerntannern.github.io/talk-to-me](https://tannerntannern.github.io/talk-to-me/).
