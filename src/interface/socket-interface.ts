@@ -29,7 +29,7 @@ export type SocketInterface = {
  */
 export type EventResponse<Name extends string, Transmitters extends TransmitterMap, Location extends SocketLocation> =
 	{
-		name: Name, args?: Transmitters[Name]['args']				// Every EventResponse must include the event name and arguments,
+		name: Name, args: Transmitters[Name]['args']				// Every EventResponse must include the event name and arguments,
 	} & (
 		Location extends 'server' ? { broadcast?: boolean } : {}	// but a server EventResponse may also specify whether or not it is a broadcast.
 	);
