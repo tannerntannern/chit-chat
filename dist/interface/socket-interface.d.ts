@@ -43,6 +43,8 @@ export declare type EventResponse<Name extends string, Transmitters extends Tran
  */
 declare type EventHandlers<Transmitters extends TransmitterMap, RemoteTransmitters extends TransmitterMap, Location extends SocketLocation, HandlerContext> = {
     [RT in keyof RemoteTransmitters]: (this: HandlerContext, ...args: RemoteTransmitters[RT]['args']) => RemoteTransmitters[RT]['expect'] extends string ? EventResponse<RemoteTransmitters[RT]['expect'], Transmitters, Location> : EventResponse<Extract<keyof Transmitters, string>, Transmitters, Location> | void;
+} & {
+    [extraHandler: string]: (this: HandlerContext, ...args: any[]) => EventResponse<Extract<keyof Transmitters, string>, Transmitters, Location> | void;
 };
 /**
  * Utility type for generating EventHandlers given a SocketInterface and a SocketLocation.

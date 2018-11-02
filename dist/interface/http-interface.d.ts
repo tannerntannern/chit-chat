@@ -20,6 +20,10 @@ export declare type MethodWithoutArgs = 'get' | 'delete' | 'head';
  */
 export declare type MethodWithArgs = 'post' | 'put' | 'patch';
 /**
+ * All supported HTTP methods.
+ */
+export declare type Method = MethodWithArgs | MethodWithoutArgs;
+/**
  * Defines the format for an HttpInterface.
  */
 export declare type HttpInterface = {
