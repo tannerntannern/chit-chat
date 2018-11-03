@@ -73,7 +73,7 @@ export abstract class SocketServer<API extends SocketInterface> extends HttpServ
 
 	/**
 	 * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
-	 * proper even will automatically be emitted.
+	 * proper event will automatically be emitted.
 	 */
 	protected handleEvent(ctx: HandlerCtx<API>, event: string, ...args) {
 		let response = this.socketHandlers[event].call(ctx, ...args);
@@ -170,8 +170,10 @@ export abstract class SocketServer<API extends SocketInterface> extends HttpServ
 	 */
 	protected setup(httpServer: http.Server) {
 		this.io = socketio(httpServer, this.config.ioOptions);
-		this.config.ioConfig(this.io, this);
-		this.attachSocketHandlers(this.io.nsps['/']);
+
+		let rootNamespace = this.io.nsps['/'];
+		this.config.namespaceConfig(rootNamespace, this);
+		this.attachSocketHandlers(rootNamespace);
 	}
 
 	/**

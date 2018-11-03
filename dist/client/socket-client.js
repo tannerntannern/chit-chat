@@ -12,7 +12,7 @@ var SocketClient = /** @class */ (function () {
         var _this = this;
         if (url === void 0) { url = ''; }
         return new Promise(function (resolve, reject) {
-            _this.io = socketio.connect(url, options);
+            _this.socket = socketio.connect(url, options);
             _this.io.once('connect', function () { resolve(true); });
             _this.io.once('connect_failed', function () { resolve(false); });
         });
