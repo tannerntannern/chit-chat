@@ -38,5 +38,9 @@ export declare type HttpHandlers<API extends HttpInterface, HandlerCtx> = {
     [Method in keyof API]: {
         [EP in keyof API[Method]]: API[Method] extends MethodWithoutArgs ? (this: HandlerCtx) => API[Method][EP]['return'] : (this: HandlerCtx, data: API[Method][EP]['args']) => API[Method][EP]['return'];
     };
+} & {
+    [M in Method]?: {
+        [extraHandler: string]: (this: HandlerCtx, data?: object) => any;
+    };
 };
 export {};

@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0-alpha.2"></a>
+# [0.1.0-alpha.2](https://github.com/tannerntannern/table-talk/compare/v0.1.0-alpha.1...v0.1.0-alpha.2) (2018-11-03)
+
+
+### Bug Fixes
+
+* **build:** fixed issue with uncommitted files during release ([45a2ce3](https://github.com/tannerntannern/table-talk/commit/45a2ce3))
+
+
+
 <a name="0.1.0-alpha.1"></a>
 # [0.1.0-alpha.1](https://github.com/tannerntannern/table-talk/compare/v0.1.0-alpha.0...v0.1.0-alpha.1) (2018-11-03)
 

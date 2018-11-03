@@ -49,7 +49,7 @@ export declare abstract class SocketServer<API extends SocketInterface> extends 
     emit<Event extends keyof API['server']>(target: socketio.Namespace | socketio.Socket, event: Event, ...args: API['server'][Event]['args']): void;
     /**
      * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
-     * proper even will automatically be emitted.
+     * proper event will automatically be emitted.
      */
     protected handleEvent(ctx: HandlerCtx<API>, event: string, ...args: any[]): void;
     /**

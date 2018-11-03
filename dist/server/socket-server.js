@@ -59,7 +59,7 @@ var SocketServer = /** @class */ (function (_super) {
     };
     /**
      * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
-     * proper even will automatically be emitted.
+     * proper event will automatically be emitted.
      */
     SocketServer.prototype.handleEvent = function (ctx, event) {
         var args = [];
@@ -153,8 +153,9 @@ var SocketServer = /** @class */ (function (_super) {
      */
     SocketServer.prototype.setup = function (httpServer) {
         this.io = socketio(httpServer, this.config.ioOptions);
-        this.config.ioConfig(this.io, this);
-        this.attachSocketHandlers(this.io.nsps['/']);
+        var rootNamespace = this.io.nsps['/'];
+        this.config.namespaceConfig(rootNamespace, this);
+        this.attachSocketHandlers(rootNamespace);
     };
     /**
      * Cleans up any socket-related junk.
