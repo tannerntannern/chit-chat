@@ -1,4 +1,5 @@
 # table-talk
+[![npm version](https://badge.fury.io/js/table-talk.svg)](https://badge.fury.io/js/table-talk)
 [![Build Status](https://travis-ci.org/tannerntannern/table-talk.svg?branch=master)](https://travis-ci.org/tannerntannern/table-talk)
 [![Coverage Status](https://coveralls.io/repos/github/tannerntannern/table-talk/badge.svg?branch=master)](https://coveralls.io/github/tannerntannern/table-talk?branch=master)
 [![Dependencies Status](https://david-dm.org/tannerntannern/table-talk/status.svg)](https://david-dm.org/tannerntannern/table-talk)
