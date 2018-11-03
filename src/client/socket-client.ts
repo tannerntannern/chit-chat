@@ -75,7 +75,7 @@ export abstract class SocketClient<API extends SocketInterface> {
 			this.socket.io.open((err?) => {
 				if (err) reject(err);
 				else resolve();
-			})
+			});
 		});
 	}
 
