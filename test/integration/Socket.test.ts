@@ -1,6 +1,7 @@
 import 'mocha';
 import {expect} from 'chai';
-import {SocketServer} from '../../src';
-import {SocketClient} from '../../src';
+import {Server, Client} from '../shared/socket';
 
-// TODO...
+describe('SocketServer + SocketClient', function(){
+	// TODO: ...
+});

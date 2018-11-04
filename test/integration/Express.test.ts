@@ -1,4 +1,7 @@
 import 'mocha';
 import {expect} from 'chai';
+import {Server, Client} from '../shared/express';
 
-// TODO...
+describe('ExpressServer + ExpressClient', function(){
+	// TODO: ...
+});

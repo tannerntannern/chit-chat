@@ -4,7 +4,7 @@ import {SocketHandlers, SocketInterface} from '../interface/socket-interface';
 /**
  * Describes the shape of the `this` context that will be available in every SocketClient handler.
  */
-type HandlerCtx<API extends SocketInterface> = {
+export type HandlerCtx<API extends SocketInterface> = {
 	socket: SocketIOClient.Socket,
 	client: SocketClient<API>
 };
