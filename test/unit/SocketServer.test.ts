@@ -11,7 +11,6 @@ describe('SocketServer', function(){
 	describe('Configuration', function(){
 		it('should have the proper default configurations', function(){
 			expect(s.config.ioOptions).to.deep.equal({});
-			expect(s.config.namespaceConfig.toString()).to.equal('function (namespace, server) { }');
 		});
 	});
 
