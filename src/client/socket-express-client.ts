@@ -15,4 +15,4 @@ interface SocketExpressClient<SocketAPI extends SocketInterface, HttpAPI extends
 
 export {
 	SocketExpressClient
-}
+};
