@@ -2,7 +2,7 @@ import { SocketHandlers, SocketInterface } from '../interface/socket-interface';
 /**
  * Describes the shape of the `this` context that will be available in every SocketClient handler.
  */
-declare type HandlerCtx<API extends SocketInterface> = {
+export declare type HandlerCtx<API extends SocketInterface> = {
     socket: SocketIOClient.Socket;
     client: SocketClient<API>;
 };
@@ -33,6 +33,10 @@ export declare abstract class SocketClient<API extends SocketInterface> {
      */
     isConnected(): boolean;
     /**
+     * Returns the socket id if the client is connected.
+     */
+    getSocketId(): string;
+    /**
      * Attempts to connect to a SocketServer.  Returns a Promise for when the process completes or fails.
      */
     connect(url?: string, options?: SocketIOClient.ConnectOpts): Promise<any>;
@@ -45,4 +49,3 @@ export declare abstract class SocketClient<API extends SocketInterface> {
      */
     emit<Event extends keyof API['client']>(event: Event, ...args: API['client'][Event]['args']): void;
 }
-export {};

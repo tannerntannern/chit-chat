@@ -56,6 +56,15 @@ var SocketClient = /** @class */ (function () {
         return this.socket && this.socket.connected;
     };
     /**
+     * Returns the socket id if the client is connected.
+     */
+    SocketClient.prototype.getSocketId = function () {
+        if (this.isConnected())
+            return this.socket.id;
+        else
+            throw new Error('The client must first be connected to get the socket id');
+    };
+    /**
      * Attempts to connect to a SocketServer.  Returns a Promise for when the process completes or fails.
      */
     SocketClient.prototype.connect = function (url, options) {
