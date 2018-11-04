@@ -61,6 +61,16 @@ export abstract class SocketClient<API extends SocketInterface> {
 	}
 
 	/**
+	 * Returns the socket id if the client is connected.
+	 */
+	public getSocketId(): string {
+		if (this.isConnected())
+			return this.socket.id;
+		else
+			throw new Error('The client must first be connected to get the socket id');
+	}
+
+	/**
 	 * Attempts to connect to a SocketServer.  Returns a Promise for when the process completes or fails.
 	 */
 	public connect(url: string = '', options?: SocketIOClient.ConnectOpts): Promise<any> {

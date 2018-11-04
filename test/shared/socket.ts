@@ -28,7 +28,8 @@ export class Server extends SocketServer<API> {
 			this.data[key] = value;
 			return {
 				name: 'patch-data',
-				args: [key, value]
+				args: [key, value],
+				broadcast: true
 			}
 		}
 	};
