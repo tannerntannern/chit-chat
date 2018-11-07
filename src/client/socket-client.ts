@@ -57,7 +57,7 @@ export abstract class SocketClient<API extends SocketInterface> {
 	 * Returns whether or not the client has an active socket connection.
 	 */
 	public isConnected() {
-		return this.socket && this.socket.connected;
+		return (this.socket !== null) && this.socket.connected;
 	}
 
 	/**
