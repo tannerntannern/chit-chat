@@ -25,6 +25,11 @@ export abstract class SocketClient<API extends SocketInterface> {
 	protected abstract socketHandlers: SocketHandlers<API, 'client', HandlerCtx<API>>;
 
 	/**
+	 * @internal
+	 */
+	private waiters: {[event: string]: Function[]} = {};
+
+	/**
 	 * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
 	 * proper event will automatically be emitted.
 	 */
@@ -49,6 +54,12 @@ export abstract class SocketClient<API extends SocketInterface> {
 		// Setup listeners for each event
 		for (let event in this.socketHandlers)
 			this.socket.on(event, (...args) => {
+				// Process any waiters
+				let waiters = this.waiters[event];
+				if (waiters) for (let waiter of waiters) waiter();
+				this.waiters[event] = [];
+
+				// Handle the event
 				this.handleEvent(ctx, event, ...args);
 			});
 	}
@@ -105,5 +116,17 @@ export abstract class SocketClient<API extends SocketInterface> {
 	 */
 	public emit<Event extends keyof API['client']>(event: Event, ...args: API['client'][Event]['args']) {
 		this.socket.emit(<string>event, ...args);
+	}
+
+	/**
+	 * Gives the ability to block and wait for an event.  Usage: `await client.blockEvent('some-event');`
+	 */
+	public blockEvent<Event extends keyof API['client']>(event: Event): Promise<any> {
+		return new Promise((resolve, reject) => {
+			if (!this.waiters[<string>event])
+				this.waiters[<string>event] = [];
+
+			this.waiters[<string>event].push(resolve);
+		});
 	}
 }
