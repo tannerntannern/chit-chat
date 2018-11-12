@@ -6,7 +6,8 @@ import {HandlerCtx as ClientCtx} from '../../src/client/socket-client';
 export interface API {
 	server: {
 		'patch-data': {args: [string, string]},
-		'reset-data': {args: [{}]}
+		'reset-data': {args: [{}]},
+		'connected': {args: [string], responseTo: 'connect'}
 	},
 	client: {
 		'get-data': {args: [string], expect: 'patch-data'},

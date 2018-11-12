@@ -106,12 +106,14 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_client_socket_client_.socketclient.html#socket" class="tsd-kind-icon">socket</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_client_socket_client_.socketclient.html#sockethandlers" class="tsd-kind-icon">socket<wbr>Handlers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_client_socket_client_.socketclient.html#waiters" class="tsd-kind-icon">waiters</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_client_socket_client_.socketclient.html#attachsockethandlers" class="tsd-kind-icon">attach<wbr>Socket<wbr>Handlers</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_client_socket_client_.socketclient.html#blockevent" class="tsd-kind-icon">block<wbr>Event</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_client_socket_client_.socketclient.html#connect" class="tsd-kind-icon">connect</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_client_socket_client_.socketclient.html#disconnect" class="tsd-kind-icon">disconnect</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_client_socket_client_.socketclient.html#emit" class="tsd-kind-icon">emit</a></li>
@@ -131,7 +133,7 @@
 					<div class="tsd-signature tsd-kind-icon">socket<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Socket</span><span class="tsd-signature-symbol"> =&nbsp;null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/client/socket-client.ts#L19">client/socket-client.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/client/socket-client.ts#L19">client/socket-client.ts:19</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -146,7 +148,7 @@
 					<div class="tsd-signature tsd-kind-icon">socket<wbr>Handlers<span class="tsd-signature-symbol">:</span> <a href="../modules/_interface_socket_interface_.html#sockethandlers" class="tsd-signature-type">SocketHandlers</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"client"</span><span class="tsd-signature-symbol">, </span><a href="../modules/_client_socket_client_.html#handlerctx" class="tsd-signature-type">HandlerCtx</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/client/socket-client.ts#L25">client/socket-client.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/client/socket-client.ts#L25">client/socket-client.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,6 +156,30 @@
 							<p>Contains implementations for the events described by the API.  This guarantees compatibility with any
 							SocketServer that implements the same API.</p>
 						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="waiters" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> waiters</h3>
+					<div class="tsd-signature tsd-kind-icon">waiters<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/client/socket-client.ts#L30">client/socket-client.ts:30</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>internal</dt>
+							<dd></dd>
+						</dl>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-index-signature">
+								<h5><span class="tsd-signature-symbol">[</span>event: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">[]</span></h5>
+							</li>
+						</ul>
 					</div>
 				</section>
 			</section>
@@ -169,7 +195,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/client/socket-client.ts#L42">client/socket-client.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/client/socket-client.ts#L52">client/socket-client.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -178,6 +204,40 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="blockevent" class="tsd-anchor"></a>
+					<h3>block<wbr>Event</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">block<wbr>Event&lt;Event&gt;<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/client/socket-client.ts#L123">client/socket-client.ts:123</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gives the ability to block and wait for an event.  Usage: <code>await client.blockEvent(&#39;some-event&#39;);</code></p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>Event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof API[&quot;client&quot;]</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">Event</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -191,7 +251,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/client/socket-client.ts#L76">client/socket-client.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/client/socket-client.ts#L86">client/socket-client.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -222,7 +282,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/client/socket-client.ts#L95">client/socket-client.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/client/socket-client.ts#L105">client/socket-client.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -244,7 +304,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/client/socket-client.ts#L106">client/socket-client.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/client/socket-client.ts#L116">client/socket-client.ts:116</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -281,7 +341,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/client/socket-client.ts#L66">client/socket-client.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/client/socket-client.ts#L76">client/socket-client.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -303,7 +363,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/client/socket-client.ts#L31">client/socket-client.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/client/socket-client.ts#L36">client/socket-client.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -338,7 +398,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/client/socket-client.ts#L59">client/socket-client.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/client/socket-client.ts#L69">client/socket-client.ts:69</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -406,8 +466,14 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="_client_socket_client_.socketclient.html#sockethandlers" class="tsd-kind-icon">socket<wbr>Handlers</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_client_socket_client_.socketclient.html#waiters" class="tsd-kind-icon">waiters</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 								<a href="_client_socket_client_.socketclient.html#attachsockethandlers" class="tsd-kind-icon">attach<wbr>Socket<wbr>Handlers</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="_client_socket_client_.socketclient.html#blockevent" class="tsd-kind-icon">block<wbr>Event</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_client_socket_client_.socketclient.html#connect" class="tsd-kind-icon">connect</a>

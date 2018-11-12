@@ -93,7 +93,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Handlers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/interface/socket-interface.ts#L44">interface/socket-interface.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/interface/socket-interface.ts#L47">interface/socket-interface.ts:47</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -112,7 +112,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Location extends &quot;server&quot; ? { broadcast?: boolean; } : {}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/interface/socket-interface.ts#L30">interface/socket-interface.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/interface/socket-interface.ts#L33">interface/socket-interface.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -127,15 +127,19 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Transmitter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/interface/socket-interface.ts#L11">interface/socket-interface.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/interface/socket-interface.ts#L14">interface/socket-interface.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Describes an EventTransmitter by specifying what arguments can be passed along with it, and optionally which
-								transmitter is expected to be triggered after the other side receives this particular transmission.  For example,
-							a &#39;request-data&#39; transmitter might look like this: <code>{args: [DataSchema], expect: &#39;give-data&#39;}</code></p>
+							<p>Describes a transmittable event on either the client or the server.  Each one may specify its argument types with a
+								tuple, the name of the event it expects to receive as a response, and optionally the name of the event that the
+							transmitter should be used in response to.  This can be confusing, but these guiding principles should help:</p>
 						</div>
+						<ul>
+							<li>When you want the other side to respond to the transmitter with a particular event, use <code>expect</code></li>
+							<li>When you want the transmitter be used <em>as a response</em> to a particular event, use <code>responseTo</code></li>
+						</ul>
 					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
@@ -146,6 +150,9 @@
 							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> expect<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> response<wbr>To<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
 						</ul>
 					</div>
 				</section>
@@ -155,7 +162,7 @@
 					<div class="tsd-signature tsd-kind-icon">Socket<wbr>Handlers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SocketHandlers&lt;TS, SL, HandlerContext&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/interface/socket-interface.ts#L62">interface/socket-interface.ts:62</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/interface/socket-interface.ts#L65">interface/socket-interface.ts:65</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -170,7 +177,7 @@
 					<div class="tsd-signature tsd-kind-icon">Socket<wbr>Interface<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/interface/socket-interface.ts#L22">interface/socket-interface.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/interface/socket-interface.ts#L25">interface/socket-interface.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -196,7 +203,7 @@
 					<div class="tsd-signature tsd-kind-icon">Socket<wbr>Location<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"server"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"client"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/interface/socket-interface.ts#L4">interface/socket-interface.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/interface/socket-interface.ts#L4">interface/socket-interface.ts:4</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -211,7 +218,7 @@
 					<div class="tsd-signature tsd-kind-icon">Transmitter<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6c24940/src/interface/socket-interface.ts#L17">interface/socket-interface.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/5aadb35/src/interface/socket-interface.ts#L20">interface/socket-interface.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">

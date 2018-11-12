@@ -34,11 +34,16 @@ export abstract class SocketClient<API extends SocketInterface> {
 	 * proper event will automatically be emitted.
 	 */
 	protected handleEvent(ctx: HandlerCtx<API>, event: string, ...args) {
+		// Process the response if there is one
 		let response = this.socketHandlers[event].call(ctx, ...args);
-
 		if (response) {
 			this.emit(response.name, ...response.args);
 		}
+
+		// Process any waiters
+		let waiters = this.waiters[event];
+		if (waiters) for (let waiter of waiters) waiter();
+		this.waiters[event] = [];
 	}
 
 	/**
@@ -54,12 +59,6 @@ export abstract class SocketClient<API extends SocketInterface> {
 		// Setup listeners for each event
 		for (let event in this.socketHandlers)
 			this.socket.on(event, (...args) => {
-				// Process any waiters
-				let waiters = this.waiters[event];
-				if (waiters) for (let waiter of waiters) waiter();
-				this.waiters[event] = [];
-
-				// Handle the event
 				this.handleEvent(ctx, event, ...args);
 			});
 	}
