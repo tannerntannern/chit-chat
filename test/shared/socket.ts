@@ -19,6 +19,12 @@ export class Server extends SocketServer<API> {
 	protected data = {};
 
 	protected socketHandlers: SocketHandlers<API, "server", ServerCtx<API>> = {
+		'connect': function () {
+			return {
+				name: 'connected',
+				args: [this.socket.id]
+			}
+		},
 		'get-data': (key: string) => {
 			return {
 				name: 'patch-data',
@@ -40,6 +46,9 @@ export class Client extends SocketClient<API> {
 	protected data = {};
 
 	protected socketHandlers: SocketHandlers<API, "client", ClientCtx<API>> = {
+		'connected': (id: string) => {
+			console.log(id, 'has connected!');
+		},
 		'patch-data': (key: string, value: string) => {
 			this.data[key] = value;
 		},

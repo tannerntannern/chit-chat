@@ -20,8 +20,32 @@ type EventTransmitter = {args: any[], expect?: string, responseTo?: string};
 type TransmitterMap = {[event: string]: EventTransmitter};
 
 /**
+ * Given a TransmitterMap, this type be the union of names for any events that have the given ResponseTo type as their
+ * `responseTo` value.  In a well-formed API, this should be a single string literal type.  To illustrate, since this
+ * can be a confusing type:
+ *
+ * 	interface MyTransmitterMap {
+ * 	    'notify-connected': {args: ..., responseTo: 'connect'}
+ * 	}
+ *
+ * 	// This type will be equivalent to 'notify-connected'
+ * 	type TransmitterOfInterest = TransmitterWithResponseTo<MyTransmitterMap, 'connect'>;
+ */
+type TransmitterWithResponseTo<T extends TransmitterMap, ResponseTo extends string> =
+	Extract<{[K in keyof T]: T[K]['responseTo'] extends ResponseTo ? K : never}[keyof T], string>;
+
+/**
  * Given a TransmitterMap, generates a type that is the union of all `responseTo` types within.  Based on:
- * https://github.com/Microsoft/TypeScript/issues/23199#issuecomment-379323872
+ * https://github.com/Microsoft/TypeScript/issues/23199#issuecomment-379323872  To illustrate, since this can be a
+ * confusing type:
+ *
+ * 	interface MyTransmitterMap {
+ * 		'notify-disconnected': {args: ..., responseTo: 'disconnect'},
+ * 	    'notify-connected': {args: ..., responseTo: 'connect'}
+ * 	}
+ *
+ * 	// This type will be equivalent to 'connect' | 'disconnect'
+ * 	type EventsOfInterest = ResponseTos<MyTransmitterMap>;
  */
 type ResponseTos<T extends TransmitterMap> = {[K in keyof T]: T[K]['responseTo'] extends string ? T[K]['responseTo'] : never}[keyof T];
 
@@ -34,31 +58,31 @@ export type SocketInterface = {
 };
 
 /**
- * Utility type that generates an EventResponse given a name and a TransmitterMap.
+ * Utility type that generates a Response given a name and a TransmitterMap.
  */
-export type EventResponse<E extends string, T extends TransmitterMap, L extends SocketLocation> =
+export type Response<E extends string, T extends TransmitterMap, L extends SocketLocation> =
 	{
-		name: E, args: T[E]['args']							// Every EventResponse must include the event name and arguments,
+		name: E, args: T[E]['args']							// Every Response must include the event name and arguments,
 	} & (
-		L extends 'server' ? { broadcast?: boolean } : {}	// but a server EventResponse may also specify whether or not it is a broadcast.
+		L extends 'server' ? { broadcast?: boolean } : {}	// but a server Response may also specify whether or not it is a broadcast.
 	);
 
 /**
- * Generic EventResponse, given a TransmitterMap and a SocketLocation.
+ * Generic Response, given a TransmitterMap and a SocketLocation.
  */
 type GenericTransmitterResponse<T extends TransmitterMap, L extends SocketLocation> =
-	EventResponse<Extract<keyof T, string>, T, L> | void;
+	Response<Extract<keyof T, string>, T, L> | void;
 
 /**
- * Specific EventResponse based on what is expected from the given remote EventTransmitter.  (If nothing is expected,
+ * Specific Response based on what is expected from the given remote EventTransmitter.  (If nothing is expected,
  * it defaults to GenericTransmitterResponse.)
  */
-type RestrictedRemoteTransmitterResponse<RT extends EventTransmitter, T extends TransmitterMap, L extends SocketLocation> =
+type RemoteTransmitterResponse<RT extends EventTransmitter, T extends TransmitterMap, L extends SocketLocation> =
 	// If the transmitter expects a specific response,
 	RT['expect'] extends string ?
 		// then make sure the handler returns it.
-		EventResponse<RT['expect'], T, L> :
-		// Otherwise, the handler may return any EventResponse available in Transmitters, or nothing at all.
+		Response<RT['expect'], T, L> :
+		// Otherwise, the handler may return any Response available in Transmitters, or nothing at all.
 		GenericTransmitterResponse<T, L>;
 
 /**
@@ -70,10 +94,10 @@ type RestrictedRemoteTransmitterResponse<RT extends EventTransmitter, T extends 
  */
 type EventHandlers<T extends TransmitterMap, RT extends TransmitterMap, L extends SocketLocation, CTX> = {
 	// For every RemoteTransmitter, we expect a corresponding handler with the arguments specified by the RemoteTransmitter
-	[E in keyof RT]: (this: CTX, ...args: RT[E]['args']) => RestrictedRemoteTransmitterResponse<RT[E], T, L>;
+	[E in keyof RT]: (this: CTX, ...args: RT[E]['args']) => RemoteTransmitterResponse<RT[E], T, L>;
 } & {
 	// For every Transmitter that has a `responseTo` field, we expect the corresponding handler
-	// [Event in ResponseTos<T>]: (this: CTX, ...args: any[]) => GenericTransmitterResponse<T, L>; TODO: this needs rethinking; not correct
+	[E in ResponseTos<T>]: (this: CTX, ...args: any[]) => Response<TransmitterWithResponseTo<T, E>, T, L>;
 } & {
 	// There may be any number of additional handlers that the server or client may wish to include that are not necessarily
 	// the direct result of a message from the other.  These handlers may respond with an event response or nothing at all
