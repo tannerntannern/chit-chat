@@ -19,33 +19,11 @@ type EventTransmitter = {args: any[], expect?: string, responseTo?: string};
  */
 type TransmitterMap = {[event: string]: EventTransmitter};
 
-interface API {
-	server: {
-		'patch-data': {args: [string, string]},
-		'reset-data': {args: [{}]},
-		'connected': {args: [string], responseTo: 'connect'}
-	},
-	client: {
-		'get-data': {args: [string], expect: 'patch-data'},
-		'put-data': {args: [string, string], expect: 'patch-data'}
-	}
-}
-
-type ResponseTos2<Transmitters extends TransmitterMap> = {
-	[Key in keyof Transmitters]:
-		Transmitters[Key]['responseTo'] extends string ?
-			Transmitters[Key]['responseTo'] :
-			never
-}
-
-let t: API['server'][keyof ResponseTos2<API['server']>]['responseTo'] = {
-	'connected': 'connect'
-};
-
 /**
- * TODO
+ * Given a TransmitterMap, generates a type that is the union of all `responseTo` types within.  Based on:
+ * https://github.com/Microsoft/TypeScript/issues/23199#issuecomment-379323872
  */
-export type ResponseTos<Transmitters extends TransmitterMap> = Transmitters['connected' | 'reset-data']['responseTo'];
+type ResponseTos<T extends TransmitterMap> = {[K in keyof T]: T[K]['responseTo'] extends string ? T[K]['responseTo'] : never}[keyof T];
 
 /**
  * Describes all of the EventTransmitters within a server-client relationship.
