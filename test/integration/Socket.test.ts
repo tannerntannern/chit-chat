@@ -52,9 +52,32 @@ describe('SocketServer + SocketClient', function(){
 
 			expect(c.data).to.deep.equal({newKey: 'new value'});
 
-			await c.disconnect();
+			c.disconnect();
 		});
 
-		// TODO: ...
+		it('should be able to put data on the server', async function(){
+			await c.connect('http://localhost:3000', 'connected');
+
+			c.emit('put-data', 'keyFromClient', 'valueFromClient');
+			await s.blockEvent('put-data');
+			expect(s.data.keyFromClient).to.equal('valueFromClient');
+
+			await c.blockEvent('patch-data');
+			expect(c.data.keyFromClient).to.equal('valueFromClient');
+
+			c.disconnect();
+		});
+
+		it('should be able to get data from the server', async function(){
+			await c.connect('http://localhost:3000', 'connected');
+
+			s.data = {keyFromServer: 'valueFromServer'};
+			c.emit('get-data', 'keyFromServer');
+
+			await c.blockEvent('patch-data');
+			expect(c.data.keyFromServer).to.equal('valueFromServer');
+
+			c.disconnect();
+		});
 	});
 });
