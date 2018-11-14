@@ -8,6 +8,10 @@ var SocketClient = /** @class */ (function () {
          * Socket.io Socket instance for internal use.
          */
         this.socket = null;
+        /**
+         * @internal
+         */
+        this.waiters = {};
     }
     /**
      * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
@@ -19,10 +23,19 @@ var SocketClient = /** @class */ (function () {
             args[_i - 2] = arguments[_i];
         }
         var _a;
+        // Process the response if there is one
         var response = (_a = this.socketHandlers[event]).call.apply(_a, [ctx].concat(args));
         if (response) {
             this.emit.apply(this, [response.name].concat(response.args));
         }
+        // Process any waiters
+        var waiters = this.waiters[event];
+        if (waiters)
+            for (var _b = 0, waiters_1 = waiters; _b < waiters_1.length; _b++) {
+                var waiter = waiters_1[_b];
+                waiter();
+            }
+        this.waiters[event] = [];
     };
     /**
      * Sets up the socket handlers for the client.
@@ -53,7 +66,7 @@ var SocketClient = /** @class */ (function () {
      * Returns whether or not the client has an active socket connection.
      */
     SocketClient.prototype.isConnected = function () {
-        return this.socket && this.socket.connected;
+        return (this.socket !== null) && this.socket.connected;
     };
     /**
      * Returns the socket id if the client is connected.
@@ -65,38 +78,29 @@ var SocketClient = /** @class */ (function () {
             throw new Error('The client must first be connected to get the socket id');
     };
     /**
-     * Attempts to connect to a SocketServer.  Returns a Promise for when the process completes or fails.
+     * Attempts to connect to a SocketServer.
      */
-    SocketClient.prototype.connect = function (url, options) {
-        var _this = this;
+    SocketClient.prototype.connect = function (url, waitFor, options) {
         if (url === void 0) { url = ''; }
+        if (waitFor === void 0) { waitFor = null; }
         if (!options)
             options = {};
         Object.assign(options, {
             autoConnect: false
         });
-        return new Promise(function (resolve, reject) {
-            _this.socket = socketio(url, options);
-            _this.attachSocketHandlers();
-            _this.socket.io.open(function (err) {
-                if (err)
-                    reject(err);
-                else
-                    resolve();
-            });
-        });
+        this.socket = socketio(url, options);
+        this.attachSocketHandlers();
+        this.socket.open();
+        if (typeof waitFor === 'string')
+            return this.blockEvent(waitFor);
     };
     /**
      * Disconnects from the SocketServer, if there was a connection.
      */
     SocketClient.prototype.disconnect = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            if (_this.socket)
-                _this.socket.close();
-            _this.socket = null;
-            resolve();
-        });
+        if (this.socket)
+            this.socket.close();
+        this.socket = null;
     };
     /**
      * Emits an event to the connected SocketServer.  TypeScript ensures that the event adheres to the API description.
@@ -108,6 +112,17 @@ var SocketClient = /** @class */ (function () {
         }
         var _a;
         (_a = this.socket).emit.apply(_a, [event].concat(args));
+    };
+    /**
+     * Gives the ability to block and wait for an event.  Usage: `await client.blockEvent('some-event');`
+     */
+    SocketClient.prototype.blockEvent = function (event) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            if (!_this.waiters[event])
+                _this.waiters[event] = [];
+            _this.waiters[event].push(resolve);
+        });
     };
     return SocketClient;
 }());

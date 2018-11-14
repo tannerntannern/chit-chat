@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0-beta.0"></a>
+# [0.1.0-beta.0](https://github.com/tannerntannern/table-talk/compare/v0.1.0-alpha.3...v0.1.0-beta.0) (2018-11-14)
+
+
+### Bug Fixes
+
+* finally got the ResponseTos<T> type to work ([bc75da2](https://github.com/tannerntannern/table-talk/commit/bc75da2))
+* got EventHandlers working (basically) with the new `responseTo` feature ([095f85a](https://github.com/tannerntannern/table-talk/commit/095f85a))
+
+
+### Features
+
+* added a waitFor parameter to SocketClient#connect() to resolve connection issue ([f666770](https://github.com/tannerntannern/table-talk/commit/f666770))
+* added SocketClient#blockEvent(event) ([c013c52](https://github.com/tannerntannern/table-talk/commit/c013c52))
+* started work on the responseTo feature for socket interfaces ([3256c13](https://github.com/tannerntannern/table-talk/commit/3256c13))
+
+
+
 <a name="0.1.0-alpha.3"></a>
 # [0.1.0-alpha.3](https://github.com/tannerntannern/table-talk/compare/v0.1.0-alpha.2...v0.1.0-alpha.3) (2018-11-04)
 

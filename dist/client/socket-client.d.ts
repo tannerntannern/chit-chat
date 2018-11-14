@@ -20,6 +20,10 @@ export declare abstract class SocketClient<API extends SocketInterface> {
      */
     protected abstract socketHandlers: SocketHandlers<API, 'client', HandlerCtx<API>>;
     /**
+     * @internal
+     */
+    private waiters;
+    /**
      * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
      * proper event will automatically be emitted.
      */
@@ -37,15 +41,19 @@ export declare abstract class SocketClient<API extends SocketInterface> {
      */
     getSocketId(): string;
     /**
-     * Attempts to connect to a SocketServer.  Returns a Promise for when the process completes or fails.
+     * Attempts to connect to a SocketServer.
      */
-    connect(url?: string, options?: SocketIOClient.ConnectOpts): Promise<any>;
+    connect<WaitFor extends string | null>(url?: string, waitFor?: WaitFor, options?: SocketIOClient.ConnectOpts): WaitFor extends string ? Promise<any> : void;
     /**
      * Disconnects from the SocketServer, if there was a connection.
      */
-    disconnect(): Promise<any>;
+    disconnect(): void;
     /**
      * Emits an event to the connected SocketServer.  TypeScript ensures that the event adheres to the API description.
      */
     emit<Event extends keyof API['client']>(event: Event, ...args: API['client'][Event]['args']): void;
+    /**
+     * Gives the ability to block and wait for an event.  Usage: `await client.blockEvent('some-event');`
+     */
+    blockEvent<Event extends string>(event: Event): Promise<any>;
 }
