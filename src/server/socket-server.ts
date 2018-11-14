@@ -187,4 +187,4 @@ interface SocketServer<API extends SocketInterface> extends HttpServer, SocketMi
 
 export {
 	SocketServer
-}
+};
