@@ -1,7 +1,9 @@
 import * as http from 'http';
 import * as socketio from 'socket.io';
+import {MixinDecorator} from 'ts-mixer';
 import {HttpServer, HttpServerConfig} from './http-server';
 import {SocketHandlers, SocketInterface} from '../interface/socket-interface';
+import {SocketMixin} from '../lib/socket-mixin';
 
 /**
  * Defines how SocketServer may be configured.
@@ -23,7 +25,9 @@ export type HandlerCtx<API extends SocketInterface> = {
 /**
  * A simple SocketServer with an API protected by TypeScript.
  */
-export abstract class SocketServer<API extends SocketInterface> extends HttpServer {
+// @ts-ignore: It's ok to mix these abstract classes
+@MixinDecorator(SocketMixin)
+abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 	/**
 	 * Socket.io server instance for managing socket communication.
 	 */
@@ -72,15 +76,10 @@ export abstract class SocketServer<API extends SocketInterface> extends HttpServ
 	}
 
 	/**
-	 * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
-	 * proper event will automatically be emitted.
+	 * Handles a Response that requires a reply.
 	 */
-	protected handleEvent(ctx: HandlerCtx<API>, event: string, ...args) {
-		let response = this.socketHandlers[event].call(ctx, ...args);
-
-		if (response) {
-			this.emit(response.broadcast ? ctx.nsp : ctx.socket, response.name, ...response.args);
-		}
+	protected reply(ctx, response) {
+		this.emit(response.broadcast ? ctx.nsp : ctx.socket, response.name, ...response.args);
 	}
 
 	/**
@@ -182,4 +181,10 @@ export abstract class SocketServer<API extends SocketInterface> extends HttpServ
 	protected takedown() {
 		this.io = null;
 	}
+}
+
+interface SocketServer<API extends SocketInterface> extends HttpServer, SocketMixin<API, 'server'> {}
+
+export {
+	SocketServer
 }

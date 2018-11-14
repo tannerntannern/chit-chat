@@ -1,5 +1,6 @@
 import * as socketio from 'socket.io-client';
 import {SocketHandlers, SocketInterface} from '../interface/socket-interface';
+import {SocketMixin} from '../lib/socket-mixin';
 
 /**
  * Describes the shape of the `this` context that will be available in every SocketClient handler.
@@ -12,7 +13,7 @@ export type HandlerCtx<API extends SocketInterface> = {
 /**
  * Basic socket client that can be used in Node or in the browser.
  */
-export abstract class SocketClient<API extends SocketInterface> {
+export abstract class SocketClient<API extends SocketInterface> extends SocketMixin<API, 'client'> {
 	/**
 	 * Socket.io Socket instance for internal use.
 	 */
@@ -23,28 +24,6 @@ export abstract class SocketClient<API extends SocketInterface> {
 	 * SocketServer that implements the same API.
 	 */
 	protected abstract socketHandlers: SocketHandlers<API, 'client', HandlerCtx<API>>;
-
-	/**
-	 * @internal
-	 */
-	private waiters: {[event: string]: Function[]} = {};
-
-	/**
-	 * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
-	 * proper event will automatically be emitted.
-	 */
-	protected handleEvent(ctx: HandlerCtx<API>, event: string, ...args) {
-		// Process the response if there is one
-		let response = this.socketHandlers[event].call(ctx, ...args);
-		if (response) {
-			this.emit(response.name, ...response.args);
-		}
-
-		// Process any waiters
-		let waiters = this.waiters[event];
-		if (waiters) for (let waiter of waiters) waiter();
-		this.waiters[event] = [];
-	}
 
 	/**
 	 * Sets up the socket handlers for the client.
@@ -113,14 +92,9 @@ export abstract class SocketClient<API extends SocketInterface> {
 	}
 
 	/**
-	 * Gives the ability to block and wait for an event.  Usage: `await client.blockEvent('some-event');`
+	 * Handles a Response that requires a reply.
 	 */
-	public blockEvent<Event extends string>(event: Event): Promise<any> {
-		return new Promise((resolve, reject) => {
-			if (!this.waiters[<string>event])
-				this.waiters[<string>event] = [];
-
-			this.waiters[<string>event].push(resolve);
-		});
+	protected reply(ctx, response) {
+		this.socket.emit(response.name, ...response.args);
 	}
 }

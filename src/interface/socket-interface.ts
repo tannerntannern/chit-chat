@@ -1,7 +1,12 @@
 /**
  * Where socket handlers can reside -- either on the server or the client.
  */
-type SocketLocation = 'server' | 'client';
+export type SocketLocation = 'server' | 'client';
+
+/**
+ * Given a SocketLocation, generates the opposite SocketLocation.
+ */
+export type OtherLocation<L extends SocketLocation> = L extends 'server' ? 'client' : 'server';
 
 /**
  * Describes a transmittable event on either the client or the server.  Each one may specify its argument types with a
@@ -108,6 +113,4 @@ type EventHandlers<T extends TransmitterMap, RT extends TransmitterMap, L extend
  * Utility type for generating EventHandlers given a SocketInterface and a SocketLocation.
  */
 export type SocketHandlers<TS extends SocketInterface, SL extends SocketLocation, HandlerContext> =
-	SL extends 'server' ?
-		EventHandlers<TS['server'], TS['client'], SL, HandlerContext> :
-		EventHandlers<TS['client'], TS['server'], SL, HandlerContext>;
+	EventHandlers<TS[SL], TS[OtherLocation<SL>], SL, HandlerContext>;
