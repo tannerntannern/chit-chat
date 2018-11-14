@@ -3,6 +3,7 @@ import * as http from 'http';
 import * as socketio from 'socket.io';
 import { HttpServer, HttpServerConfig } from './http-server';
 import { SocketHandlers, SocketInterface } from '../interface/socket-interface';
+import { SocketMixin } from '../lib/socket-mixin';
 /**
  * Defines how SocketServer may be configured.
  */
@@ -21,7 +22,7 @@ export declare type HandlerCtx<API extends SocketInterface> = {
 /**
  * A simple SocketServer with an API protected by TypeScript.
  */
-export declare abstract class SocketServer<API extends SocketInterface> extends HttpServer {
+declare abstract class SocketServer<API extends SocketInterface> extends HttpServer {
     /**
      * Socket.io server instance for managing socket communication.
      */
@@ -48,10 +49,9 @@ export declare abstract class SocketServer<API extends SocketInterface> extends 
      */
     emit<Event extends keyof API['server']>(target: socketio.Namespace | socketio.Socket, event: Event, ...args: API['server'][Event]['args']): void;
     /**
-     * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
-     * proper event will automatically be emitted.
+     * Handles a Response that requires a reply.
      */
-    protected handleEvent(ctx: HandlerCtx<API>, event: string, ...args: any[]): void;
+    protected reply(ctx: any, response: any): void;
     /**
      * Sets up the socket handlers for the given namespace.
      */
@@ -77,3 +77,6 @@ export declare abstract class SocketServer<API extends SocketInterface> extends 
      */
     protected takedown(): void;
 }
+interface SocketServer<API extends SocketInterface> extends HttpServer, SocketMixin<API, 'server'> {
+}
+export { SocketServer };

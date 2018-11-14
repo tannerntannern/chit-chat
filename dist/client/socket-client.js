@@ -1,42 +1,31 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 import * as socketio from 'socket.io-client';
+import { SocketMixin } from '../lib/socket-mixin';
 /**
  * Basic socket client that can be used in Node or in the browser.
  */
-var SocketClient = /** @class */ (function () {
+var SocketClient = /** @class */ (function (_super) {
+    __extends(SocketClient, _super);
     function SocketClient() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
         /**
          * Socket.io Socket instance for internal use.
          */
-        this.socket = null;
-        /**
-         * @internal
-         */
-        this.waiters = {};
+        _this.socket = null;
+        return _this;
     }
-    /**
-     * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
-     * proper event will automatically be emitted.
-     */
-    SocketClient.prototype.handleEvent = function (ctx, event) {
-        var args = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-            args[_i - 2] = arguments[_i];
-        }
-        var _a;
-        // Process the response if there is one
-        var response = (_a = this.socketHandlers[event]).call.apply(_a, [ctx].concat(args));
-        if (response) {
-            this.emit.apply(this, [response.name].concat(response.args));
-        }
-        // Process any waiters
-        var waiters = this.waiters[event];
-        if (waiters)
-            for (var _b = 0, waiters_1 = waiters; _b < waiters_1.length; _b++) {
-                var waiter = waiters_1[_b];
-                waiter();
-            }
-        this.waiters[event] = [];
-    };
     /**
      * Sets up the socket handlers for the client.
      */
@@ -114,16 +103,12 @@ var SocketClient = /** @class */ (function () {
         (_a = this.socket).emit.apply(_a, [event].concat(args));
     };
     /**
-     * Gives the ability to block and wait for an event.  Usage: `await client.blockEvent('some-event');`
+     * Handles a Response that requires a reply.
      */
-    SocketClient.prototype.blockEvent = function (event) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            if (!_this.waiters[event])
-                _this.waiters[event] = [];
-            _this.waiters[event].push(resolve);
-        });
+    SocketClient.prototype.reply = function (ctx, response) {
+        var _a;
+        (_a = this.socket).emit.apply(_a, [response.name].concat(response.args));
     };
     return SocketClient;
-}());
+}(SocketMixin));
 export { SocketClient };

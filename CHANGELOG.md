@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0-beta.1"></a>
+# [0.1.0-beta.1](https://github.com/tannerntannern/table-talk/compare/v0.1.0-beta.0...v0.1.0-beta.1) (2018-11-14)
+
+
+### Bug Fixes
+
+* fixed lint error ([4290610](https://github.com/tannerntannern/table-talk/commit/4290610))
+
+
+
 <a name="0.1.0-beta.0"></a>
 # [0.1.0-beta.0](https://github.com/tannerntannern/table-talk/compare/v0.1.0-alpha.3...v0.1.0-beta.0) (2018-11-14)
 

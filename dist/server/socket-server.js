@@ -11,11 +11,20 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 import * as socketio from 'socket.io';
+import { MixinDecorator } from 'ts-mixer';
 import { HttpServer } from './http-server';
+import { SocketMixin } from '../lib/socket-mixin';
 /**
  * A simple SocketServer with an API protected by TypeScript.
  */
+// @ts-ignore: It's ok to mix these abstract classes
 var SocketServer = /** @class */ (function (_super) {
     __extends(SocketServer, _super);
     /**
@@ -58,19 +67,10 @@ var SocketServer = /** @class */ (function (_super) {
         target.emit.apply(target, [event].concat(args));
     };
     /**
-     * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
-     * proper event will automatically be emitted.
+     * Handles a Response that requires a reply.
      */
-    SocketServer.prototype.handleEvent = function (ctx, event) {
-        var args = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-            args[_i - 2] = arguments[_i];
-        }
-        var _a;
-        var response = (_a = this.socketHandlers[event]).call.apply(_a, [ctx].concat(args));
-        if (response) {
-            this.emit.apply(this, [response.broadcast ? ctx.nsp : ctx.socket, response.name].concat(response.args));
-        }
+    SocketServer.prototype.reply = function (ctx, response) {
+        this.emit.apply(this, [response.broadcast ? ctx.nsp : ctx.socket, response.name].concat(response.args));
     };
     /**
      * Sets up the socket handlers for the given namespace.
@@ -163,6 +163,9 @@ var SocketServer = /** @class */ (function (_super) {
     SocketServer.prototype.takedown = function () {
         this.io = null;
     };
+    SocketServer = __decorate([
+        MixinDecorator(SocketMixin)
+    ], SocketServer);
     return SocketServer;
 }(HttpServer));
 export { SocketServer };

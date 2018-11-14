@@ -76,12 +76,13 @@
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-not-exported"><a href="_interface_socket_interface_.html#eventhandlers" class="tsd-kind-icon">Event<wbr>Handlers</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported"><a href="_interface_socket_interface_.html#eventtransmitter" class="tsd-kind-icon">Event<wbr>Transmitter</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-not-exported"><a href="_interface_socket_interface_.html#generictransmitterresponse" class="tsd-kind-icon">Generic<wbr>Transmitter<wbr>Response</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_interface_socket_interface_.html#otherlocation" class="tsd-kind-icon">Other<wbr>Location</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-not-exported"><a href="_interface_socket_interface_.html#remotetransmitterresponse" class="tsd-kind-icon">Remote<wbr>Transmitter<wbr>Response</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_interface_socket_interface_.html#response" class="tsd-kind-icon">Response</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-not-exported"><a href="_interface_socket_interface_.html#responsetos" class="tsd-kind-icon">Response<wbr>Tos</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_interface_socket_interface_.html#sockethandlers" class="tsd-kind-icon">Socket<wbr>Handlers</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_interface_socket_interface_.html#socketinterface" class="tsd-kind-icon">Socket<wbr>Interface</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported"><a href="_interface_socket_interface_.html#socketlocation" class="tsd-kind-icon">Socket<wbr>Location</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_interface_socket_interface_.html#socketlocation" class="tsd-kind-icon">Socket<wbr>Location</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported"><a href="_interface_socket_interface_.html#transmittermap" class="tsd-kind-icon">Transmitter<wbr>Map</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-not-exported"><a href="_interface_socket_interface_.html#transmitterwithresponseto" class="tsd-kind-icon">Transmitter<wbr>With<wbr>Response<wbr>To</a></li>
 							</ul>
@@ -97,7 +98,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Handlers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6a39ffc/src/interface/socket-interface.ts#L95">interface/socket-interface.ts:95</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L100">interface/socket-interface.ts:100</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -116,7 +117,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Transmitter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6a39ffc/src/interface/socket-interface.ts#L14">interface/socket-interface.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L19">interface/socket-interface.ts:19</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -151,12 +152,27 @@
 					<div class="tsd-signature tsd-kind-icon">Generic<wbr>Transmitter<wbr>Response<span class="tsd-signature-symbol">:</span> <a href="_interface_socket_interface_.html#response" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Extract</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">keyof T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">L</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6a39ffc/src/interface/socket-interface.ts#L73">interface/socket-interface.ts:73</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L78">interface/socket-interface.ts:78</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Generic Response, given a TransmitterMap and a SocketLocation.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
+					<a name="otherlocation" class="tsd-anchor"></a>
+					<h3>Other<wbr>Location</h3>
+					<div class="tsd-signature tsd-kind-icon">Other<wbr>Location<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OtherLocation&lt;L&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L9">interface/socket-interface.ts:9</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Given a SocketLocation, generates the opposite SocketLocation.</p>
 						</div>
 					</div>
 				</section>
@@ -166,7 +182,7 @@
 					<div class="tsd-signature tsd-kind-icon">Remote<wbr>Transmitter<wbr>Response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RemoteTransmitterResponse&lt;RT, T, L&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6a39ffc/src/interface/socket-interface.ts#L80">interface/socket-interface.ts:80</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L85">interface/socket-interface.ts:85</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -182,7 +198,7 @@
 					<div class="tsd-signature tsd-kind-icon">Response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">L extends &quot;server&quot; ? { broadcast?: boolean; } : {}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6a39ffc/src/interface/socket-interface.ts#L63">interface/socket-interface.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L68">interface/socket-interface.ts:68</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -197,7 +213,7 @@
 					<div class="tsd-signature tsd-kind-icon">Response<wbr>Tos<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">{ [K in keyof T]: T[K][&quot;responseTo&quot;] extends string ? T[K][&quot;responseTo&quot;] : never; }[keyof T]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6a39ffc/src/interface/socket-interface.ts#L50">interface/socket-interface.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L55">interface/socket-interface.ts:55</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -218,10 +234,10 @@ type EventsOfInterest = ResponseTos&lt;MyTransmitterMap&gt;;</code></pre>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
 					<a name="sockethandlers" class="tsd-anchor"></a>
 					<h3>Socket<wbr>Handlers</h3>
-					<div class="tsd-signature tsd-kind-icon">Socket<wbr>Handlers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SocketHandlers&lt;TS, SL, HandlerContext&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">Socket<wbr>Handlers<span class="tsd-signature-symbol">:</span> <a href="_interface_socket_interface_.html#eventhandlers" class="tsd-signature-type">EventHandlers</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TS[SL]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TS[OtherLocation&lt;SL&gt;]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">SL</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">HandlerContext</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6a39ffc/src/interface/socket-interface.ts#L110">interface/socket-interface.ts:110</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L115">interface/socket-interface.ts:115</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -236,7 +252,7 @@ type EventsOfInterest = ResponseTos&lt;MyTransmitterMap&gt;;</code></pre>
 					<div class="tsd-signature tsd-kind-icon">Socket<wbr>Interface<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6a39ffc/src/interface/socket-interface.ts#L55">interface/socket-interface.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L60">interface/socket-interface.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -256,13 +272,13 @@ type EventsOfInterest = ResponseTos&lt;MyTransmitterMap&gt;;</code></pre>
 						</ul>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
 					<a name="socketlocation" class="tsd-anchor"></a>
 					<h3>Socket<wbr>Location</h3>
 					<div class="tsd-signature tsd-kind-icon">Socket<wbr>Location<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"server"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"client"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6a39ffc/src/interface/socket-interface.ts#L4">interface/socket-interface.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L4">interface/socket-interface.ts:4</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -277,7 +293,7 @@ type EventsOfInterest = ResponseTos&lt;MyTransmitterMap&gt;;</code></pre>
 					<div class="tsd-signature tsd-kind-icon">Transmitter<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6a39ffc/src/interface/socket-interface.ts#L20">interface/socket-interface.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L25">interface/socket-interface.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -301,7 +317,7 @@ type EventsOfInterest = ResponseTos&lt;MyTransmitterMap&gt;;</code></pre>
 					<div class="tsd-signature tsd-kind-icon">Transmitter<wbr>With<wbr>Response<wbr>To<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Extract</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">{ [K in keyof T]: T[K][&quot;responseTo&quot;] extends ResponseTo ? K : never; }[keyof T]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/6a39ffc/src/interface/socket-interface.ts#L34">interface/socket-interface.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/socket-interface.ts#L39">interface/socket-interface.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -345,6 +361,9 @@ type EventsOfInterest = ResponseTos&lt;MyTransmitterMap&gt;;</code></pre>
 						<a href="_interface_socket_interface_.html">"interface/socket-<wbr>interface"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="_lib_socket_mixin_.html">"lib/socket-<wbr>mixin"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="_lib_util_.html">"lib/util"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -372,6 +391,9 @@ type EventsOfInterest = ResponseTos&lt;MyTransmitterMap&gt;;</code></pre>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-not-exported">
 						<a href="_interface_socket_interface_.html#generictransmitterresponse" class="tsd-kind-icon">Generic<wbr>Transmitter<wbr>Response</a>
 					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="_interface_socket_interface_.html#otherlocation" class="tsd-kind-icon">Other<wbr>Location</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-not-exported">
 						<a href="_interface_socket_interface_.html#remotetransmitterresponse" class="tsd-kind-icon">Remote<wbr>Transmitter<wbr>Response</a>
 					</li>
@@ -387,7 +409,7 @@ type EventsOfInterest = ResponseTos&lt;MyTransmitterMap&gt;;</code></pre>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
 						<a href="_interface_socket_interface_.html#socketinterface" class="tsd-kind-icon">Socket<wbr>Interface</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
 						<a href="_interface_socket_interface_.html#socketlocation" class="tsd-kind-icon">Socket<wbr>Location</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">

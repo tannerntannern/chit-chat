@@ -1,4 +1,5 @@
 import { SocketHandlers, SocketInterface } from '../interface/socket-interface';
+import { SocketMixin } from '../lib/socket-mixin';
 /**
  * Describes the shape of the `this` context that will be available in every SocketClient handler.
  */
@@ -9,7 +10,7 @@ export declare type HandlerCtx<API extends SocketInterface> = {
 /**
  * Basic socket client that can be used in Node or in the browser.
  */
-export declare abstract class SocketClient<API extends SocketInterface> {
+export declare abstract class SocketClient<API extends SocketInterface> extends SocketMixin<API, 'client'> {
     /**
      * Socket.io Socket instance for internal use.
      */
@@ -19,15 +20,6 @@ export declare abstract class SocketClient<API extends SocketInterface> {
      * SocketServer that implements the same API.
      */
     protected abstract socketHandlers: SocketHandlers<API, 'client', HandlerCtx<API>>;
-    /**
-     * @internal
-     */
-    private waiters;
-    /**
-     * Processes an incoming event with the appropriate socketHandler.  If the handler returns an EventResponse, the
-     * proper event will automatically be emitted.
-     */
-    protected handleEvent(ctx: HandlerCtx<API>, event: string, ...args: any[]): void;
     /**
      * Sets up the socket handlers for the client.
      */
@@ -53,7 +45,7 @@ export declare abstract class SocketClient<API extends SocketInterface> {
      */
     emit<Event extends keyof API['client']>(event: Event, ...args: API['client'][Event]['args']): void;
     /**
-     * Gives the ability to block and wait for an event.  Usage: `await client.blockEvent('some-event');`
+     * Handles a Response that requires a reply.
      */
-    blockEvent<Event extends string>(event: Event): Promise<any>;
+    protected reply(ctx: any, response: any): void;
 }
