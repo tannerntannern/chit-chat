@@ -47,7 +47,7 @@ export class Client extends SocketClient<API> {
 
 	protected socketHandlers: SocketHandlers<API, "client", ClientCtx<API>> = {
 		'connected': (id: string) => {
-			console.log(id, 'has connected!');
+			// console.log(id, 'has connected!');
 		},
 		'patch-data': (key: string, value: string) => {
 			this.data[key] = value;

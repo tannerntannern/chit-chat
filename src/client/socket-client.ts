@@ -81,33 +81,28 @@ export abstract class SocketClient<API extends SocketInterface> {
 	}
 
 	/**
-	 * Attempts to connect to a SocketServer.  Returns a Promise for when the process completes or fails.
+	 * Attempts to connect to a SocketServer.
 	 */
-	public connect(url: string = '', options?: SocketIOClient.ConnectOpts): Promise<any> {
+	public connect<WaitFor extends string | null>(url: string = '', waitFor: WaitFor = null, options?: SocketIOClient.ConnectOpts): WaitFor extends string ? Promise<any> : void {
 		if (!options) options = {};
 		Object.assign(options, {
 			autoConnect: false
 		});
 
-		return new Promise<any>((resolve, reject) => {
-			this.socket = socketio(url, options);
-			this.attachSocketHandlers();
-			this.socket.io.open((err?) => {
-				if (err) reject(err);
-				else resolve();
-			});
-		});
+		this.socket = socketio(url, options);
+		this.attachSocketHandlers();
+		this.socket.open();
+
+		if (typeof waitFor === 'string')
+			return <any>this.blockEvent(waitFor);
 	}
 
 	/**
 	 * Disconnects from the SocketServer, if there was a connection.
 	 */
-	public disconnect(): Promise<any> {
-		return new Promise<any>((resolve, reject) => {
-			if (this.socket) this.socket.close();
-			this.socket = null;
-			resolve();
-		});
+	public disconnect() {
+		if (this.socket) this.socket.close();
+		this.socket = null;
 	}
 
 	/**
@@ -120,7 +115,7 @@ export abstract class SocketClient<API extends SocketInterface> {
 	/**
 	 * Gives the ability to block and wait for an event.  Usage: `await client.blockEvent('some-event');`
 	 */
-	public blockEvent<Event extends keyof API['client']>(event: Event): Promise<any> {
+	public blockEvent<Event extends string>(event: Event): Promise<any> {
 		return new Promise((resolve, reject) => {
 			if (!this.waiters[<string>event])
 				this.waiters[<string>event] = [];
