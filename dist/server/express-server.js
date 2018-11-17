@@ -67,11 +67,11 @@ var ExpressServer = /** @class */ (function (_super) {
         // Init the handlers
         var that = this;
         var _loop_1 = function (methodName) {
-            var methodGroup = this_1.httpHandlers[methodName];
+            var methodGroup = this_1.httpHandlers[methodName], argsKey = (methodName === 'put' || methodName === 'post' || methodName === 'patch') ? 'body' : 'query';
             var _loop_2 = function (handlerName) {
-                app[methodName](handlerName, function (req, res, next) {
+                app[methodName](handlerName, function (req, res) {
                     var handler = methodGroup[handlerName], ctx = { req: req, res: res, server: that };
-                    var response = handler.call(ctx, req.body);
+                    var response = handler.call(ctx, req[argsKey]);
                     res.send(response);
                 });
             };

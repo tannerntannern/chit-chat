@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { HttpInterface, MethodWithArgs, MethodWithoutArgs } from '../interface/http-interface';
+import { HttpInterface, Methods } from '../interface/http-interface';
 /**
  * Basic AJAX class than can be used in Node or the browser.  Essentially just wraps around some axios methods and
  * provides the proper typing based on the given HttpInterface, so that no requests are malformed.
@@ -16,22 +16,20 @@ export declare class ExpressClient<API extends HttpInterface> {
     /**
      * General HTTP request method.
      */
-    request<M extends MethodWithArgs | MethodWithoutArgs, EP extends keyof API[M]>(endpoint: EP, config: AxiosRequestConfig & {
+    request<M extends Methods, EP extends keyof API[M]>(endpoint: EP, config: AxiosRequestConfig & {
         method: M;
-        data?: M extends MethodWithArgs ? API[M][EP]['args'] : any;
+        data?: API[M][EP]['args'];
     }): Promise<API[M][EP]['return']>;
     /**
-     * Sends a GET request to the given endpoint.
+     * Sends a GET request to the given endpoint.  Note that since GET requests cannot have a body, the args are passed
+     * as query parameters.
      */
-    get<EP extends keyof API['get']>(endpoint: EP, config?: AxiosRequestConfig): Promise<API['get'][EP]['return']>;
+    get<EP extends keyof API['get']>(endpoint: EP, args: API['get'][EP]['args'], config?: AxiosRequestConfig): Promise<API['get'][EP]['return']>;
     /**
-     * Sends a DELETE request to the given endpoint.
+     * Sends a DELETE request to the given endpoint.  Note that since DELETE requests cannot have a body, the args are
+     * passed as query parameters.
      */
-    delete<EP extends keyof API['delete']>(endpoint: EP, config?: AxiosRequestConfig): Promise<API['delete'][EP]['return']>;
-    /**
-     * Sends a HEAD request to the given endpoint.
-     */
-    head<EP extends keyof API['head']>(endpoint: EP, config?: AxiosRequestConfig): Promise<API['head'][EP]['return']>;
+    delete<EP extends keyof API['delete']>(endpoint: EP, args: API['delete'][EP]['args'], config?: AxiosRequestConfig): Promise<API['delete'][EP]['return']>;
     /**
      * Sends a POST request to the given endpoint with the given arguments.
      */

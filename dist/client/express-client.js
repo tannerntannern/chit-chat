@@ -21,22 +21,24 @@ var ExpressClient = /** @class */ (function () {
         return axios.request(config);
     };
     /**
-     * Sends a GET request to the given endpoint.
+     * Sends a GET request to the given endpoint.  Note that since GET requests cannot have a body, the args are passed
+     * as query parameters.
      */
-    ExpressClient.prototype.get = function (endpoint, config) {
+    ExpressClient.prototype.get = function (endpoint, args, config) {
+        if (config === undefined)
+            config = {};
+        config.params = args;
         return axios.get(this.host + endpoint, config);
     };
     /**
-     * Sends a DELETE request to the given endpoint.
+     * Sends a DELETE request to the given endpoint.  Note that since DELETE requests cannot have a body, the args are
+     * passed as query parameters.
      */
-    ExpressClient.prototype.delete = function (endpoint, config) {
+    ExpressClient.prototype.delete = function (endpoint, args, config) {
+        if (config === undefined)
+            config = {};
+        config.params = args;
         return axios.delete(this.host + endpoint, config);
-    };
-    /**
-     * Sends a HEAD request to the given endpoint.
-     */
-    ExpressClient.prototype.head = function (endpoint, config) {
-        return axios.head(this.host + endpoint, config);
     };
     /**
      * Sends a POST request to the given endpoint with the given arguments.

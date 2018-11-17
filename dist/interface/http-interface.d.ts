@@ -1,46 +1,38 @@
-import { ObjectOf } from '../lib/util';
 /**
- * Describes the most basic kind of Endpoint.  Essentially just specifies a return type.
+ * Describes the components of an endpoint.
  */
 declare type Endpoint = {
     return: any;
+    args?: {
+        [key: string]: any;
+    };
 };
-/**
- * Describes a slightly more complex kind of Endpoint, which has the ability to specify arguments.
- */
-declare type EndpointWithArgs = Endpoint & {
-    args?: object;
-};
-/**
- * Defines which HTTP methods don't accept extra arguments.
- */
-export declare type MethodWithoutArgs = 'get' | 'delete' | 'head';
-/**
- * Defines with HTTP methods do accept extra arguments.
- */
-export declare type MethodWithArgs = 'post' | 'put' | 'patch';
 /**
  * All supported HTTP methods.
  */
-export declare type Method = MethodWithArgs | MethodWithoutArgs;
+export declare type Methods = 'get' | 'delete' | 'post' | 'put' | 'patch';
 /**
- * Defines the format for an HttpInterface.
+ * Defines the format for an HttpInterface; a collection of endpoints, grouped by method.
  */
 export declare type HttpInterface = {
-    [Method in MethodWithArgs]?: ObjectOf<EndpointWithArgs>;
-} & {
-    [Method in MethodWithoutArgs]?: ObjectOf<Endpoint>;
+    [Mthd in Methods]?: {
+        [route: string]: Endpoint;
+    };
 };
 /**
  * Utility type for generating http handlers given an HttpInterface.
  */
 export declare type HttpHandlers<API extends HttpInterface, HandlerCtx> = {
-    [Method in keyof API]: {
-        [EP in keyof API[Method]]: API[Method] extends MethodWithoutArgs ? (this: HandlerCtx) => API[Method][EP]['return'] : (this: HandlerCtx, data: API[Method][EP]['args']) => API[Method][EP]['return'];
+    [Mthd in keyof API]: {
+        [EndPt in keyof API[Mthd]]: API[Mthd][EndPt]['args'] extends {
+            [key: string]: any;
+        } ? (this: HandlerCtx, data: API[Mthd][EndPt]['args']) => API[Mthd][EndPt]['return'] : (this: HandlerCtx) => API[Mthd][EndPt]['return'];
     };
 } & {
-    [M in Method]?: {
-        [extraHandler: string]: (this: HandlerCtx, data?: object) => any;
+    [Mthd in Methods]?: {
+        [extraHandler: string]: (this: HandlerCtx, args?: {
+            [key: string]: any;
+        }) => any;
     };
 };
 export {};

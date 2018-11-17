@@ -74,12 +74,9 @@
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported"><a href="_interface_http_interface_.html#endpoint" class="tsd-kind-icon">Endpoint</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported"><a href="_interface_http_interface_.html#endpointwithargs" class="tsd-kind-icon">Endpoint<wbr>With<wbr>Args</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_interface_http_interface_.html#httphandlers" class="tsd-kind-icon">Http<wbr>Handlers</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_interface_http_interface_.html#httpinterface" class="tsd-kind-icon">Http<wbr>Interface</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_interface_http_interface_.html#method" class="tsd-kind-icon">Method</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_interface_http_interface_.html#methodwithargs" class="tsd-kind-icon">Method<wbr>With<wbr>Args</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_interface_http_interface_.html#methodwithoutargs" class="tsd-kind-icon">Method<wbr>Without<wbr>Args</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_interface_http_interface_.html#methods" class="tsd-kind-icon">Methods</a></li>
 							</ul>
 						</section>
 					</div>
@@ -93,36 +90,29 @@
 					<div class="tsd-signature tsd-kind-icon">Endpoint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/http-interface.ts#L6">interface/http-interface.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/d235335/src/interface/http-interface.ts#L4">interface/http-interface.ts:4</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Describes the most basic kind of Endpoint.  Essentially just specifies a return type.</p>
+							<p>Describes the components of an endpoint.</p>
 						</div>
 					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> args<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span></h5>
+								<ul class="tsd-parameters">
+									<li class="tsd-parameter-index-signature">
+										<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></h5>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
 								<h5>return<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></h5>
 							</li>
 						</ul>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="endpointwithargs" class="tsd-anchor"></a>
-					<h3>Endpoint<wbr>With<wbr>Args</h3>
-					<div class="tsd-signature tsd-kind-icon">Endpoint<wbr>With<wbr>Args<span class="tsd-signature-symbol">:</span> <a href="_interface_http_interface_.html#endpoint" class="tsd-signature-type">Endpoint</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/http-interface.ts#L11">interface/http-interface.ts:11</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Describes a slightly more complex kind of Endpoint, which has the ability to specify arguments.</p>
-						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
@@ -131,7 +121,7 @@
 					<div class="tsd-signature tsd-kind-icon">Http<wbr>Handlers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/http-interface.ts#L38">interface/http-interface.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/d235335/src/interface/http-interface.ts#L23">interface/http-interface.ts:23</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -143,60 +133,35 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
 					<a name="httpinterface" class="tsd-anchor"></a>
 					<h3>Http<wbr>Interface</h3>
-					<div class="tsd-signature tsd-kind-icon">Http<wbr>Interface<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></div>
+					<div class="tsd-signature tsd-kind-icon">Http<wbr>Interface<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/http-interface.ts#L31">interface/http-interface.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/d235335/src/interface/http-interface.ts#L14">interface/http-interface.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Defines the format for an HttpInterface.</p>
+							<p>Defines the format for an HttpInterface; a collection of endpoints, grouped by method.</p>
 						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
-					<a name="method" class="tsd-anchor"></a>
-					<h3>Method</h3>
-					<div class="tsd-signature tsd-kind-icon">Method<span class="tsd-signature-symbol">:</span> <a href="_interface_http_interface_.html#methodwithargs" class="tsd-signature-type">MethodWithArgs</a><span class="tsd-signature-symbol"> | </span><a href="_interface_http_interface_.html#methodwithoutargs" class="tsd-signature-type">MethodWithoutArgs</a></div>
+					<a name="methods" class="tsd-anchor"></a>
+					<h3>Methods</h3>
+					<div class="tsd-signature tsd-kind-icon">Methods<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"get"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"post"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"put"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"patch"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/http-interface.ts#L26">interface/http-interface.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/d235335/src/interface/http-interface.ts#L9">interface/http-interface.ts:9</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>All supported HTTP methods.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
-					<a name="methodwithargs" class="tsd-anchor"></a>
-					<h3>Method<wbr>With<wbr>Args</h3>
-					<div class="tsd-signature tsd-kind-icon">Method<wbr>With<wbr>Args<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"post"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"put"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"patch"</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/http-interface.ts#L21">interface/http-interface.ts:21</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Defines with HTTP methods do accept extra arguments.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
-					<a name="methodwithoutargs" class="tsd-anchor"></a>
-					<h3>Method<wbr>Without<wbr>Args</h3>
-					<div class="tsd-signature tsd-kind-icon">Method<wbr>Without<wbr>Args<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"get"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"head"</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/4290610/src/interface/http-interface.ts#L16">interface/http-interface.ts:16</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Defines which HTTP methods don&#39;t accept extra arguments.</p>
 						</div>
 					</div>
 				</section>
@@ -251,9 +216,6 @@
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_interface_http_interface_.html#endpoint" class="tsd-kind-icon">Endpoint</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_interface_http_interface_.html#endpointwithargs" class="tsd-kind-icon">Endpoint<wbr>With<wbr>Args</a>
-					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="_interface_http_interface_.html#httphandlers" class="tsd-kind-icon">Http<wbr>Handlers</a>
 					</li>
@@ -261,13 +223,7 @@
 						<a href="_interface_http_interface_.html#httpinterface" class="tsd-kind-icon">Http<wbr>Interface</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="_interface_http_interface_.html#method" class="tsd-kind-icon">Method</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="_interface_http_interface_.html#methodwithargs" class="tsd-kind-icon">Method<wbr>With<wbr>Args</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="_interface_http_interface_.html#methodwithoutargs" class="tsd-kind-icon">Method<wbr>Without<wbr>Args</a>
+						<a href="_interface_http_interface_.html#methods" class="tsd-kind-icon">Methods</a>
 					</li>
 				</ul>
 			</nav>
