@@ -37,28 +37,4 @@ describe('ExpressServer', function(){
 			await s.stop();
 		});
 	});
-
-	describe('Using an API', function(){
-		beforeEach(async () => {
-			await s.start();
-		});
-
-		afterEach(async () => {
-			await s.stop();
-		});
-
-		it('should pass a basic ping-pong test', async function(){
-			expect((await axios.get('http://localhost:3000/ping')).data).to.equal('pong');
-		});
-
-		it('should be able to use PUT /data and GET /data to modify and view data on the server', async function(){
-			expect(s.internalData).to.equal('default');
-			expect((await axios.get('http://localhost:3000/data')).data).to.equal('default');
-
-			await axios.put('http://localhost:3000/data', {value: 'test-data'});
-
-			expect(s.internalData).to.equal('test-data');
-			expect((await axios.get('http://localhost:3000/data')).data).to.equal('test-data');
-		});
-	});
 });
