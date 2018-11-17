@@ -86,13 +86,15 @@ export abstract class ExpressServer<API extends HttpInterface> extends HttpServe
 		// Init the handlers
 		let that = this;
 		for (let methodName in this.httpHandlers){
-			let methodGroup = this.httpHandlers[methodName];
+			let methodGroup = this.httpHandlers[methodName],
+				argsKey = (methodName === 'put' || methodName === 'post' || methodName === 'patch') ? 'body' : 'query';
+
 			for (let handlerName in methodGroup) {
-				(<any>app)[methodName](handlerName, function(req, res, next) {
+				(<any>app)[methodName](handlerName, function(req, res) {
 					let handler = methodGroup[handlerName],
 						ctx: HandlerCtx<API> = { req: req, res: res, server: that };
 
-					let response = handler.call(ctx, req.body);
+					let response = handler.call(ctx, req[argsKey]);
 
 					res.send(response);
 				});
