@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/tannerntannern/table-talk/compare/v0.1.0...v0.2.0) (2018-11-18)
+
+
+### Features
+
+* exposed more types from the servers and interfaces ([837a8ac](https://github.com/tannerntannern/table-talk/commit/837a8ac))
+
+
+
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/tannerntannern/table-talk/compare/v0.1.0-beta.2...v0.1.0) (2018-11-18)
 
