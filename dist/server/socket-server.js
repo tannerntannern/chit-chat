@@ -65,6 +65,7 @@ var SocketServer = /** @class */ (function (_super) {
             args[_i - 2] = arguments[_i];
         }
         target.emit.apply(target, [event].concat(args));
+        return this;
     };
     /**
      * Handles a Response that requires a reply.
@@ -130,6 +131,7 @@ var SocketServer = /** @class */ (function (_super) {
         var nsp = this.io.of(namespaceName);
         this.config.namespaceConfig(nsp, this);
         this.attachSocketHandlers(nsp);
+        return this;
     };
     /**
      * Removes a namespace from the socket server.
@@ -147,6 +149,7 @@ var SocketServer = /** @class */ (function (_super) {
         });
         nsp.removeAllListeners();
         delete this.io.nsps[namespaceName];
+        return this;
     };
     /**
      * Attaches a socket.io server to the internal Node http server.

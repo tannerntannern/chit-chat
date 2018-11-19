@@ -1,3 +1,5 @@
+import { HandlerCtx } from '../server/socket-server';
+import * as socketio from 'socket.io';
 /**
  * Where socket handlers can reside -- either on the server or the client.
  */
@@ -5,7 +7,7 @@ export declare type SocketLocation = 'server' | 'client';
 /**
  * Given a SocketLocation, generates the opposite SocketLocation.
  */
-export declare type OtherLocation<L extends SocketLocation> = L extends 'server' ? 'client' : 'server';
+declare type OpLoc<L extends SocketLocation> = L extends 'server' ? 'client' : 'server';
 /**
  * Describes a transmittable event on either the client or the server.  Each one may specify its argument types with a
  * tuple, the name of the event it expects to receive as a response, and optionally the name of the event for which the
@@ -89,15 +91,21 @@ declare type RemoteTransmitterResponse<RT extends EventTransmitter, T extends Tr
  * remote transmitter.  Furthermore, if that remote transmitter expects a response from a local transmitter called
  * 'give-data', then the event handler must respond with that transmitter and the arguments specified by it.
  */
-declare type EventHandlers<T extends TransmitterMap, RT extends TransmitterMap, L extends SocketLocation, CTX> = {
-    [E in keyof RT]: (this: CTX, ...args: RT[E]['args']) => RemoteTransmitterResponse<RT[E], T, L>;
+export declare type SocketHandlers<I extends SocketInterface, L extends SocketLocation, CTX> = {
+    [E in keyof I[OpLoc<L>]]: (this: CTX, ...args: I[OpLoc<L>][E]['args']) => RemoteTransmitterResponse<I[OpLoc<L>][E], I[L], L>;
 } & {
-    [E in ResponseTos<T>]: (this: CTX, ...args: any[]) => Response<TransmitterWithResponseTo<T, E>, T, L>;
+    [E in ResponseTos<I[L]>]: (this: CTX, ...args: any[]) => Response<TransmitterWithResponseTo<I[L], E>, I[L], L>;
 } & {
-    [extraHandler: string]: (this: CTX, ...args: any[]) => GenericTransmitterResponse<T, L>;
+    [extraHandler: string]: (this: CTX, ...args: any[]) => GenericTransmitterResponse<I[L], L>;
 };
 /**
- * Utility type for generating EventHandlers given a SocketInterface and a SocketLocation.
+ * TODO: ...
  */
-export declare type SocketHandlers<TS extends SocketInterface, SL extends SocketLocation, HandlerContext> = EventHandlers<TS[SL], TS[OtherLocation<SL>], SL, HandlerContext>;
+export interface SocketServerInterface<API extends SocketInterface> {
+    socketHandlers: SocketHandlers<API, 'server', HandlerCtx<API>>;
+    emit<Event extends keyof API['server']>(target: socketio.Namespace | socketio.Socket, event: Event, ...args: API['server'][Event]['args']): this;
+    getNamespaces(): string[];
+    addNamespace(name: string): this;
+    removeNamespace(name: string): this;
+}
 export {};

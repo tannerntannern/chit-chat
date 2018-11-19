@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-alpha.0"></a>
+# [1.0.0-alpha.0](https://github.com/tannerntannern/table-talk/compare/v0.2.0...v1.0.0-alpha.0) (2018-11-19)
+
+
+### Features
+
+* BREAKING CHANGE: extracted the shapes of socket and express servers as interfaces and exposed them ([f679fee](https://github.com/tannerntannern/table-talk/commit/f679fee))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/tannerntannern/table-talk/compare/v0.1.0...v0.2.0) (2018-11-18)
 

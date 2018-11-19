@@ -2,7 +2,7 @@
 import * as http from 'http';
 import * as socketio from 'socket.io';
 import { HttpServer, HttpServerConfig } from './http-server';
-import { SocketHandlers, SocketInterface } from '../interface/socket-interface';
+import { SocketHandlers, SocketInterface, SocketServerInterface } from '../interface/socket-interface';
 import { SocketMixin } from '../lib/socket-mixin';
 /**
  * Defines how SocketServer may be configured.
@@ -31,7 +31,7 @@ declare abstract class SocketServer<API extends SocketInterface> extends HttpSer
      * Contains implementations for the events described by the API.  This guarantees compatibility with any
      * SocketClient that implements the same API.
      */
-    protected abstract socketHandlers: SocketHandlers<API, 'server', HandlerCtx<API>>;
+    abstract socketHandlers: SocketHandlers<API, 'server', HandlerCtx<API>>;
     /**
      * Constructs a new SocketServer.
      */
@@ -47,7 +47,7 @@ declare abstract class SocketServer<API extends SocketInterface> extends HttpSer
     /**
      * Emits an event to the given target.  The typings ensure that only events defined in the API can be emitted.
      */
-    emit<Event extends keyof API['server']>(target: socketio.Namespace | socketio.Socket, event: Event, ...args: API['server'][Event]['args']): void;
+    emit<Event extends keyof API['server']>(target: socketio.Namespace | socketio.Socket, event: Event, ...args: API['server'][Event]['args']): this;
     /**
      * Handles a Response that requires a reply.
      */
@@ -63,11 +63,11 @@ declare abstract class SocketServer<API extends SocketInterface> extends HttpSer
     /**
      * Adds a namespace to the socket server.  Throws an error if the namespace already exists.
      */
-    addNamespace(name: string): void;
+    addNamespace(name: string): this;
     /**
      * Removes a namespace from the socket server.
      */
-    removeNamespace(name: string): void;
+    removeNamespace(name: string): this;
     /**
      * Attaches a socket.io server to the internal Node http server.
      */
@@ -77,6 +77,6 @@ declare abstract class SocketServer<API extends SocketInterface> extends HttpSer
      */
     protected takedown(): void;
 }
-interface SocketServer<API extends SocketInterface> extends HttpServer, SocketMixin<API, 'server'> {
+interface SocketServer<API extends SocketInterface> extends HttpServer, SocketMixin<API, 'server'>, SocketServerInterface<API> {
 }
 export { SocketServer };

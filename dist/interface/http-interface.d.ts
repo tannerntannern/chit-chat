@@ -1,6 +1,7 @@
 /**
  * Describes the components of an endpoint.
  */
+import { HandlerCtx } from '../server/express-server';
 declare type Endpoint = {
     return: any;
     args?: {
@@ -35,4 +36,10 @@ export declare type HttpHandlers<API extends HttpInterface, HandlerCtx> = {
         }) => any;
     };
 };
+/**
+ * TODO: ...
+ */
+export interface ExpressServerInterface<API extends HttpInterface> {
+    httpHandlers: HttpHandlers<API, HandlerCtx<API>>;
+}
 export {};
