@@ -5,11 +5,12 @@ import {SocketServer, SocketServerConfig, HandlerCtx as SocketHandlerCtx} from '
 import {SocketClient} from './client/socket-client';
 import {SocketExpressServer, SocketExpressServerConfig} from './server/socket-express-server';
 import {SocketExpressClient} from './client/socket-express-client';
-import {HttpHandlers} from './interface/http-interface';
-import {SocketHandlers} from './interface/socket-interface';
+import {HttpHandlers, ExpressServerInterface} from './interface/http-interface';
+import {SocketHandlers, SocketServerInterface} from './interface/socket-interface';
 
 export {
 	HttpHandlers, SocketHandlers,
+	ExpressServerInterface, SocketServerInterface,
 	HttpServer, HttpServerConfig,
 	ExpressServer, ExpressServerConfig, ExpressHandlerCtx,
 	ExpressClient,

@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as core from 'express-serve-static-core';
 import * as bodyParser from 'body-parser';
 import {HttpServer, HttpServerConfig} from './http-server';
-import {HttpHandlers, HttpInterface} from '../interface/http-interface';
+import {ExpressServerInterface, HttpHandlers, HttpInterface} from '../interface/http-interface';
 
 /**
  * Defines how an ExpressServer may be configured.
@@ -26,11 +26,11 @@ export type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server:
  * and to implement an interface that can also be implemented by an ExpressClient to ensure that both communicate with
  * each other properly.
  */
-export abstract class ExpressServer<API extends HttpInterface> extends HttpServer {
+export abstract class ExpressServer<API extends HttpInterface> extends HttpServer implements ExpressServerInterface<API> {
 	/**
 	 * Defines how the server should react to each request.
 	 */
-	protected abstract httpHandlers: HttpHandlers<API, HandlerCtx<API>>;
+	abstract httpHandlers: HttpHandlers<API, HandlerCtx<API>>;
 
 	/**
 	 * Constructs a new ExpressServer.

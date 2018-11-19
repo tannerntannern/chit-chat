@@ -29,7 +29,7 @@ export interface API extends HttpInterface {
 export class Server extends ExpressServer<API> {
 	protected users: User[];
 
-	protected httpHandlers: HttpHandlers<API, HandlerCtx<API>> = {
+	public httpHandlers: HttpHandlers<API, HandlerCtx<API>> = {
 		get: {
 			'/users': () => {
 				return this.users;

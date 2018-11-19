@@ -2,7 +2,7 @@ import * as http from 'http';
 import * as socketio from 'socket.io';
 import {MixinDecorator} from 'ts-mixer';
 import {HttpServer, HttpServerConfig} from './http-server';
-import {SocketHandlers, SocketInterface} from '../interface/socket-interface';
+import {SocketHandlers, SocketInterface, SocketServerInterface} from '../interface/socket-interface';
 import {SocketMixin} from '../lib/socket-mixin';
 
 /**
@@ -37,7 +37,7 @@ abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 	 * Contains implementations for the events described by the API.  This guarantees compatibility with any
 	 * SocketClient that implements the same API.
 	 */
-	protected abstract socketHandlers: SocketHandlers<API, 'server', HandlerCtx<API>>;
+	abstract socketHandlers: SocketHandlers<API, 'server', HandlerCtx<API>>;
 
 	/**
 	 * Constructs a new SocketServer.
@@ -63,7 +63,7 @@ abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 	/**
 	 * Override to allow the options object to be of type SocketServerConfig.
 	 */
-	public configure(options: SocketServerConfig<API>){
+	public configure(options: SocketServerConfig<API>): this {
 		super.configure(options);
 		return this;
 	}
@@ -71,8 +71,9 @@ abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 	/**
 	 * Emits an event to the given target.  The typings ensure that only events defined in the API can be emitted.
 	 */
-	public emit<Event extends keyof API['server']>(target: socketio.Namespace | socketio.Socket, event: Event, ...args: API['server'][Event]['args']) {
+	public emit<Event extends keyof API['server']>(target: socketio.Namespace | socketio.Socket, event: Event, ...args: API['server'][Event]['args']): this {
 		target.emit(<string> event, ...args);
+		return this;
 	}
 
 	/**
@@ -122,7 +123,7 @@ abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 	/**
 	 * Adds a namespace to the socket server.  Throws an error if the namespace already exists.
 	 */
-	public addNamespace(name: string) {
+	public addNamespace(name: string): this {
 		// Make namespace name to avoid confusion about the slash
 		let namespaceName = '/' + name;
 
@@ -139,12 +140,14 @@ abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 		let nsp = this.io.of(namespaceName);
 		this.config.namespaceConfig(nsp, this);
 		this.attachSocketHandlers(nsp);
+
+		return this;
 	}
 
 	/**
 	 * Removes a namespace from the socket server.
 	 */
-	public removeNamespace(name: string) {
+	public removeNamespace(name: string): this {
 		// Make namespace name to avoid confusion about the slash
 		let namespaceName = '/' + name;
 
@@ -162,6 +165,8 @@ abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 
 		nsp.removeAllListeners();
 		delete this.io.nsps[namespaceName];
+
+		return this;
 	}
 
 	/**
@@ -183,7 +188,7 @@ abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 	}
 }
 
-interface SocketServer<API extends SocketInterface> extends HttpServer, SocketMixin<API, 'server'> {}
+interface SocketServer<API extends SocketInterface> extends HttpServer, SocketMixin<API, 'server'>, SocketServerInterface<API> {}
 
 export {
 	SocketServer

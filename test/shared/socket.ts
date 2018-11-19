@@ -18,7 +18,7 @@ export interface API {
 export class Server extends SocketServer<API> {
 	protected data = {};
 
-	protected socketHandlers: SocketHandlers<API, "server", ServerCtx<API>> = {
+	public socketHandlers: SocketHandlers<API, "server", ServerCtx<API>> = {
 		'connect': function () {
 			return {
 				name: 'connected',

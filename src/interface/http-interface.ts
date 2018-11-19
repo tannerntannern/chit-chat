@@ -1,6 +1,8 @@
 /**
  * Describes the components of an endpoint.
  */
+import {HandlerCtx} from '../server/express-server';
+
 type Endpoint = {return: any, args?: {[key: string]: any}};
 
 /**
@@ -35,3 +37,10 @@ export type HttpHandlers<API extends HttpInterface, HandlerCtx> = {
 		[extraHandler: string]: (this: HandlerCtx, args?: {[key: string]: any}) => any
 	}
 };
+
+/**
+ * TODO: ...
+ */
+export interface ExpressServerInterface<API extends HttpInterface> {
+	httpHandlers: HttpHandlers<API, HandlerCtx<API>>;
+}
