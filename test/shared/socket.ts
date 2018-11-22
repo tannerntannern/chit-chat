@@ -1,4 +1,4 @@
-import {SocketClient, SocketServer} from '../../src';
+import {SocketClient, SocketServerManager} from '../../src';
 import {SocketHandlers} from '../../src/interface/socket-interface';
 import {HandlerCtx as ServerCtx} from '../../src/server/socket-server';
 import {HandlerCtx as ClientCtx} from '../../src/client/socket-client';
@@ -15,21 +15,21 @@ export interface API {
 	}
 }
 
-export class Server extends SocketServer<API> {
+export class Server extends SocketServerManager<API> {
 	protected data = {};
 
-	public socketHandlers: SocketHandlers<API, "server", ServerCtx<API>> = {
+	protected socketHandlers: SocketHandlers<API, 'server', ServerCtx<API>> = {
 		'connect': function () {
 			return {
 				name: 'connected',
 				args: [this.socket.id]
-			}
+			};
 		},
 		'get-data': (key: string) => {
 			return {
 				name: 'patch-data',
 				args: [key, this.data[key]]
-			}
+			};
 		},
 		'put-data': (key: string, value: string) => {
 			this.data[key] = value;
@@ -37,7 +37,7 @@ export class Server extends SocketServer<API> {
 				name: 'patch-data',
 				args: [key, value],
 				broadcast: true
-			}
+			};
 		}
 	};
 }
@@ -45,7 +45,7 @@ export class Server extends SocketServer<API> {
 export class Client extends SocketClient<API> {
 	protected data = {};
 
-	protected socketHandlers: SocketHandlers<API, "client", ClientCtx<API>> = {
+	protected socketHandlers: SocketHandlers<API, 'client', ClientCtx<API>> = {
 		'connected': (id: string) => {
 			// console.log(id, 'has connected!');
 		},
@@ -55,5 +55,5 @@ export class Client extends SocketClient<API> {
 		'reset-data': (data: {}) => {
 			this.data = data;
 		}
-	}
+	};
 }

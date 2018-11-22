@@ -1,5 +1,5 @@
 import {HttpHandlers, HttpInterface} from '../../src/interface/http-interface';
-import {ExpressServer, HandlerCtx} from '../../src/server/express-server';
+import {ExpressServerManager, HandlerCtx} from '../../src/server/express-server';
 import {ExpressClient} from '../../src/client/express-client';
 
 export type User = {
@@ -26,10 +26,10 @@ export interface API extends HttpInterface {
 	}
 }
 
-export class Server extends ExpressServer<API> {
+export class Server extends ExpressServerManager<API> {
 	protected users: User[];
 
-	public httpHandlers: HttpHandlers<API, HandlerCtx<API>> = {
+	protected httpHandlers: HttpHandlers<API, HandlerCtx<API>> = {
 		get: {
 			'/users': () => {
 				return this.users;

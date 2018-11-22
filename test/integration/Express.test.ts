@@ -3,12 +3,14 @@ import {expect} from 'chai';
 import {Server, Client} from '../shared/express';
 
 describe('ExpressServer + ExpressClient', function(){
-	let s, c;
+	let s, m, c;
 	beforeEach(async () => {
-		s = new Server();
+		let {server, manager} = Server.makeServer();
+		s = server;
+		m = manager;
 		c = new Client('http://localhost:3000');
 
-		s.users = [{name: 'Bob', age: 60}, {name: 'Shirley', age: 47}];
+		m.users = [{name: 'Bob', age: 60}, {name: 'Shirley', age: 47}];
 
 		await s.start();
 	});
@@ -36,25 +38,25 @@ describe('ExpressServer + ExpressClient', function(){
 
 		it('should be able to POST a new user', async function(){
 			await c.post('/user', {name: 'Josh', age: 30});
-			expect(s.users[2]).to.deep.equal({name: 'Josh', age: 30});
+			expect(m.users[2]).to.deep.equal({name: 'Josh', age: 30});
 		});
 
 		it('should be able to PUT a user', async function(){
 			await c.put('/user', {index: 1, user: {name: 'Bill', age: 65}});
-			expect(s.users[1]).to.deep.equal({name: 'Bill', age: 65});
+			expect(m.users[1]).to.deep.equal({name: 'Bill', age: 65});
 		});
 
 		it('should be able to PATCH an existing user', async function(){
-			expect(s.users[0].age).to.equal(60);
+			expect(m.users[0].age).to.equal(60);
 
 			await c.patch('/user', {index: 0, userKey: 'age', userValue: 61});
 
-			expect(s.users[0].age).to.equal(61);
+			expect(m.users[0].age).to.equal(61);
 		});
 
 		it('should be able to DELETE an existing user', async function(){
 			await c.delete('/user', {index: 0});
-			expect(s.users).to.deep.equal([{name: 'Shirley', age: 47}]);
+			expect(m.users).to.deep.equal([{name: 'Shirley', age: 47}]);
 		});
 	});
 });

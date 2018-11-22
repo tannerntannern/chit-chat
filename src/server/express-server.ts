@@ -2,21 +2,21 @@ import * as http from 'http';
 import * as express from 'express';
 import * as core from 'express-serve-static-core';
 import * as bodyParser from 'body-parser';
-import {HttpServer, HttpServerConfig} from './http-server';
-import {ExpressServerInterface, HttpHandlers, HttpInterface} from '../interface/http-interface';
+import {HttpServer, HttpServerConfig, ServerManager} from './http-server';
+import {HttpHandlers, HttpInterface} from '../interface/http-interface';
 
 /**
  * Defines how an ExpressServer may be configured.
  */
-export type ExpressServerConfig<API extends HttpInterface> = {
-	expressConfig?: (expressApp: core.Express, server: ExpressServer<API>) => void,
+export type ExpressServerManagerConfig<API extends HttpInterface> = {
+	expressConfig?: (expressApp: core.Express, server: ExpressServerManager<API>) => void,
 	serveStaticDir?: string | null
-} & HttpServerConfig;
+};
 
 /**
  * Describes the shape of the `this` context that will be available in every ExpressServer handler.
  */
-export type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server: ExpressServer<API>};
+export type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server: ExpressServerManager<API>};
 
 /**
  * A simple HTTP server built on Express, with an API protected by TypeScript.
@@ -26,44 +26,32 @@ export type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server:
  * and to implement an interface that can also be implemented by an ExpressClient to ensure that both communicate with
  * each other properly.
  */
-export abstract class ExpressServer<API extends HttpInterface> extends HttpServer implements ExpressServerInterface<API> {
+export abstract class ExpressServerManager<API extends HttpInterface> extends ServerManager {
 	/**
 	 * Defines how the server should react to each request.
 	 */
-	abstract httpHandlers: HttpHandlers<API, HandlerCtx<API>>;
-
-	/**
-	 * Constructs a new ExpressServer.
-	 */
-	constructor(options?: ExpressServerConfig<API>) {
-		super(options);
-	}
+	protected abstract httpHandlers: HttpHandlers<API, HandlerCtx<API>>;
 
 	/**
 	 * Default configuration values for all ExpressServers.
 	 */
-	public getDefaultConfig() {
-		let baseConfig = super.getDefaultConfig();
-
-		Object.assign(baseConfig, {
-			expressConfig: function(expressApp, server) {
-				expressApp.get('/', function(req, res){
-					res.send(
-						'<h1>It Works!</h1>' +
-						'<p>The next step is to configure the server for your needs.</p>'
-					);
-				});
-			},
-			serveStaticDir: null
-		});
-
-		return baseConfig;
-	}
+	protected config = {
+		expressConfig: function(expressApp, server) {
+			expressApp.get('/', function(req, res){
+				res.send(
+					'<h1>It Works!</h1>' +
+					'<p>The next step is to configure the server for your needs.</p>'
+				);
+			});
+		},
+		serveStaticDir: null
+	};
 
 	/**
-	 * Override to allow the options object to be of type ExpressServerConfig.
+	 * Configures the ExpressServerManager.
 	 */
-	public configure(options: ExpressServerConfig<API>): this {
+	public configure(options: ExpressServerManagerConfig<API>): this {
+		// @ts-ignore: ServerManager mixin
 		super.configure(options);
 		return this;
 	}
@@ -71,7 +59,7 @@ export abstract class ExpressServer<API extends HttpInterface> extends HttpServe
 	/**
 	 * Configures an Express instance and attaches it to the given httpServer.
 	 */
-	protected setup(httpServer: http.Server) {
+	public setup(httpServer: http.Server) {
 		// Create express instance
 		let app = express(),
 			cfg = this.config;
@@ -112,7 +100,7 @@ export abstract class ExpressServer<API extends HttpInterface> extends HttpServe
 	/**
 	 * Performs any necessary cleanup.
 	 */
-	protected takedown(){
+	public takedown(){
 		// Nothing to clean up
 	}
 }

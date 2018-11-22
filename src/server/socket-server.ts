@@ -1,23 +1,23 @@
 import * as http from 'http';
 import * as socketio from 'socket.io';
-import {MixinDecorator} from 'ts-mixer';
-import {HttpServer, HttpServerConfig} from './http-server';
-import {SocketHandlers, SocketInterface, SocketServerInterface} from '../interface/socket-interface';
+import {HttpServer, HttpServerConfig, ServerManager} from './http-server';
+import {SocketHandlers, SocketInterface} from '../interface/socket-interface';
 import {SocketMixin} from '../lib/socket-mixin';
+import {MixinDecorator} from 'ts-mixer';
 
 /**
  * Defines how SocketServer may be configured.
  */
-export type SocketServerConfig<API extends SocketInterface> = {
+export type SocketServerManagerConfig<API extends SocketInterface> = {
 	ioOptions?: socketio.ServerOptions,
-	namespaceConfig?: (namespace: socketio.Namespace, server: SocketServer<API>) => void
-} & HttpServerConfig;
+	namespaceConfig?: (namespace: socketio.Namespace, server: SocketServerManager<API>) => void
+};
 
 /**
  * Describes the shape of the `this` context that will be available in every SocketServer handler.
  */
 export type HandlerCtx<API extends SocketInterface> = {
-	server: SocketServer<API>,
+	server: SocketServerManager<API>,
 	socket: socketio.Socket,
 	nsp: socketio.Namespace
 };
@@ -25,45 +25,33 @@ export type HandlerCtx<API extends SocketInterface> = {
 /**
  * A simple SocketServer with an API protected by TypeScript.
  */
-// @ts-ignore: It's ok to mix these abstract classes
+// @ts-ignore: abstract class, but it's ok
 @MixinDecorator(SocketMixin)
-abstract class SocketServer<API extends SocketInterface> extends HttpServer {
+abstract class SocketServerManager<API extends SocketInterface> extends ServerManager {
 	/**
 	 * Socket.io server instance for managing socket communication.
 	 */
 	protected io: socketio.Server = null;
 
 	/**
+	 * Default configuration values for all SocketServers.
+	 */
+	protected config: SocketServerManagerConfig<API> = {
+		ioOptions: {},
+		namespaceConfig: function(namespace, server) {}
+	};
+
+	/**
 	 * Contains implementations for the events described by the API.  This guarantees compatibility with any
 	 * SocketClient that implements the same API.
 	 */
-	abstract socketHandlers: SocketHandlers<API, 'server', HandlerCtx<API>>;
+	protected abstract socketHandlers: SocketHandlers<API, 'server', HandlerCtx<API>>;
 
 	/**
-	 * Constructs a new SocketServer.
+	 * Configures the SocketServerManager.
 	 */
-	constructor(options?: SocketServerConfig<API>) {
-		super(options);
-	}
-
-	/**
-	 * Default configuration values for all SocketServers.
-	 */
-	public getDefaultConfig() {
-		let baseConfig = super.getDefaultConfig();
-
-		Object.assign(baseConfig, {
-			ioOptions: {},
-			namespaceConfig: function(namespace, server) {}
-		});
-
-		return baseConfig;
-	}
-
-	/**
-	 * Override to allow the options object to be of type SocketServerConfig.
-	 */
-	public configure(options: SocketServerConfig<API>): this {
+	public configure(options: SocketServerManagerConfig<API>): this {
+		// @ts-ignore: ServerManager mixin
 		super.configure(options);
 		return this;
 	}
@@ -79,7 +67,7 @@ abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 	/**
 	 * Handles a Response that requires a reply.
 	 */
-	protected reply(ctx, response) {
+	protected reply(ctx: HandlerCtx<API>, response) {
 		this.emit(response.broadcast ? ctx.nsp : ctx.socket, response.name, ...response.args);
 	}
 
@@ -172,7 +160,7 @@ abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 	/**
 	 * Attaches a socket.io server to the internal Node http server.
 	 */
-	protected setup(httpServer: http.Server) {
+	public setup(httpServer: http.Server) {
 		this.io = socketio(httpServer, this.config.ioOptions);
 
 		let rootNamespace = this.io.nsps['/'];
@@ -183,13 +171,13 @@ abstract class SocketServer<API extends SocketInterface> extends HttpServer {
 	/**
 	 * Cleans up any socket-related junk.
 	 */
-	protected takedown() {
+	public takedown() {
 		this.io = null;
 	}
 }
 
-interface SocketServer<API extends SocketInterface> extends HttpServer, SocketMixin<API, 'server'>, SocketServerInterface<API> {}
+interface SocketServerManager<API extends SocketInterface> extends SocketMixin<API, 'server'> {}
 
 export {
-	SocketServer
+	SocketServerManager
 };

@@ -1,40 +1,31 @@
 import 'mocha';
 import {expect} from 'chai';
-import {HttpServer} from '../../src';
 import * as http from 'http';
+import {ServerManager} from '../../src/server/http-server';
 
 let setupCalls = 0, takedownCalls = 0;
-class Server extends HttpServer {
-	constructor(options?) {
-		super(options);
-	}
-
-	protected setup(httpServer: http.Server) {
+class Manager extends ServerManager {
+	public setup(httpServer: http.Server) {
 		setupCalls ++;
 	}
 
-	protected takedown() {
+	public takedown() {
 		takedownCalls ++;
 	}
 }
 
 describe('HttpServer', function(){
-	let s;
+	let s, m;
 	beforeEach(() => {
-		s = new Server();
+		let {server, manager} = Manager.makeServer();
+		s = server;
+		m = manager;
 	});
 
 	describe('Configuration', function(){
 		it('should have the proper default configuration values', function(){
 			expect(s.config.port).to.equal(3000);
 			expect(s.config.host).to.equal('localhost');
-		});
-
-		it('should accept new configuration values on construction', function(){
-			s = new Server({port: 2000, host: 'my.domain.com'});
-
-			expect(s.config.port).to.equal(2000);
-			expect(s.config.host).to.equal('my.domain.com');
 		});
 
 		it('should accept new configuration values via the config() method', function(){

@@ -3,9 +3,11 @@ import {expect} from 'chai';
 import {Server, Client} from '../shared/socket';
 
 describe('SocketServer + SocketClient', function(){
-	let s, c;
+	let s, m, c;
 	beforeEach(() => {
-		s = new Server({port: 3000});
+		let {server, manager} = Server.makeServer({port: 3000});
+		s = server;
+		m = manager;
 		c = new Client();
 
 		s.start();
@@ -47,7 +49,7 @@ describe('SocketServer + SocketClient', function(){
 		it('should be able to accept changes from the server', async function(){
 			await c.connect('http://localhost:3000', 'connected');
 
-			s.emit(s.io.nsps['/'], 'reset-data', {newKey: 'new value'});
+			m.emit(m.io.nsps['/'], 'reset-data', {newKey: 'new value'});
 			await c.blockEvent('reset-data');
 
 			expect(c.data).to.deep.equal({newKey: 'new value'});
@@ -59,8 +61,8 @@ describe('SocketServer + SocketClient', function(){
 			await c.connect('http://localhost:3000', 'connected');
 
 			c.emit('put-data', 'keyFromClient', 'valueFromClient');
-			await s.blockEvent('put-data');
-			expect(s.data.keyFromClient).to.equal('valueFromClient');
+			await m.blockEvent('put-data');
+			expect(m.data.keyFromClient).to.equal('valueFromClient');
 
 			await c.blockEvent('patch-data');
 			expect(c.data.keyFromClient).to.equal('valueFromClient');
@@ -71,7 +73,7 @@ describe('SocketServer + SocketClient', function(){
 		it('should be able to get data from the server', async function(){
 			await c.connect('http://localhost:3000', 'connected');
 
-			s.data = {keyFromServer: 'valueFromServer'};
+			m.data = {keyFromServer: 'valueFromServer'};
 			c.emit('get-data', 'keyFromServer');
 
 			await c.blockEvent('patch-data');

@@ -3,14 +3,16 @@ import {expect} from 'chai';
 import {Server} from '../shared/socket';
 
 describe('SocketServer', function(){
-	let s;
+	let s, m;
 	beforeEach(() => {
-		s = new Server();
+		let {server, manager} = Server.makeServer();
+		s = server;
+		m = manager;
 	});
 
 	describe('Configuration', function(){
 		it('should have the proper default configurations', function(){
-			expect(s.config.ioOptions).to.deep.equal({});
+			expect(m.config.ioOptions).to.deep.equal({});
 		});
 	});
 
@@ -24,21 +26,21 @@ describe('SocketServer', function(){
 		});
 
 		it('There should only be one namespace by default', function(){
-			expect(s.getNamespaces()).to.deep.equal(['/']);
+			expect(m.getNamespaces()).to.deep.equal(['/']);
 		});
 
 		it('should properly add namespaces', function(){
-			s.addNamespace('test');
-			expect(s.getNamespaces()).to.deep.equal(['/', '/test']);
+			m.addNamespace('test');
+			expect(m.getNamespaces()).to.deep.equal(['/', '/test']);
 		});
 
 		it('should properly remove namespaces', function(){
-			s.addNamespace('test1');
-			s.addNamespace('test2');
-			expect(s.getNamespaces()).to.deep.equal(['/', '/test1', '/test2']);
+			m.addNamespace('test1');
+			m.addNamespace('test2');
+			expect(m.getNamespaces()).to.deep.equal(['/', '/test1', '/test2']);
 
-			s.removeNamespace('test1');
-			expect(s.getNamespaces()).to.deep.equal(['/', '/test2']);
+			m.removeNamespace('test1');
+			expect(m.getNamespaces()).to.deep.equal(['/', '/test2']);
 		});
 	});
 

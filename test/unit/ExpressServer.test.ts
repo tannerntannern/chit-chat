@@ -5,14 +5,16 @@ import axios from 'axios';
 import {Server} from '../shared/express';
 
 describe('ExpressServer', function(){
-	let s;
+	let s, m;
 	beforeEach(() => {
-		s = new Server();
+		let {server, manager} = Server.makeServer();
+		s = server;
+		m = manager;
 	});
 
 	describe('Configuration', function(){
 		it('should have the proper default configurations', async function(){
-			expect(s.config.serveStaticDir).to.equal(null);
+			expect(m.config.serveStaticDir).to.equal(null);
 
 			await s.start();
 			expect((await axios.get('http://localhost:3000/')).data).to.equal(
@@ -24,7 +26,7 @@ describe('ExpressServer', function(){
 		});
 
 		it('should properly serve a static directory', async function(){
-			s.configure({
+			m.configure({
 				expressConfig: () => null,
 				serveStaticDir: path.resolve('./test/unit/serve')
 			});

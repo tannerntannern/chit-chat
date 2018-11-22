@@ -11,36 +11,37 @@ export type HttpServerConfig = {
 /**
  * Defines the common interface and shared functionality that all Servers should have.
  */
-export abstract class HttpServer {
+export class HttpServer {
 	/**
 	 * Internal Node.js http server.
 	 */
 	private httpServer: http.Server = null;
 
 	/**
+	 * List of ServerManagers in charge of the server.
+	 */
+	protected serverManagers: ServerManager[] = [];
+
+	/**
 	 * Where the HttpServer configurations are stored.
 	 */
-	protected config;
+	protected config: HttpServerConfig = {
+		host: 'localhost',
+		port: 3000
+	};
 
 	/**
 	 * Constructs and configures a new HttpServer.
 	 */
-	protected constructor(options?: HttpServerConfig) {
-		// Apply default configurations
-		this.config = this.getDefaultConfig();
-
-		// Then apply configurations given to constructor
+	constructor(options?: HttpServerConfig) {
 		this.configure(options);
 	}
 
 	/**
-	 * Default configuration values for all HttpServers.
+	 * Attaches a ServerManager to this server.
 	 */
-	protected getDefaultConfig(): HttpServerConfig {
-		return {
-			host: 'localhost',
-			port: 3000
-		};
+	public attach(...managers: ServerManager[]) {
+		this.serverManagers.push(...managers);
 	}
 
 	/**
@@ -53,7 +54,7 @@ export abstract class HttpServer {
 	/**
 	 * Applies configurations to the HttpServer.
 	 */
-	public configure<Config extends HttpServerConfig>(options: Config): this {
+	public configure(options: HttpServerConfig): this {
 		if (this.isRunning()) throw new Error('Cannot make configuration changes while the server is running!');
 
 		Object.assign(this.config, options);
@@ -62,23 +63,14 @@ export abstract class HttpServer {
 	}
 
 	/**
-	 * Configures the Node http server instance upon starting.
-	 */
-	protected abstract setup(httpServer: http.Server);
-
-	/**
-	 * Performs any necessary cleanup after the HttpServer stops listening.
-	 */
-	protected abstract takedown();
-
-	/**
 	 * Starts the HttpServer and returns a Promise for when it's ready.
 	 */
 	public start(): Promise<boolean> {
 		return new Promise<boolean>((resolve, reject) => {
 			this.httpServer = http.createServer();
 
-			this.setup(this.httpServer);
+			for (let manager of this.serverManagers)
+				manager.setup(this.httpServer);
 
 			this.httpServer.listen(this.config.port, () => {
 				resolve(true);
@@ -94,10 +86,62 @@ export abstract class HttpServer {
 			this.httpServer.close(() => {
 				this.httpServer = null;
 
-				this.takedown();
+				for (let manager of this.serverManagers)
+					manager.takedown();
 
 				resolve(true);
 			});
 		});
 	}
+}
+
+/**
+ * A special class that can be attached to HttpServers to manage them; the "management" part must be implemented.
+ */
+export abstract class ServerManager {
+	/**
+	 * Convenience method that constructs a new HttpServer with a ServerManager attached to it.
+	 */
+	public static makeServer(serverConfig?: HttpServerConfig, managerConfig?: unknown): {server: HttpServer, manager: ServerManager} {
+		// @ts-ignore: instantiating abstract class
+		let manager = new this(managerConfig),
+			server = new HttpServer(serverConfig);
+
+		server.attach(manager);
+
+		return {
+			server: server,
+			manager: manager
+		};
+	}
+
+	/**
+	 * Where configs specific to the ServerManager are stored.
+	 */
+	protected config = {};
+
+	/**
+	 * Constructs a new ServerManager and applies any additional configurations.
+	 */
+	constructor(options?: unknown) {
+		this.configure(options);
+	}
+
+	/**
+	 * Modifies the internal config object.
+	 */
+	public configure(options): this {
+		Object.assign(this.config, options);
+		return this;
+	}
+
+	/**
+	 * Configures the Node http server instance upon starting.
+	 */
+	public abstract setup(httpServer: http.Server);
+
+	/**
+	 * Performs any necessary cleanup after the HttpServer stops listening.
+	 */
+	public abstract takedown();
 }
