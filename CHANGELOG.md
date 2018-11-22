@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-alpha.1"></a>
+# [1.0.0-alpha.1](https://github.com/tannerntannern/table-talk/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2018-11-22)
+
+
+### Bug Fixes
+
+* reverted typescript-eslint-parser back to v19 ([6220032](https://github.com/tannerntannern/table-talk/commit/6220032))
+
+
+### Features
+
+* BREAKING CHANGE: introduced the concept of ServerManagers, which are less tightly coupled ([cf61659](https://github.com/tannerntannern/table-talk/commit/cf61659))
+
+
+
 <a name="1.0.0-alpha.0"></a>
 # [1.0.0-alpha.0](https://github.com/tannerntannern/table-talk/compare/v0.2.0...v1.0.0-alpha.0) (2018-11-19)
 

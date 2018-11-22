@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { HttpServer } from './http-server';
+import { ServerManager } from './http-server';
 /**
  * A simple HTTP server built on Express, with an API protected by TypeScript.
  *
@@ -22,20 +22,14 @@ import { HttpServer } from './http-server';
  * and to implement an interface that can also be implemented by an ExpressClient to ensure that both communicate with
  * each other properly.
  */
-var ExpressServer = /** @class */ (function (_super) {
-    __extends(ExpressServer, _super);
-    /**
-     * Constructs a new ExpressServer.
-     */
-    function ExpressServer(options) {
-        return _super.call(this, options) || this;
-    }
-    /**
-     * Default configuration values for all ExpressServers.
-     */
-    ExpressServer.prototype.getDefaultConfig = function () {
-        var baseConfig = _super.prototype.getDefaultConfig.call(this);
-        Object.assign(baseConfig, {
+var ExpressServerManager = /** @class */ (function (_super) {
+    __extends(ExpressServerManager, _super);
+    function ExpressServerManager() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        /**
+         * Default configuration values for all ExpressServers.
+         */
+        _this.config = {
             expressConfig: function (expressApp, server) {
                 expressApp.get('/', function (req, res) {
                     res.send('<h1>It Works!</h1>' +
@@ -43,20 +37,21 @@ var ExpressServer = /** @class */ (function (_super) {
                 });
             },
             serveStaticDir: null
-        });
-        return baseConfig;
-    };
+        };
+        return _this;
+    }
     /**
-     * Override to allow the options object to be of type ExpressServerConfig.
+     * Configures the ExpressServerManager.
      */
-    ExpressServer.prototype.configure = function (options) {
+    ExpressServerManager.prototype.configure = function (options) {
+        // @ts-ignore: ServerManager mixin
         _super.prototype.configure.call(this, options);
         return this;
     };
     /**
      * Configures an Express instance and attaches it to the given httpServer.
      */
-    ExpressServer.prototype.setup = function (httpServer) {
+    ExpressServerManager.prototype.setup = function (httpServer) {
         // Create express instance
         var app = express(), cfg = this.config;
         // Add middleware for parsing post requests
@@ -92,9 +87,9 @@ var ExpressServer = /** @class */ (function (_super) {
     /**
      * Performs any necessary cleanup.
      */
-    ExpressServer.prototype.takedown = function () {
+    ExpressServerManager.prototype.takedown = function () {
         // Nothing to clean up
     };
-    return ExpressServer;
-}(HttpServer));
-export { ExpressServer };
+    return ExpressServerManager;
+}(ServerManager));
+export { ExpressServerManager };

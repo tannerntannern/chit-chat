@@ -10,23 +10,27 @@ export declare type HttpServerConfig = {
 /**
  * Defines the common interface and shared functionality that all Servers should have.
  */
-export declare abstract class HttpServer {
+export declare class HttpServer {
     /**
      * Internal Node.js http server.
      */
     private httpServer;
     /**
+     * List of ServerManagers in charge of the server.
+     */
+    protected serverManagers: ServerManager[];
+    /**
      * Where the HttpServer configurations are stored.
      */
-    protected config: any;
+    protected config: HttpServerConfig;
     /**
      * Constructs and configures a new HttpServer.
      */
-    protected constructor(options?: HttpServerConfig);
+    constructor(options?: HttpServerConfig);
     /**
-     * Default configuration values for all HttpServers.
+     * Attaches a ServerManager to this server.
      */
-    protected getDefaultConfig(): HttpServerConfig;
+    attach(...managers: ServerManager[]): void;
     /**
      * Returns whether or not the server is running.
      */
@@ -34,15 +38,7 @@ export declare abstract class HttpServer {
     /**
      * Applies configurations to the HttpServer.
      */
-    configure<Config extends HttpServerConfig>(options: Config): this;
-    /**
-     * Configures the Node http server instance upon starting.
-     */
-    protected abstract setup(httpServer: http.Server): any;
-    /**
-     * Performs any necessary cleanup after the HttpServer stops listening.
-     */
-    protected abstract takedown(): any;
+    configure(options: HttpServerConfig): this;
     /**
      * Starts the HttpServer and returns a Promise for when it's ready.
      */
@@ -51,4 +47,36 @@ export declare abstract class HttpServer {
      * Stops the HttpServer and returns a Promise for when it's done.
      */
     stop(): Promise<boolean>;
+}
+/**
+ * A special class that can be attached to HttpServers to manage them; the "management" part must be implemented.
+ */
+export declare abstract class ServerManager {
+    /**
+     * Convenience method that constructs a new HttpServer with a ServerManager attached to it.
+     */
+    static makeServer(serverConfig?: HttpServerConfig, managerConfig?: unknown): {
+        server: HttpServer;
+        manager: ServerManager;
+    };
+    /**
+     * Where configs specific to the ServerManager are stored.
+     */
+    protected config: {};
+    /**
+     * Constructs a new ServerManager and applies any additional configurations.
+     */
+    constructor(options?: unknown);
+    /**
+     * Modifies the internal config object.
+     */
+    configure(options: any): this;
+    /**
+     * Configures the Node http server instance upon starting.
+     */
+    abstract setup(httpServer: http.Server): any;
+    /**
+     * Performs any necessary cleanup after the HttpServer stops listening.
+     */
+    abstract takedown(): any;
 }

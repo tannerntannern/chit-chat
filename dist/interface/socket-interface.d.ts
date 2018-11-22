@@ -1,5 +1,3 @@
-import { HandlerCtx } from '../server/socket-server';
-import * as socketio from 'socket.io';
 /**
  * Where socket handlers can reside -- either on the server or the client.
  */
@@ -98,14 +96,4 @@ export declare type SocketHandlers<I extends SocketInterface, L extends SocketLo
 } & {
     [extraHandler: string]: (this: CTX, ...args: any[]) => GenericTransmitterResponse<I[L], L>;
 };
-/**
- * TODO: ...
- */
-export interface SocketServerInterface<API extends SocketInterface> {
-    socketHandlers: SocketHandlers<API, 'server', HandlerCtx<API>>;
-    emit<Event extends keyof API['server']>(target: socketio.Namespace | socketio.Socket, event: Event, ...args: API['server'][Event]['args']): this;
-    getNamespaces(): string[];
-    addNamespace(name: string): this;
-    removeNamespace(name: string): this;
-}
 export {};

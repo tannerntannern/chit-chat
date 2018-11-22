@@ -73,13 +73,13 @@
 						<section class="tsd-index-section ">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter"><a href="../classes/_server_express_server_.expressserver.html" class="tsd-kind-icon">Express<wbr>Server</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter"><a href="../classes/_server_express_server_.expressservermanager.html" class="tsd-kind-icon">Express<wbr>Server<wbr>Manager</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_server_express_server_.html#expressserverconfig" class="tsd-kind-icon">Express<wbr>Server<wbr>Config</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_server_express_server_.html#expressservermanagerconfig" class="tsd-kind-icon">Express<wbr>Server<wbr>Manager<wbr>Config</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_server_express_server_.html#handlerctx" class="tsd-kind-icon">Handler<wbr>Ctx</a></li>
 							</ul>
 						</section>
@@ -89,18 +89,50 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
-					<a name="expressserverconfig" class="tsd-anchor"></a>
-					<h3>Express<wbr>Server<wbr>Config</h3>
-					<div class="tsd-signature tsd-kind-icon">Express<wbr>Server<wbr>Config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> &amp; </span><a href="_server_http_server_.html#httpserverconfig" class="tsd-signature-type">HttpServerConfig</a></div>
+					<a name="expressservermanagerconfig" class="tsd-anchor"></a>
+					<h3>Express<wbr>Server<wbr>Manager<wbr>Config</h3>
+					<div class="tsd-signature tsd-kind-icon">Express<wbr>Server<wbr>Manager<wbr>Config<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/f679fee/src/server/express-server.ts#L11">server/express-server.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/9eef832/src/server/express-server.ts#L11">server/express-server.ts:11</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Defines how an ExpressServer may be configured.</p>
 						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> express<wbr>Config<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span></h5>
+								<ul class="tsd-parameters">
+									<li class="tsd-parameter-siganture">
+										<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
+											<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>expressApp<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Express</span>, server<span class="tsd-signature-symbol">: </span><a href="../classes/_server_express_server_.expressservermanager.html" class="tsd-signature-type">ExpressServerManager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+										</ul>
+										<ul class="tsd-descriptions">
+											<li class="tsd-description">
+												<h4 class="tsd-parameters-title">Parameters</h4>
+												<ul class="tsd-parameters">
+													<li>
+														<h5>expressApp: <span class="tsd-signature-type">Express</span></h5>
+													</li>
+													<li>
+														<h5>server: <a href="../classes/_server_express_server_.expressservermanager.html" class="tsd-signature-type">ExpressServerManager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">&gt;</span></h5>
+													</li>
+												</ul>
+												<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> serve<wbr>Static<wbr>Dir<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+							</li>
+						</ul>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
@@ -109,7 +141,7 @@
 					<div class="tsd-signature tsd-kind-icon">Handler<wbr>Ctx<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/f679fee/src/server/express-server.ts#L19">server/express-server.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/9eef832/src/server/express-server.ts#L19">server/express-server.ts:19</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -127,7 +159,7 @@
 								<h5>res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5>server<span class="tsd-signature-symbol">: </span><a href="../classes/_server_express_server_.expressserver.html" class="tsd-signature-type">ExpressServer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<h5>server<span class="tsd-signature-symbol">: </span><a href="../classes/_server_express_server_.expressservermanager.html" class="tsd-signature-type">ExpressServerManager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">&gt;</span></h5>
 							</li>
 						</ul>
 					</div>
@@ -171,9 +203,6 @@
 						<a href="_server_http_server_.html">"server/http-<wbr>server"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_server_socket_express_server_.html">"server/socket-<wbr>express-<wbr>server"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="_server_socket_server_.html">"server/socket-<wbr>server"</a>
 					</li>
 				</ul>
@@ -181,10 +210,10 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_server_express_server_.expressserver.html" class="tsd-kind-icon">Express<wbr>Server</a>
+						<a href="../classes/_server_express_server_.expressservermanager.html" class="tsd-kind-icon">Express<wbr>Server<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="_server_express_server_.html#expressserverconfig" class="tsd-kind-icon">Express<wbr>Server<wbr>Config</a>
+						<a href="_server_express_server_.html#expressservermanagerconfig" class="tsd-kind-icon">Express<wbr>Server<wbr>Manager<wbr>Config</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="_server_express_server_.html#handlerctx" class="tsd-kind-icon">Handler<wbr>Ctx</a>
