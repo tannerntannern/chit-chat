@@ -23,5 +23,5 @@ export declare abstract class SocketMixin<API extends SocketInterface, Loc exten
     /**
      * Gives the ability to block and wait for an event.  Usage: `await this.blockEvent('some-event');`
      */
-    blockEvent<Event extends string>(event: Event): Promise<any>;
+    blockEvent<Event extends string>(event: Event, timeout?: number): Promise<any>;
 }

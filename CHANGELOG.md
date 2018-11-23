@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-beta.2"></a>
+# [1.0.0-beta.2](https://github.com/tannerntannern/table-talk/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2018-11-23)
+
+
+### Features
+
+* made blockEvent() have the ability to timeout when the event never arrives ([203e977](https://github.com/tannerntannern/table-talk/commit/203e977))
+
+
+
 <a name="1.0.0-beta.1"></a>
 # [1.0.0-beta.1](https://github.com/tannerntannern/table-talk/compare/v1.0.0-beta.0...v1.0.0-beta.1) (2018-11-23)
 
