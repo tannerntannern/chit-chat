@@ -20,7 +20,7 @@ export class HttpServer {
 	/**
 	 * List of ServerManagers in charge of the server.
 	 */
-	protected serverManagers: ServerManager[] = [];
+	protected serverManagers: {[key: string]: ServerManager} = {};
 
 	/**
 	 * Where the HttpServer configurations are stored.
@@ -38,10 +38,35 @@ export class HttpServer {
 	}
 
 	/**
-	 * Attaches a ServerManager to this server.
+	 * Attaches a ServerManager(s) to this server.
 	 */
-	public attach(...managers: ServerManager[]) {
-		this.serverManagers.push(...managers);
+	public attach(name: string, manager: ServerManager): this;
+	public attach(managers: {[key: string]: ServerManager}): this;
+	public attach(p1: string | {[key: string]: ServerManager}, p2?: ServerManager): this {
+		if (typeof p1 === 'string') {
+			this.serverManagers[p1] = p2;
+		} else {
+			Object.assign(this.serverManagers, p1);
+		}
+
+		return this;
+	}
+
+	/**
+	 * Alias for attach(...)
+	 */
+	public with(name: string, manager: ServerManager): this;
+	public with(managers: {[key: string]: ServerManager}): this;
+	public with(p1: string | {[key: string]: ServerManager}, p2?: ServerManager): this {
+		// @ts-ignore: since `with` is an alias, this is fine
+		return this.attach(p1, p2);
+	}
+
+	/**
+	 * Returns the ServerManager with the given name.
+	 */
+	public getManager(key: string): ServerManager {
+		return this.serverManagers[key];
 	}
 
 	/**
@@ -69,8 +94,8 @@ export class HttpServer {
 		return new Promise<boolean>((resolve, reject) => {
 			this.httpServer = http.createServer();
 
-			for (let manager of this.serverManagers)
-				manager.setup(this.httpServer);
+			for (let name in this.serverManagers)
+				this.serverManagers[name].setup(this.httpServer);
 
 			this.httpServer.listen(this.config.port, () => {
 				resolve(true);
@@ -86,8 +111,8 @@ export class HttpServer {
 			this.httpServer.close(() => {
 				this.httpServer = null;
 
-				for (let manager of this.serverManagers)
-					manager.takedown();
+				for (let name in this.serverManagers)
+					this.serverManagers[name].takedown();
 
 				resolve(true);
 			});
@@ -99,22 +124,6 @@ export class HttpServer {
  * A special class that can be attached to HttpServers to manage them; the "management" part must be implemented.
  */
 export abstract class ServerManager {
-	/**
-	 * Convenience method that constructs a new HttpServer with a ServerManager attached to it.
-	 */
-	public static makeServer(serverConfig?: HttpServerConfig, managerConfig?: unknown): {server: HttpServer, manager: ServerManager} {
-		// @ts-ignore: instantiating abstract class
-		let manager = new this(managerConfig),
-			server = new HttpServer(serverConfig);
-
-		server.attach(manager);
-
-		return {
-			server: server,
-			manager: manager
-		};
-	}
-
 	/**
 	 * Where configs specific to the ServerManager are stored.
 	 */

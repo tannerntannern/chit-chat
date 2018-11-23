@@ -15,7 +15,7 @@ export interface API {
 	}
 }
 
-export class Server extends SocketServerManager<API> {
+export class ServerManager extends SocketServerManager<API> {
 	protected data = {};
 
 	protected socketHandlers: SocketHandlers<API, 'server', ServerCtx<API>> = {

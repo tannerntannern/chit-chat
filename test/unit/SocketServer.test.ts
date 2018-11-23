@@ -1,13 +1,13 @@
 import 'mocha';
 import {expect} from 'chai';
-import {Server} from '../shared/socket';
+import {ServerManager} from '../shared/socket';
+import {HttpServer} from '../../src';
 
 describe('SocketServer', function(){
 	let s, m;
 	beforeEach(() => {
-		let {server, manager} = Server.makeServer();
-		s = server;
-		m = manager;
+		s = new HttpServer().with('socket', new ServerManager());
+		m = s.getManager('socket');
 	});
 
 	describe('Configuration', function(){

@@ -2,14 +2,14 @@ import 'mocha';
 import {expect} from 'chai';
 import * as path from 'path';
 import axios from 'axios';
-import {Server} from '../shared/express';
+import {ServerManager} from '../shared/express';
+import {HttpServer} from '../../src';
 
 describe('ExpressServer', function(){
 	let s, m;
 	beforeEach(() => {
-		let {server, manager} = Server.makeServer();
-		s = server;
-		m = manager;
+		s = new HttpServer().with('express', new ServerManager());
+		m = s.getManager('express');
 	});
 
 	describe('Configuration', function(){

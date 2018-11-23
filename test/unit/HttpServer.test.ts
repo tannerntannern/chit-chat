@@ -1,7 +1,7 @@
 import 'mocha';
 import {expect} from 'chai';
 import * as http from 'http';
-import {ServerManager} from '../../src/server/http-server';
+import {HttpServer, ServerManager} from '../../src/server/http-server';
 
 let setupCalls = 0, takedownCalls = 0;
 class Manager extends ServerManager {
@@ -17,9 +17,8 @@ class Manager extends ServerManager {
 describe('HttpServer', function(){
 	let s, m;
 	beforeEach(() => {
-		let {server, manager} = Manager.makeServer();
-		s = server;
-		m = manager;
+		s = new HttpServer().with('manager', new Manager());
+		m = s.getManager('manager');
 	});
 
 	describe('Configuration', function(){

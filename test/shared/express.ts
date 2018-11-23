@@ -26,7 +26,7 @@ export interface API extends HttpInterface {
 	}
 }
 
-export class Server extends ExpressServerManager<API> {
+export class ServerManager extends ExpressServerManager<API> {
 	protected users: User[];
 
 	protected httpHandlers: HttpHandlers<API, HandlerCtx<API>> = {

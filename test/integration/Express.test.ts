@@ -1,13 +1,13 @@
 import 'mocha';
 import {expect} from 'chai';
-import {Server, Client} from '../shared/express';
+import {ServerManager, Client} from '../shared/express';
+import {HttpServer} from '../../src';
 
 describe('ExpressServer + ExpressClient', function(){
 	let s, m, c;
 	beforeEach(async () => {
-		let {server, manager} = Server.makeServer();
-		s = server;
-		m = manager;
+		s = new HttpServer().with('express', new ServerManager());
+		m = s.getManager('express');
 		c = new Client('http://localhost:3000');
 
 		m.users = [{name: 'Bob', age: 60}, {name: 'Shirley', age: 47}];
