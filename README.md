@@ -33,8 +33,6 @@ For help getting started, keep reading.
 Start by sketching an API that you want implemented:
 
 ```typescript
-import {ExpressServerManager, ExpressClient} from 'table-talk';
-
 type User = {
 	name: string,
 	age: number
@@ -94,20 +92,30 @@ export class Client extends ExpressClient<API> {
 }
 ```
 
-Then start up the server and bask in the type-protected glory:
+Then create an `HttpServer` and attach the manager you just implemented.
+
 ```typescript
-let {server, manager} = ServerManager.makeServer({port: 3000});
-let client = new Client('http://localhost:3000');
+let server = new HttpServer({port: 3000})
+	.with('my-manager', new ServerManager());
 
 await server.start();
+```
 
-// Then on the client side:
+When the client connects to the server, it will only be able to make requests that make sense.
+For example:
 
-// This works
+```typescript
+let client = new Client('http://localhost:3000');
+
+// This works because the GET route exists and is passed the proper arguments
+// Note that the Promise value is also properly typed according to the API
 let user: User = await client.get('/user', {id: 0});
 
 // This won't work because the passed object is not properly typed; missing prop 'age'
 await client.post('/user', {name: 'Josh'});
+
+// This won't work because the /users route is a GET route, not PUT
+await client.PUT('/users', {foo: 'bar'})
 ```
 
 ### Creating a Socket Server/Client
