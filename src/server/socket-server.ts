@@ -10,14 +10,14 @@ import {MixinDecorator} from 'ts-mixer';
  */
 export type SocketServerManagerConfig<API extends SocketInterface> = {
 	ioOptions?: socketio.ServerOptions,
-	namespaceConfig?: (namespace: socketio.Namespace, server: SocketServerManager<API>) => void
+	namespaceConfig?: (namespace: socketio.Namespace, manager: SocketServerManager<API>) => void
 };
 
 /**
  * Describes the shape of the `this` context that will be available in every SocketServer handler.
  */
 export type HandlerCtx<API extends SocketInterface> = {
-	server: SocketServerManager<API>,
+	manager: SocketServerManager<API>,
 	socket: socketio.Socket,
 	nsp: socketio.Namespace
 };
@@ -80,7 +80,7 @@ abstract class SocketServerManager<API extends SocketInterface> extends ServerMa
 		namespace.on('connection', socket => {
 			// Build context for all handlers
 			let ctx: HandlerCtx<API> = {
-				server: this,
+				manager: this,
 				socket: socket,
 				nsp: namespace
 			};

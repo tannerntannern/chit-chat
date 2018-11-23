@@ -43,10 +43,20 @@ export class HttpServer {
 	public attach(name: string, manager: ServerManager): this;
 	public attach(managers: {[key: string]: ServerManager}): this;
 	public attach(p1: string | {[key: string]: ServerManager}, p2?: ServerManager): this {
+		// Force the overloads into a single case
+		let managers;
 		if (typeof p1 === 'string') {
-			this.serverManagers[p1] = p2;
+			managers = {};
+			managers[p1] = p2;
 		} else {
-			Object.assign(this.serverManagers, p1);
+			managers = p1;
+		}
+
+		// Add the managers and assign their internal `peers` property
+		for (let key in managers) {
+			let manager = managers[key];
+			manager.peers = this.serverManagers;
+			this.serverManagers[key] = manager;
 		}
 
 		return this;
@@ -125,6 +135,12 @@ export class HttpServer {
  */
 export abstract class ServerManager {
 	/**
+	 * Contains a reference to the other ServerManagers on the HttpServer that this manager is attached to.  (only
+	 * available after it has been attached)
+	 */
+	private peers: {[key: string]: ServerManager};
+
+	/**
 	 * Where configs specific to the ServerManager are stored.
 	 */
 	protected config = {};
@@ -142,6 +158,14 @@ export abstract class ServerManager {
 	public configure(options): this {
 		Object.assign(this.config, options);
 		return this;
+	}
+
+	/**
+	 * Since there can be multiple managers on an HttpServer, one manager may wish to communicate with another.  This
+	 * function will return one of the other managers by name.
+	 */
+	public getPeer(name: string): ServerManager {
+		return this.peers[name];
 	}
 
 	/**

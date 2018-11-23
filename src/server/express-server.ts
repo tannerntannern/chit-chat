@@ -16,7 +16,11 @@ export type ExpressServerManagerConfig<API extends HttpInterface> = {
 /**
  * Describes the shape of the `this` context that will be available in every ExpressServer handler.
  */
-export type HandlerCtx<API extends HttpInterface> = {req: any, res: any, server: ExpressServerManager<API>};
+export type HandlerCtx<API extends HttpInterface> = {
+	req: express.Request,
+	res: express.Response,
+	manager: ExpressServerManager<API>
+};
 
 /**
  * A simple HTTP server built on Express, with an API protected by TypeScript.
@@ -36,7 +40,7 @@ export abstract class ExpressServerManager<API extends HttpInterface> extends Se
 	 * Default configuration values for all ExpressServers.
 	 */
 	protected config = {
-		expressConfig: function(expressApp, server) {
+		expressConfig: function(expressApp, manager) {
 			expressApp.get('/', function(req, res){
 				res.send(
 					'<h1>It Works!</h1>' +
@@ -80,7 +84,7 @@ export abstract class ExpressServerManager<API extends HttpInterface> extends Se
 			for (let handlerName in methodGroup) {
 				(<any>app)[methodName](handlerName, function(req, res) {
 					let handler = methodGroup[handlerName],
-						ctx: HandlerCtx<API> = { req: req, res: res, server: that };
+						ctx: HandlerCtx<API> = { req: req, res: res, manager: that };
 
 					let response = handler.call(ctx, req[argsKey]);
 
