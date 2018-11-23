@@ -18,7 +18,9 @@ export declare class HttpServer {
     /**
      * List of ServerManagers in charge of the server.
      */
-    protected serverManagers: ServerManager[];
+    protected serverManagers: {
+        [key: string]: ServerManager;
+    };
     /**
      * Where the HttpServer configurations are stored.
      */
@@ -28,9 +30,23 @@ export declare class HttpServer {
      */
     constructor(options?: HttpServerConfig);
     /**
-     * Attaches a ServerManager to this server.
+     * Attaches a ServerManager(s) to this server.
      */
-    attach(...managers: ServerManager[]): void;
+    attach(name: string, manager: ServerManager): this;
+    attach(managers: {
+        [key: string]: ServerManager;
+    }): this;
+    /**
+     * Alias for attach(...)
+     */
+    with(name: string, manager: ServerManager): this;
+    with(managers: {
+        [key: string]: ServerManager;
+    }): this;
+    /**
+     * Returns the ServerManager with the given name.
+     */
+    getManager(key: string): ServerManager;
     /**
      * Returns whether or not the server is running.
      */
@@ -52,13 +68,6 @@ export declare class HttpServer {
  * A special class that can be attached to HttpServers to manage them; the "management" part must be implemented.
  */
 export declare abstract class ServerManager {
-    /**
-     * Convenience method that constructs a new HttpServer with a ServerManager attached to it.
-     */
-    static makeServer(serverConfig?: HttpServerConfig, managerConfig?: unknown): {
-        server: HttpServer;
-        manager: ServerManager;
-    };
     /**
      * Where configs specific to the ServerManager are stored.
      */

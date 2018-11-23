@@ -93,9 +93,7 @@
 				</ul>
 				<h3 id="creating-an-http-server-client">Creating an HTTP Server/Client</h3>
 				<p>Start by sketching an API that you want implemented:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {ExpressServerManager, ExpressClient} <span class="hljs-keyword">from</span> <span class="hljs-string">'table-talk'</span>;
-
-<span class="hljs-keyword">type</span> User = {
+				<pre><code class="language-typescript"><span class="hljs-keyword">type</span> User = {
     name: <span class="hljs-built_in">string</span>,
     age: <span class="hljs-built_in">number</span>
 }
@@ -149,23 +147,28 @@
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> Client <span class="hljs-keyword">extends</span> ExpressClient&lt;API&gt; {
     <span class="hljs-comment">// Nothing to implement here</span>
 }</code></pre>
-				<p>Then start up the server and bask in the type-protected glory:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">let</span> {server, manager} = ServerManager.makeServer({port: <span class="hljs-number">3000</span>});
-<span class="hljs-keyword">let</span> client = <span class="hljs-keyword">new</span> Client(<span class="hljs-string">'http://localhost:3000'</span>);
+				<p>Then create an <code>HttpServer</code> and attach the manager you just implemented.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">let</span> server = <span class="hljs-keyword">new</span> HttpServer({port: <span class="hljs-number">3000</span>})
+    .with(<span class="hljs-string">'my-manager'</span>, <span class="hljs-keyword">new</span> ServerManager());
 
-<span class="hljs-keyword">await</span> server.start();
+<span class="hljs-keyword">await</span> server.start();</code></pre>
+				<p>When the client connects to the server, it will only be able to make requests that make sense.
+				For example:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">let</span> client = <span class="hljs-keyword">new</span> Client(<span class="hljs-string">'http://localhost:3000'</span>);
 
-<span class="hljs-comment">// Then on the client side:</span>
-
-<span class="hljs-comment">// This works</span>
+<span class="hljs-comment">// This works because the GET route exists and is passed the proper arguments</span>
+<span class="hljs-comment">// Note that the Promise value is also properly typed according to the API</span>
 <span class="hljs-keyword">let</span> user: User = <span class="hljs-keyword">await</span> client.get(<span class="hljs-string">'/user'</span>, {id: <span class="hljs-number">0</span>});
 
 <span class="hljs-comment">// This won't work because the passed object is not properly typed; missing prop 'age'</span>
-<span class="hljs-keyword">await</span> client.post(<span class="hljs-string">'/user'</span>, {name: <span class="hljs-string">'Josh'</span>});</code></pre>
+<span class="hljs-keyword">await</span> client.post(<span class="hljs-string">'/user'</span>, {name: <span class="hljs-string">'Josh'</span>});
+
+<span class="hljs-comment">// This won't work because the /users route is a GET route, not PUT</span>
+<span class="hljs-keyword">await</span> client.PUT(<span class="hljs-string">'/users'</span>, {foo: <span class="hljs-string">'bar'</span>})</code></pre>
 				<h3 id="creating-a-socket-server-client">Creating a Socket Server/Client</h3>
 				<p>Coming soon...</p>
 				<h1 id="author">Author</h1>
-				<p>Tanner Nielsen <a href="mailto:&#x74;&#x61;&#x6e;&#x6e;&#x65;&#x72;&#110;&#116;&#97;&#110;&#110;&#x65;&#114;&#x6e;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;">&#x74;&#x61;&#x6e;&#x6e;&#x65;&#x72;&#110;&#116;&#97;&#110;&#110;&#x65;&#114;&#x6e;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#x63;&#111;&#109;</a></p>
+				<p>Tanner Nielsen <a href="mailto:&#116;&#x61;&#110;&#x6e;&#x65;&#114;&#x6e;&#x74;&#x61;&#x6e;&#x6e;&#101;&#114;&#110;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#111;&#109;">&#116;&#x61;&#110;&#x6e;&#x65;&#114;&#x6e;&#x74;&#x61;&#x6e;&#x6e;&#101;&#114;&#110;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a></p>
 				<ul>
 					<li>Website - <a href="http://tannernielsen.com">tannernielsen.com</a></li>
 					<li>Github - <a href="https://github.com/tannerntannern">github.com/tannerntannern</a></li>

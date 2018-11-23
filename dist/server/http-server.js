@@ -14,7 +14,7 @@ var HttpServer = /** @class */ (function () {
         /**
          * List of ServerManagers in charge of the server.
          */
-        this.serverManagers = [];
+        this.serverManagers = {};
         /**
          * Where the HttpServer configurations are stored.
          */
@@ -24,16 +24,24 @@ var HttpServer = /** @class */ (function () {
         };
         this.configure(options);
     }
-    /**
-     * Attaches a ServerManager to this server.
-     */
-    HttpServer.prototype.attach = function () {
-        var managers = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            managers[_i] = arguments[_i];
+    HttpServer.prototype.attach = function (p1, p2) {
+        if (typeof p1 === 'string') {
+            this.serverManagers[p1] = p2;
         }
-        var _a;
-        (_a = this.serverManagers).push.apply(_a, managers);
+        else {
+            Object.assign(this.serverManagers, p1);
+        }
+        return this;
+    };
+    HttpServer.prototype.with = function (p1, p2) {
+        // @ts-ignore: since `with` is an alias, this is fine
+        return this.attach(p1, p2);
+    };
+    /**
+     * Returns the ServerManager with the given name.
+     */
+    HttpServer.prototype.getManager = function (key) {
+        return this.serverManagers[key];
     };
     /**
      * Returns whether or not the server is running.
@@ -57,10 +65,8 @@ var HttpServer = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             _this.httpServer = http.createServer();
-            for (var _i = 0, _a = _this.serverManagers; _i < _a.length; _i++) {
-                var manager = _a[_i];
-                manager.setup(_this.httpServer);
-            }
+            for (var name in _this.serverManagers)
+                _this.serverManagers[name].setup(_this.httpServer);
             _this.httpServer.listen(_this.config.port, function () {
                 resolve(true);
             });
@@ -74,10 +80,8 @@ var HttpServer = /** @class */ (function () {
         return new Promise(function (resolve, reject) {
             _this.httpServer.close(function () {
                 _this.httpServer = null;
-                for (var _i = 0, _a = _this.serverManagers; _i < _a.length; _i++) {
-                    var manager = _a[_i];
-                    manager.takedown();
-                }
+                for (var name in _this.serverManagers)
+                    _this.serverManagers[name].takedown();
                 resolve(true);
             });
         });
@@ -99,18 +103,6 @@ var ServerManager = /** @class */ (function () {
         this.config = {};
         this.configure(options);
     }
-    /**
-     * Convenience method that constructs a new HttpServer with a ServerManager attached to it.
-     */
-    ServerManager.makeServer = function (serverConfig, managerConfig) {
-        // @ts-ignore: instantiating abstract class
-        var manager = new this(managerConfig), server = new HttpServer(serverConfig);
-        server.attach(manager);
-        return {
-            server: server,
-            manager: manager
-        };
-    };
     /**
      * Modifies the internal config object.
      */

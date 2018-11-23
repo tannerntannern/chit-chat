@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-beta.0"></a>
+# [1.0.0-beta.0](https://github.com/tannerntannern/table-talk/compare/v1.0.0-alpha.1...v1.0.0-beta.0) (2018-11-23)
+
+
+### Features
+
+* BREAKING CHANGE: modified how ServerManagers attach to HttpServers for flexibility ([acc6d22](https://github.com/tannerntannern/table-talk/commit/acc6d22))
+
+
+
 <a name="1.0.0-alpha.1"></a>
 # [1.0.0-alpha.1](https://github.com/tannerntannern/table-talk/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2018-11-22)
 
