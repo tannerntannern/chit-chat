@@ -55,10 +55,12 @@ interface API {
 Then create a ServerManager and Client class that implement the API.  The typings will
 ensure that all the `httpHandlers` are implemented properly:
 ```typescript
+import {ExpressServerManager, ExpressClient} from 'table-talk';
+
 class ServerManager extends ExpressServerManager<API> {
 	protected users: User[];
 
-	protected httpHandlers: HttpHandlers<API, HandlerCtx<API>> = {
+	protected httpHandlers = {
 		get: {
 			'/users': () => {
 				return this.users;
@@ -87,7 +89,7 @@ class ServerManager extends ExpressServerManager<API> {
 	};
 }
 
-export class Client extends ExpressClient<API> {
+class Client extends ExpressClient<API> {
 	// Nothing to implement here
 }
 ```
@@ -95,6 +97,8 @@ export class Client extends ExpressClient<API> {
 Then create an `HttpServer` and attach the manager you just implemented.
 
 ```typescript
+import {HttpServer} from 'table-talk';
+
 let server = new HttpServer({port: 3000})
 	.with('my-manager', new ServerManager());
 
