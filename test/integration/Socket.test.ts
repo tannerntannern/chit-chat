@@ -46,6 +46,14 @@ describe('SocketServer + SocketClient', function(){
 	});
 
 	describe('Transmitting and receiving data', function(){
+		it('should timeout if blockEvent() never recieves the event', async function(){
+			await c.connect('http://localhost:3000', 'connected');
+
+			expect(async () => { await c.blockEvent('asdf', 500) }).to.throw;
+
+			c.disconnect();
+		});
+
 		it('should be able to accept changes from the server', async function(){
 			await c.connect('http://localhost:3000', 'connected');
 

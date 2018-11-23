@@ -7,7 +7,15 @@ export abstract class SocketMixin<API extends SocketInterface, Loc extends Socke
 	/**
 	 * @internal
 	 */
-	private waiters: {[event: string]: Function[]} = {};
+	private waiters: {
+		[event: string]: {
+			[startTime: number]: {
+				resolve: Function,
+				reject: Function,
+				timeoutId
+			}
+		}
+	} = {};
 
 	/**
 	 * Expected by the mixin.
@@ -30,19 +38,33 @@ export abstract class SocketMixin<API extends SocketInterface, Loc extends Socke
 
 		// Process any waiters
 		let waiters = this.waiters[event];
-		if (waiters) for (let waiter of waiters) waiter();
-		this.waiters[event] = [];
+		if (waiters) {
+			for (let sTime in waiters) {
+				clearTimeout(waiters[sTime].timeoutId);		// Prevent the timeout from being triggered
+				waiters[sTime].resolve();					// Resolve the promise
+			}
+		}
+
+		this.waiters[event] = {};
 	}
 
 	/**
 	 * Gives the ability to block and wait for an event.  Usage: `await this.blockEvent('some-event');`
 	 */
-	public blockEvent<Event extends string>(event: Event): Promise<any> {
+	public blockEvent<Event extends string>(event: Event, timeout: number = 5000): Promise<any> {
 		return new Promise((resolve, reject) => {
-			if (!this.waiters[<string>event])
-				this.waiters[<string>event] = [];
+			if (!this.waiters[event]) this.waiters[event] = {};
 
-			this.waiters[<string>event].push(resolve);
+			// For the case that the event never arrives, we must setup a timeout function to reject the promise
+			let timestamp = Date.now();
+			let timeoutId = setTimeout(() => {
+				this.waiters[event][timestamp].reject();
+				delete this.waiters[event][timestamp];
+			}, timeout);
+
+			// Push our resolve and promise functions into the waiters structure.  If all goes well, they will be
+			// by handleEvent when the event arrives
+			this.waiters[event][timestamp] = {resolve: resolve, reject: reject, timeoutId: timeoutId};
 		});
 	}
 }
