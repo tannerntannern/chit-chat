@@ -69,6 +69,11 @@ export declare class HttpServer {
  */
 export declare abstract class ServerManager {
     /**
+     * Contains a reference to the other ServerManagers on the HttpServer that this manager is attached to.  (only
+     * available after it has been attached)
+     */
+    private peers;
+    /**
      * Where configs specific to the ServerManager are stored.
      */
     protected config: {};
@@ -80,6 +85,11 @@ export declare abstract class ServerManager {
      * Modifies the internal config object.
      */
     configure(options: any): this;
+    /**
+     * Since there can be multiple managers on an HttpServer, one manager may wish to communicate with another.  This
+     * function will return one of the other managers by name.
+     */
+    getPeer(name: string): ServerManager;
     /**
      * Configures the Node http server instance upon starting.
      */

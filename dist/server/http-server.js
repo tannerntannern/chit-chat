@@ -25,11 +25,20 @@ var HttpServer = /** @class */ (function () {
         this.configure(options);
     }
     HttpServer.prototype.attach = function (p1, p2) {
+        // Force the overloads into a single case
+        var managers;
         if (typeof p1 === 'string') {
-            this.serverManagers[p1] = p2;
+            managers = {};
+            managers[p1] = p2;
         }
         else {
-            Object.assign(this.serverManagers, p1);
+            managers = p1;
+        }
+        // Add the managers and assign their internal `peers` property
+        for (var key in managers) {
+            var manager = managers[key];
+            manager.peers = this.serverManagers;
+            this.serverManagers[key] = manager;
         }
         return this;
     };
@@ -109,6 +118,13 @@ var ServerManager = /** @class */ (function () {
     ServerManager.prototype.configure = function (options) {
         Object.assign(this.config, options);
         return this;
+    };
+    /**
+     * Since there can be multiple managers on an HttpServer, one manager may wish to communicate with another.  This
+     * function will return one of the other managers by name.
+     */
+    ServerManager.prototype.getPeer = function (name) {
+        return this.peers[name];
     };
     return ServerManager;
 }());

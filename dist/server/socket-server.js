@@ -76,7 +76,7 @@ var SocketServerManager = /** @class */ (function (_super) {
         namespace.on('connection', function (socket) {
             // Build context for all handlers
             var ctx = {
-                server: _this,
+                manager: _this,
                 socket: socket,
                 nsp: namespace
             };

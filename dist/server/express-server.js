@@ -30,7 +30,7 @@ var ExpressServerManager = /** @class */ (function (_super) {
          * Default configuration values for all ExpressServers.
          */
         _this.config = {
-            expressConfig: function (expressApp, server) {
+            expressConfig: function (expressApp, manager) {
                 expressApp.get('/', function (req, res) {
                     res.send('<h1>It Works!</h1>' +
                         '<p>The next step is to configure the server for your needs.</p>');
@@ -65,7 +65,7 @@ var ExpressServerManager = /** @class */ (function (_super) {
             var methodGroup = this_1.httpHandlers[methodName], argsKey = (methodName === 'put' || methodName === 'post' || methodName === 'patch') ? 'body' : 'query';
             var _loop_2 = function (handlerName) {
                 app[methodName](handlerName, function (req, res) {
-                    var handler = methodGroup[handlerName], ctx = { req: req, res: res, server: that };
+                    var handler = methodGroup[handlerName], ctx = { req: req, res: res, manager: that };
                     var response = handler.call(ctx, req[argsKey]);
                     res.send(response);
                 });

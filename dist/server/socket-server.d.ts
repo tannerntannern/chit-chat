@@ -9,13 +9,13 @@ import { SocketMixin } from '../lib/socket-mixin';
  */
 export declare type SocketServerManagerConfig<API extends SocketInterface> = {
     ioOptions?: socketio.ServerOptions;
-    namespaceConfig?: (namespace: socketio.Namespace, server: SocketServerManager<API>) => void;
+    namespaceConfig?: (namespace: socketio.Namespace, manager: SocketServerManager<API>) => void;
 };
 /**
  * Describes the shape of the `this` context that will be available in every SocketServer handler.
  */
 export declare type HandlerCtx<API extends SocketInterface> = {
-    server: SocketServerManager<API>;
+    manager: SocketServerManager<API>;
     socket: socketio.Socket;
     nsp: socketio.Namespace;
 };

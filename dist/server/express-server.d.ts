@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import * as http from 'http';
+import * as express from 'express';
 import * as core from 'express-serve-static-core';
 import { ServerManager } from './http-server';
 import { HttpHandlers, HttpInterface } from '../interface/http-interface';
@@ -14,9 +15,9 @@ export declare type ExpressServerManagerConfig<API extends HttpInterface> = {
  * Describes the shape of the `this` context that will be available in every ExpressServer handler.
  */
 export declare type HandlerCtx<API extends HttpInterface> = {
-    req: any;
-    res: any;
-    server: ExpressServerManager<API>;
+    req: express.Request;
+    res: express.Response;
+    manager: ExpressServerManager<API>;
 };
 /**
  * A simple HTTP server built on Express, with an API protected by TypeScript.
@@ -35,7 +36,7 @@ export declare abstract class ExpressServerManager<API extends HttpInterface> ex
      * Default configuration values for all ExpressServers.
      */
     protected config: {
-        expressConfig: (expressApp: any, server: any) => void;
+        expressConfig: (expressApp: any, manager: any) => void;
         serveStaticDir: any;
     };
     /**
