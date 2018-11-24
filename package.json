@@ -1,6 +1,6 @@
 {
   "name": "table-talk",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "A simple HTTP and socket server library that facilitates clear and error-free API design.",
   "main": "dist/index.js",
   "module": "dist/index.js",

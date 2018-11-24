@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-beta.5"></a>
+# [1.0.0-beta.5](https://github.com/tannerntannern/table-talk/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2018-11-24)
+
+
+### Bug Fixes
+
+* changed the module format back to commonjs for compatibility ([8248f4a](https://github.com/tannerntannern/table-talk/commit/8248f4a))
+
+
+
 <a name="1.0.0-beta.4"></a>
 # [1.0.0-beta.4](https://github.com/tannerntannern/table-talk/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2018-11-24)
 
