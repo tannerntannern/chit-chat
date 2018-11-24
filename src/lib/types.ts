@@ -570,4 +570,4 @@ interface ConnectOpts {
 
 export {
 	Socket, ConnectOpts
-}
+};
