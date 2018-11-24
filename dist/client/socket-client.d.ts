@@ -1,10 +1,11 @@
 import { SocketHandlers, SocketInterface } from '../interface/socket-interface';
 import { SocketMixin } from '../lib/socket-mixin';
+import { Socket, ConnectOpts } from '../lib/types';
 /**
  * Describes the shape of the `this` context that will be available in every SocketClient handler.
  */
 export declare type HandlerCtx<API extends SocketInterface> = {
-    socket: SocketIOClient.Socket;
+    socket: Socket;
     client: SocketClient<API>;
 };
 /**
@@ -14,7 +15,7 @@ export declare abstract class SocketClient<API extends SocketInterface> extends 
     /**
      * Socket.io Socket instance for internal use.
      */
-    protected socket: SocketIOClient.Socket;
+    protected socket: Socket;
     /**
      * Contains implementations for the events described by the API.  This guarantees compatibility with any
      * SocketServer that implements the same API.
@@ -35,7 +36,7 @@ export declare abstract class SocketClient<API extends SocketInterface> extends 
     /**
      * Attempts to connect to a SocketServer.
      */
-    connect<WaitFor extends string | null>(url?: string, waitFor?: WaitFor, options?: SocketIOClient.ConnectOpts): WaitFor extends string ? Promise<any> : void;
+    connect<WaitFor extends string | null>(url?: string, waitFor?: WaitFor, options?: ConnectOpts): WaitFor extends string ? Promise<any> : void;
     /**
      * Disconnects from the SocketServer, if there was a connection.
      */

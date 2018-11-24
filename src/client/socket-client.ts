@@ -1,12 +1,13 @@
 import * as socketio from 'socket.io-client';
 import {SocketHandlers, SocketInterface} from '../interface/socket-interface';
 import {SocketMixin} from '../lib/socket-mixin';
+import {Socket, ConnectOpts} from '../lib/types';
 
 /**
  * Describes the shape of the `this` context that will be available in every SocketClient handler.
  */
 export type HandlerCtx<API extends SocketInterface> = {
-	socket: SocketIOClient.Socket,
+	socket: Socket,
 	client: SocketClient<API>
 };
 
@@ -17,7 +18,7 @@ export abstract class SocketClient<API extends SocketInterface> extends SocketMi
 	/**
 	 * Socket.io Socket instance for internal use.
 	 */
-	protected socket: SocketIOClient.Socket = null;
+	protected socket: Socket = null;
 
 	/**
 	 * Contains implementations for the events described by the API.  This guarantees compatibility with any
@@ -62,7 +63,7 @@ export abstract class SocketClient<API extends SocketInterface> extends SocketMi
 	/**
 	 * Attempts to connect to a SocketServer.
 	 */
-	public connect<WaitFor extends string | null>(url: string = '', waitFor: WaitFor = null, options?: SocketIOClient.ConnectOpts): WaitFor extends string ? Promise<any> : void {
+	public connect<WaitFor extends string | null>(url: string = '', waitFor: WaitFor = null, options?: ConnectOpts): WaitFor extends string ? Promise<any> : void {
 		if (!options) options = {};
 		Object.assign(options, {
 			autoConnect: false
