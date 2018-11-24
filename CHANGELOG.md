@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-beta.4"></a>
+# [1.0.0-beta.4](https://github.com/tannerntannern/table-talk/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2018-11-24)
+
+
+### Bug Fixes
+
+* finally resolved type issue with http-interface ([59c8687](https://github.com/tannerntannern/table-talk/commit/59c8687))
+
+
+
 <a name="1.0.0-beta.3"></a>
 # [1.0.0-beta.3](https://github.com/tannerntannern/table-talk/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2018-11-24)
 
