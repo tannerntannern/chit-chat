@@ -1,3 +1,6 @@
+/**
+ * Describes the components of an endpoint.
+ */
 declare type Endpoint = {
     return: any;
     args?: {
@@ -20,11 +23,11 @@ export declare type HttpInterface = {
  * Utility type for generating http handlers given an HttpInterface.
  */
 export declare type HttpHandlers<API extends HttpInterface, HandlerCtx> = {
-    [Mthd in keyof API]: {
+    [Mthd in keyof API]: Mthd extends Methods ? {
         [EndPt in keyof API[Mthd]]: API[Mthd][EndPt]['args'] extends {
             [key: string]: any;
         } ? (this: HandlerCtx, data: API[Mthd][EndPt]['args']) => API[Mthd][EndPt]['return'] : (this: HandlerCtx) => API[Mthd][EndPt]['return'];
-    };
+    } : never;
 } & {
     [Mthd in Methods]?: {
         [extraHandler: string]: (this: HandlerCtx, args?: {

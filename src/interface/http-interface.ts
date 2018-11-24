@@ -1,8 +1,6 @@
 /**
  * Describes the components of an endpoint.
  */
-import {HandlerCtx} from '../server/express-server';
-
 type Endpoint = {return: any, args?: {[key: string]: any}};
 
 /**
@@ -23,14 +21,11 @@ export type HttpInterface = {
  * Utility type for generating http handlers given an HttpInterface.
  */
 export type HttpHandlers<API extends HttpInterface, HandlerCtx> = {
-	[Mthd in keyof API]: {
-		// @ts-ignore: not sure why TypeScript is complaining about this
+	[Mthd in keyof API]: Mthd extends Methods ? {
 		[EndPt in keyof API[Mthd]]: API[Mthd][EndPt]['args'] extends {[key: string]: any} ?
-			// @ts-ignore: not sure why TypeScript is complaining about this
 			(this: HandlerCtx, data: API[Mthd][EndPt]['args']) => API[Mthd][EndPt]['return'] :
-			// @ts-ignore: not sure why TypeScript is complaining about this
 			(this: HandlerCtx) => API[Mthd][EndPt]['return'];
-	}
+	} : never
 } & {
 	// Extra handlers not specified by the API
 	[Mthd in Methods]?: {
