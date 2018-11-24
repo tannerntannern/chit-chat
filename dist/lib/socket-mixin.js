@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Mixin for shared socket functionality between the server and client.
  */
@@ -54,4 +56,4 @@ var SocketMixin = /** @class */ (function () {
     };
     return SocketMixin;
 }());
-export { SocketMixin };
+exports.SocketMixin = SocketMixin;

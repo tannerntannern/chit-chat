@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -17,10 +18,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import * as socketio from 'socket.io';
-import { ServerManager } from './http-server';
-import { SocketMixin } from '../lib/socket-mixin';
-import { MixinDecorator } from 'ts-mixer';
+Object.defineProperty(exports, "__esModule", { value: true });
+var socketio = require("socket.io");
+var http_server_1 = require("./http-server");
+var socket_mixin_1 = require("../lib/socket-mixin");
+var ts_mixer_1 = require("ts-mixer");
 /**
  * A simple SocketServer with an API protected by TypeScript.
  */
@@ -161,8 +163,8 @@ var SocketServerManager = /** @class */ (function (_super) {
         this.io = null;
     };
     SocketServerManager = __decorate([
-        MixinDecorator(SocketMixin)
+        ts_mixer_1.MixinDecorator(socket_mixin_1.SocketMixin)
     ], SocketServerManager);
     return SocketServerManager;
-}(ServerManager));
-export { SocketServerManager };
+}(http_server_1.ServerManager));
+exports.SocketServerManager = SocketServerManager;

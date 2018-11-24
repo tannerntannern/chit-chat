@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -11,8 +12,9 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import * as socketio from 'socket.io-client';
-import { SocketMixin } from '../lib/socket-mixin';
+Object.defineProperty(exports, "__esModule", { value: true });
+var socketio = require("socket.io-client");
+var socket_mixin_1 = require("../lib/socket-mixin");
 /**
  * Basic socket client that can be used in Node or in the browser.
  */
@@ -110,5 +112,5 @@ var SocketClient = /** @class */ (function (_super) {
         (_a = this.socket).emit.apply(_a, [response.name].concat(response.args));
     };
     return SocketClient;
-}(SocketMixin));
-export { SocketClient };
+}(socket_mixin_1.SocketMixin));
+exports.SocketClient = SocketClient;

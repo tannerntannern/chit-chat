@@ -14,7 +14,7 @@
     "docs": "typedoc --out ./docs --mode modules ./src",
     "docs-clean": "rm -rf ./docs && npm run docs && touch ./docs/.nojekyll && git add ./docs",
     "lint": "eslint src/**/*.ts",
-    "test": "cross-env TS_NODE_COMPILER_OPTIONS=\"{\\\"module\\\":\\\"commonjs\\\"}\" nyc mocha --recursive -r ts-node/register test/**/*.test.*",
+    "test": "nyc mocha --recursive -r ts-node/register test/**/*.test.*",
     "coverage": "nyc report",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "release": "standard-version -a"
@@ -60,7 +60,6 @@
     "@types/node": "^10.12.10",
     "chai": "^4.2.0",
     "coveralls": "^3.0.2",
-    "cross-env": "^5.2.0",
     "eslint": "^5.9.0",
     "husky": "^1.2.0",
     "mocha": "^5.2.0",

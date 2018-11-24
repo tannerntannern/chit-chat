@@ -1,4 +1,6 @@
-import * as http from 'http';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var http = require("http");
 /**
  * Defines the common interface and shared functionality that all Servers should have.
  */
@@ -97,7 +99,7 @@ var HttpServer = /** @class */ (function () {
     };
     return HttpServer;
 }());
-export { HttpServer };
+exports.HttpServer = HttpServer;
 /**
  * A special class that can be attached to HttpServers to manage them; the "management" part must be implemented.
  */
@@ -128,4 +130,4 @@ var ServerManager = /** @class */ (function () {
     };
     return ServerManager;
 }());
-export { ServerManager };
+exports.ServerManager = ServerManager;

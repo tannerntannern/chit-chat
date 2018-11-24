@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -11,9 +12,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import { ServerManager } from './http-server';
+Object.defineProperty(exports, "__esModule", { value: true });
+var express = require("express");
+var bodyParser = require("body-parser");
+var http_server_1 = require("./http-server");
 /**
  * A simple HTTP server built on Express, with an API protected by TypeScript.
  *
@@ -91,5 +93,5 @@ var ExpressServerManager = /** @class */ (function (_super) {
         // Nothing to clean up
     };
     return ExpressServerManager;
-}(ServerManager));
-export { ExpressServerManager };
+}(http_server_1.ServerManager));
+exports.ExpressServerManager = ExpressServerManager;
