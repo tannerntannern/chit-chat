@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0-beta.3"></a>
+# [1.0.0-beta.3](https://github.com/tannerntannern/table-talk/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2018-11-24)
+
+
+### Bug Fixes
+
+* manually included socket.io-client typings to fix compilation issues ([473532c](https://github.com/tannerntannern/table-talk/commit/473532c))
+* **lint:** missing semicolon ([83a1897](https://github.com/tannerntannern/table-talk/commit/83a1897))
+
+
+
 <a name="1.0.0-beta.2"></a>
 # [1.0.0-beta.2](https://github.com/tannerntannern/table-talk/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2018-11-23)
 

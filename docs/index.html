@@ -112,10 +112,12 @@
 }</code></pre>
 				<p>Then create a ServerManager and Client class that implement the API.  The typings will
 				ensure that all the <code>httpHandlers</code> are implemented properly:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">class</span> ServerManager <span class="hljs-keyword">extends</span> ExpressServerManager&lt;API&gt; {
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {ExpressServerManager, ExpressClient} <span class="hljs-keyword">from</span> <span class="hljs-string">'table-talk'</span>;
+
+<span class="hljs-keyword">class</span> ServerManager <span class="hljs-keyword">extends</span> ExpressServerManager&lt;API&gt; {
     <span class="hljs-keyword">protected</span> users: User[];
 
-    <span class="hljs-keyword">protected</span> httpHandlers: HttpHandlers&lt;API, HandlerCtx&lt;API&gt;&gt; = {
+    <span class="hljs-keyword">protected</span> httpHandlers = {
         <span class="hljs-keyword">get</span>: {
             <span class="hljs-string">'/users'</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
                 <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.users;
@@ -144,11 +146,13 @@
     };
 }
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> Client <span class="hljs-keyword">extends</span> ExpressClient&lt;API&gt; {
+<span class="hljs-keyword">class</span> Client <span class="hljs-keyword">extends</span> ExpressClient&lt;API&gt; {
     <span class="hljs-comment">// Nothing to implement here</span>
 }</code></pre>
 				<p>Then create an <code>HttpServer</code> and attach the manager you just implemented.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">let</span> server = <span class="hljs-keyword">new</span> HttpServer({port: <span class="hljs-number">3000</span>})
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {HttpServer} <span class="hljs-keyword">from</span> <span class="hljs-string">'table-talk'</span>;
+
+<span class="hljs-keyword">let</span> server = <span class="hljs-keyword">new</span> HttpServer({port: <span class="hljs-number">3000</span>})
     .with(<span class="hljs-string">'my-manager'</span>, <span class="hljs-keyword">new</span> ServerManager());
 
 <span class="hljs-keyword">await</span> server.start();</code></pre>
@@ -168,7 +172,7 @@
 				<h3 id="creating-a-socket-server-client">Creating a Socket Server/Client</h3>
 				<p>Coming soon...</p>
 				<h1 id="author">Author</h1>
-				<p>Tanner Nielsen <a href="mailto:&#116;&#x61;&#x6e;&#x6e;&#x65;&#x72;&#110;&#116;&#97;&#110;&#x6e;&#x65;&#x72;&#110;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;">&#116;&#x61;&#x6e;&#x6e;&#x65;&#x72;&#110;&#116;&#97;&#110;&#x6e;&#x65;&#x72;&#110;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;</a></p>
+				<p>Tanner Nielsen <a href="mailto:&#116;&#97;&#x6e;&#110;&#x65;&#x72;&#x6e;&#x74;&#x61;&#x6e;&#x6e;&#x65;&#x72;&#110;&#x40;&#103;&#109;&#x61;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;">&#116;&#97;&#x6e;&#110;&#x65;&#x72;&#x6e;&#x74;&#x61;&#x6e;&#x6e;&#x65;&#x72;&#110;&#x40;&#103;&#109;&#x61;&#105;&#108;&#x2e;&#x63;&#111;&#x6d;</a></p>
 				<ul>
 					<li>Website - <a href="http://tannernielsen.com">tannernielsen.com</a></li>
 					<li>Github - <a href="https://github.com/tannerntannern">github.com/tannerntannern</a></li>
@@ -203,7 +207,7 @@
 						<a href="modules/_lib_socket_mixin_.html">"lib/socket-<wbr>mixin"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_lib_util_.html">"lib/util"</a>
+						<a href="modules/_lib_types_.html">"lib/types"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_server_express_server_.html">"server/express-<wbr>server"</a>
