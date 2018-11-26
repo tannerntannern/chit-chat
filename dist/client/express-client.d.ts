@@ -1,10 +1,15 @@
-import { AxiosRequestConfig } from 'axios';
 import { HttpInterface, Methods } from '../interface/http-interface';
+import _axios, { AxiosRequestConfig } from 'axios';
 /**
  * Basic AJAX class than can be used in Node or the browser.  Essentially just wraps around some axios methods and
  * provides the proper typing based on the given HttpInterface, so that no requests are malformed.
  */
 export declare class ExpressClient<API extends HttpInterface> {
+    /**
+     * Reference to the axios library.  If the client is running in the browser, it is assumed that axios will be
+     * available on `window`.
+     */
+    static axios: typeof _axios;
     /**
      * The base hostname/URL that the client should send its requests to.
      */

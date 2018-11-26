@@ -116,7 +116,7 @@
 						<section class="tsd-index-section tsd-is-inherited tsd-is-not-exported">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_client_socket_express_client_.socketexpressclient.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported"><a href="_client_socket_express_client_.socketexpressclient.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited tsd-is-not-exported">
@@ -125,6 +125,8 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported"><a href="_client_socket_express_client_.socketexpressclient.html#host" class="tsd-kind-icon">host</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="_client_socket_express_client_.socketexpressclient.html#socket" class="tsd-kind-icon">socket</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected tsd-is-not-exported"><a href="_client_socket_express_client_.socketexpressclient.html#sockethandlers" class="tsd-kind-icon">socket<wbr>Handlers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-not-exported"><a href="_client_socket_express_client_.socketexpressclient.html#axios" class="tsd-kind-icon">axios</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-not-exported"><a href="_client_socket_express_client_.socketexpressclient.html#io" class="tsd-kind-icon">io</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited tsd-is-not-exported">
@@ -152,31 +154,26 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-inherited tsd-is-not-exported">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Socket<wbr>Express<wbr>Client<span class="tsd-signature-symbol">(</span>host<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_client_socket_express_client_.socketexpressclient.html" class="tsd-signature-type">SocketExpressClient</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Socket<wbr>Express<wbr>Client<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_client_socket_express_client_.socketexpressclient.html" class="tsd-signature-type">SocketExpressClient</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_client_express_client_.expressclient.html">ExpressClient</a>.<a href="_client_express_client_.expressclient.html#constructor">constructor</a></p>
+								<p>Inherited from <a href="_client_socket_client_.socketclient.html">SocketClient</a>.<a href="_client_socket_client_.socketclient.html#constructor">constructor</a></p>
+								<p>Overrides <a href="_client_express_client_.expressclient.html">ExpressClient</a>.<a href="_client_express_client_.expressclient.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L12">client/express-client.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/socket-client.ts#L35">client/socket-client.ts:35</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Constructs a new ExpressClient.</p>
+									<p>Constructs a new SocketClient.</p>
 								</div>
 							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> host: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></h5>
-								</li>
-							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_client_socket_express_client_.socketexpressclient.html" class="tsd-signature-type">SocketExpressClient</a></h4>
 						</li>
 					</ul>
@@ -191,7 +188,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_client_express_client_.expressclient.html">ExpressClient</a>.<a href="_client_express_client_.expressclient.html#host">host</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L12">client/express-client.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L20">client/express-client.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -207,7 +204,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_client_socket_client_.socketclient.html">SocketClient</a>.<a href="_client_socket_client_.socketclient.html#socket">socket</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/socket-client.ts#L21">client/socket-client.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/socket-client.ts#L29">client/socket-client.ts:29</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -224,13 +221,47 @@
 						<p>Inherited from <a href="_client_socket_client_.socketclient.html">SocketClient</a>.<a href="_client_socket_client_.socketclient.html#sockethandlers">socketHandlers</a></p>
 						<p>Overrides <a href="_lib_socket_mixin_.socketmixin.html">SocketMixin</a>.<a href="_lib_socket_mixin_.socketmixin.html#sockethandlers">socketHandlers</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/socket-client.ts#L27">client/socket-client.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/socket-client.ts#L35">client/socket-client.ts:35</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Contains implementations for the events described by the API.  This guarantees compatibility with any
 							SocketServer that implements the same API.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-not-exported">
+					<a name="axios" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> axios</h3>
+					<div class="tsd-signature tsd-kind-icon">axios<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AxiosStatic</span><span class="tsd-signature-symbol"> =&nbsp;(typeof window !&#x3D;&#x3D; &#x27;undefined&#x27;) &amp;&amp; window.axios ? window.axios : null</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_client_express_client_.expressclient.html">ExpressClient</a>.<a href="_client_express_client_.expressclient.html#axios">axios</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L15">client/express-client.ts:15</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Reference to the axios library.  If the client is running in the browser, it is assumed that axios will be
+							available on <code>window</code>.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-not-exported">
+					<a name="io" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> io</h3>
+					<div class="tsd-signature tsd-kind-icon">io<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SocketIOClientStatic</span><span class="tsd-signature-symbol"> =&nbsp;(typeof window !&#x3D;&#x3D; &#x27;undefined&#x27;) &amp;&amp; window.axios ? window.axios : null</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_client_socket_client_.socketclient.html">SocketClient</a>.<a href="_client_socket_client_.socketclient.html#io">io</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/socket-client.ts#L24">client/socket-client.ts:24</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Reference to the socket.io-client library.  If the client is running in the browser, it is assumed that <code>io</code> will
+							be available on <code>window</code>.</p>
 						</div>
 					</div>
 				</section>
@@ -248,7 +279,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_socket_client_.socketclient.html">SocketClient</a>.<a href="_client_socket_client_.socketclient.html#attachsockethandlers">attachSocketHandlers</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/socket-client.ts#L32">client/socket-client.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/socket-client.ts#L54">client/socket-client.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -271,7 +302,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_lib_socket_mixin_.socketmixin.html">SocketMixin</a>.<a href="_lib_socket_mixin_.socketmixin.html#blockevent">blockEvent</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/lib/socket-mixin.ts#L54">lib/socket-mixin.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/lib/socket-mixin.ts#L54">lib/socket-mixin.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -309,7 +340,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_socket_client_.socketclient.html">SocketClient</a>.<a href="_client_socket_client_.socketclient.html#connect">connect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/socket-client.ts#L66">client/socket-client.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/socket-client.ts#L88">client/socket-client.ts:88</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -350,7 +381,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_express_client_.expressclient.html">ExpressClient</a>.<a href="_client_express_client_.expressclient.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L50">client/express-client.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L65">client/express-client.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -392,7 +423,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_socket_client_.socketclient.html">SocketClient</a>.<a href="_client_socket_client_.socketclient.html#disconnect">disconnect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/socket-client.ts#L83">client/socket-client.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/socket-client.ts#L105">client/socket-client.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -415,7 +446,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_socket_client_.socketclient.html">SocketClient</a>.<a href="_client_socket_client_.socketclient.html#emit">emit</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/socket-client.ts#L91">client/socket-client.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/socket-client.ts#L113">client/socket-client.ts:113</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -453,7 +484,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_express_client_.expressclient.html">ExpressClient</a>.<a href="_client_express_client_.expressclient.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L39">client/express-client.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L54">client/express-client.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -495,7 +526,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_socket_client_.socketclient.html">SocketClient</a>.<a href="_client_socket_client_.socketclient.html#getsocketid">getSocketId</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/socket-client.ts#L56">client/socket-client.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/socket-client.ts#L78">client/socket-client.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -518,7 +549,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_lib_socket_mixin_.socketmixin.html">SocketMixin</a>.<a href="_lib_socket_mixin_.socketmixin.html#handleevent">handleEvent</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/lib/socket-mixin.ts#L34">lib/socket-mixin.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/lib/socket-mixin.ts#L34">lib/socket-mixin.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -554,7 +585,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_socket_client_.socketclient.html">SocketClient</a>.<a href="_client_socket_client_.socketclient.html#isconnected">isConnected</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/socket-client.ts#L49">client/socket-client.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/socket-client.ts#L71">client/socket-client.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -577,7 +608,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_express_client_.expressclient.html">ExpressClient</a>.<a href="_client_express_client_.expressclient.html#patch">patch</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L74">client/express-client.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L89">client/express-client.ts:89</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -618,7 +649,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_express_client_.expressclient.html">ExpressClient</a>.<a href="_client_express_client_.expressclient.html#post">post</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L60">client/express-client.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L75">client/express-client.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -659,7 +690,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_express_client_.expressclient.html">ExpressClient</a>.<a href="_client_express_client_.expressclient.html#put">put</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L67">client/express-client.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L82">client/express-client.ts:82</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -701,7 +732,7 @@
 								<p>Inherited from <a href="_client_socket_client_.socketclient.html">SocketClient</a>.<a href="_client_socket_client_.socketclient.html#reply">reply</a></p>
 								<p>Overrides <a href="_lib_socket_mixin_.socketmixin.html">SocketMixin</a>.<a href="_lib_socket_mixin_.socketmixin.html#reply">reply</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/socket-client.ts#L98">client/socket-client.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/socket-client.ts#L120">client/socket-client.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -733,7 +764,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_client_express_client_.expressclient.html">ExpressClient</a>.<a href="_client_express_client_.expressclient.html#request">request</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L24">client/express-client.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L39">client/express-client.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -813,7 +844,7 @@
 					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-not-exported">
 						<a href="_client_socket_express_client_.socketexpressclient.html" class="tsd-kind-icon">Socket<wbr>Express<wbr>Client</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-not-exported">
 								<a href="_client_socket_express_client_.socketexpressclient.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-not-exported">
@@ -824,6 +855,12 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 								<a href="_client_socket_express_client_.socketexpressclient.html#sockethandlers" class="tsd-kind-icon">socket<wbr>Handlers</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-not-exported">
+								<a href="_client_socket_express_client_.socketexpressclient.html#axios" class="tsd-kind-icon">axios</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static tsd-is-not-exported">
+								<a href="_client_socket_express_client_.socketexpressclient.html#io" class="tsd-kind-icon">io</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected tsd-is-not-exported">
 								<a href="_client_socket_express_client_.socketexpressclient.html#attachsockethandlers" class="tsd-kind-icon">attach<wbr>Socket<wbr>Handlers</a>

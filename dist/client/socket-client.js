@@ -13,19 +13,26 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var socketio = require("socket.io-client");
 var socket_mixin_1 = require("../lib/socket-mixin");
 /**
  * Basic socket client that can be used in Node or in the browser.
  */
 var SocketClient = /** @class */ (function (_super) {
     __extends(SocketClient, _super);
+    /**
+     * Constructs a new SocketClient.
+     */
     function SocketClient() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super.call(this) || this;
         /**
          * Socket.io Socket instance for internal use.
          */
         _this.socket = null;
+        // Make sure we have a valid io reference
+        if (!SocketClient.io)
+            throw new Error('Socket.io reference not detected.  If you are running in the browser, be sure to include the ' +
+                'socket.io-client library beforehand.  If you are running under Node.js, you must assign the ' +
+                'SocketClient.io property manually before instantiating a SocketClient.');
         return _this;
     }
     /**
@@ -79,7 +86,7 @@ var SocketClient = /** @class */ (function (_super) {
         Object.assign(options, {
             autoConnect: false
         });
-        this.socket = socketio(url, options);
+        this.socket = SocketClient.io(url, options);
         this.attachSocketHandlers();
         this.socket.open();
         if (typeof waitFor === 'string')
@@ -111,6 +118,11 @@ var SocketClient = /** @class */ (function (_super) {
         var _a;
         (_a = this.socket).emit.apply(_a, [response.name].concat(response.args));
     };
+    /**
+     * Reference to the socket.io-client library.  If the client is running in the browser, it is assumed that `io` will
+     * be available on `window`.
+     */
+    SocketClient.io = (typeof window !== 'undefined') && window.axios ? window.axios : null;
     return SocketClient;
 }(socket_mixin_1.SocketMixin));
 exports.SocketClient = SocketClient;

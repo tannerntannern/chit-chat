@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-alpha.0"></a>
+# [2.0.0-alpha.0](https://github.com/tannerntannern/table-talk/compare/v1.0.0-beta.5...v2.0.0-alpha.0) (2018-11-26)
+
+
+### Features
+
+* BREAKING CHANGE: made socket.io-client and axios external modules ([38b1ce3](https://github.com/tannerntannern/table-talk/commit/38b1ce3))
+
+
+
 <a name="1.0.0-beta.5"></a>
 # [1.0.0-beta.5](https://github.com/tannerntannern/table-talk/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2018-11-24)
 

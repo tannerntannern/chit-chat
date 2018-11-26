@@ -112,6 +112,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_client_express_client_.expressclient.html#host" class="tsd-kind-icon">host</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_client_express_client_.expressclient.html#axios" class="tsd-kind-icon">axios</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -140,7 +141,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L12">client/express-client.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L20">client/express-client.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -167,12 +168,28 @@
 					<div class="tsd-signature tsd-kind-icon">host<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L12">client/express-client.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L20">client/express-client.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The base hostname/URL that the client should send its requests to.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="axios" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> axios</h3>
+					<div class="tsd-signature tsd-kind-icon">axios<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AxiosStatic</span><span class="tsd-signature-symbol"> =&nbsp;(typeof window !&#x3D;&#x3D; &#x27;undefined&#x27;) &amp;&amp; window.axios ? window.axios : null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L15">client/express-client.ts:15</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Reference to the axios library.  If the client is running in the browser, it is assumed that axios will be
+							available on <code>window</code>.</p>
 						</div>
 					</div>
 				</section>
@@ -189,7 +206,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L50">client/express-client.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L65">client/express-client.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -230,7 +247,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L39">client/express-client.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L54">client/express-client.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -271,7 +288,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L74">client/express-client.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L89">client/express-client.ts:89</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -311,7 +328,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L60">client/express-client.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L75">client/express-client.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -351,7 +368,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L67">client/express-client.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L82">client/express-client.ts:82</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -391,7 +408,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/8248f4a/src/client/express-client.ts#L24">client/express-client.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/c1200ce/src/client/express-client.ts#L39">client/express-client.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -477,6 +494,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_client_express_client_.expressclient.html#host" class="tsd-kind-icon">host</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_client_express_client_.expressclient.html#axios" class="tsd-kind-icon">axios</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="_client_express_client_.expressclient.html#delete" class="tsd-kind-icon">delete</a>
 							</li>
@@ -499,6 +519,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_client_express_client_.html#window" class="tsd-kind-icon">window</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

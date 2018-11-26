@@ -1,6 +1,7 @@
 import { SocketHandlers, SocketInterface } from '../interface/socket-interface';
 import { SocketMixin } from '../lib/socket-mixin';
 import { Socket, ConnectOpts } from '../lib/types';
+import * as _io from 'socket.io-client';
 /**
  * Describes the shape of the `this` context that will be available in every SocketClient handler.
  */
@@ -13,6 +14,11 @@ export declare type HandlerCtx<API extends SocketInterface> = {
  */
 export declare abstract class SocketClient<API extends SocketInterface> extends SocketMixin<API, 'client'> {
     /**
+     * Reference to the socket.io-client library.  If the client is running in the browser, it is assumed that `io` will
+     * be available on `window`.
+     */
+    static io: typeof _io;
+    /**
      * Socket.io Socket instance for internal use.
      */
     protected socket: Socket;
@@ -21,6 +27,10 @@ export declare abstract class SocketClient<API extends SocketInterface> extends 
      * SocketServer that implements the same API.
      */
     protected abstract socketHandlers: SocketHandlers<API, 'client', HandlerCtx<API>>;
+    /**
+     * Constructs a new SocketClient.
+     */
+    constructor();
     /**
      * Sets up the socket handlers for the client.
      */
