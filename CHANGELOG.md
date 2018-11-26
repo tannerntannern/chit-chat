@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-beta.0"></a>
+# [2.0.0-beta.0](https://github.com/tannerntannern/table-talk/compare/v2.0.0-alpha.4...v2.0.0-beta.0) (2018-11-26)
+
+
+
+<a name="2.0.0-alpha.4"></a>
+# 2.0.0-alpha.4 (2018-11-26)
+
+
+### Features
+
+* made the HttpServer publicly accessible from ServerManagers ([cedf02c](https://github.com/tannerntannern/table-talk/commit/cedf02c))
+
+
+
 <a name="2.0.0-alpha.3"></a>
 # [2.0.0-alpha.3](https://github.com/tannerntannern/table-talk/compare/v2.0.0-alpha.2...v2.0.0-alpha.3) (2018-11-26)
 
