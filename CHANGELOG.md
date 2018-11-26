@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-alpha.4"></a>
+# [2.0.0-alpha.4](https://github.com/tannerntannern/table-talk/compare/v2.0.0-alpha.3...v2.0.0-alpha.4) (2018-11-26)
+
+
+### Features
+
+* gave ServerManager direct access to its HttpServer ([507ff9e](https://github.com/tannerntannern/table-talk/commit/507ff9e))
+
+
+
 <a name="2.0.0-alpha.3"></a>
 # [2.0.0-alpha.3](https://github.com/tannerntannern/table-talk/compare/v2.0.0-alpha.2...v2.0.0-alpha.3) (2018-11-26)
 

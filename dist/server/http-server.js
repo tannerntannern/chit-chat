@@ -39,7 +39,8 @@ var HttpServer = /** @class */ (function () {
         // Add the managers and assign their internal `peers` property
         for (var key in managers) {
             var manager = managers[key];
-            manager.peers = this.serverManagers;
+            // @ts-ignore: httpServer is protected and we want it to stay that way
+            manager.httpServer = this;
             this.serverManagers[key] = manager;
         }
         return this;
@@ -126,7 +127,7 @@ var ServerManager = /** @class */ (function () {
      * function will return one of the other managers by name.
      */
     ServerManager.prototype.getPeer = function (name) {
-        return this.peers[name];
+        return this.httpServer.getManager(name);
     };
     return ServerManager;
 }());
