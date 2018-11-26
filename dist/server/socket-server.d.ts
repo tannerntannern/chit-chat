@@ -37,6 +37,10 @@ declare abstract class SocketServerManager<API extends SocketInterface> extends 
      */
     protected abstract socketHandlers: SocketHandlers<API, 'server', HandlerCtx<API>>;
     /**
+     * Constructs a new SocketServerManager.
+     */
+    constructor(options?: SocketServerManagerConfig<API>);
+    /**
      * Configures the SocketServerManager.
      */
     configure(options: SocketServerManagerConfig<API>): this;

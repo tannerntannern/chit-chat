@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-alpha.2"></a>
+# [2.0.0-alpha.2](https://github.com/tannerntannern/table-talk/compare/v2.0.0-alpha.1...v2.0.0-alpha.2) (2018-11-26)
+
+
+### Bug Fixes
+
+* corrected an issue where configs weren't properly passed through extended constructors ([622dfe6](https://github.com/tannerntannern/table-talk/commit/622dfe6))
+
+
+
 <a name="2.0.0-alpha.1"></a>
 # [2.0.0-alpha.1](https://github.com/tannerntannern/table-talk/compare/v2.0.0-alpha.0...v2.0.0-alpha.1) (2018-11-26)
 

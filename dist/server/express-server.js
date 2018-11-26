@@ -26,8 +26,11 @@ var http_server_1 = require("./http-server");
  */
 var ExpressServerManager = /** @class */ (function (_super) {
     __extends(ExpressServerManager, _super);
-    function ExpressServerManager() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * Constructs a new ExpressServerManager.
+     */
+    function ExpressServerManager(options) {
+        var _this = _super.call(this, options) || this;
         /**
          * Default configuration values for all ExpressServers.
          */

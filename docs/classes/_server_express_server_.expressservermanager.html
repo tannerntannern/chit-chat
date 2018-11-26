@@ -105,10 +105,10 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><a href="_server_express_server_.expressservermanager.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_server_express_server_.expressservermanager.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private-protected">
@@ -135,31 +135,31 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Express<wbr>Server<wbr>Manager<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_server_express_server_.expressservermanager.html" class="tsd-signature-type">ExpressServerManager</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Express<wbr>Server<wbr>Manager<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../modules/_server_express_server_.html#expressservermanagerconfig" class="tsd-signature-type">ExpressServerManagerConfig</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_server_express_server_.expressservermanager.html" class="tsd-signature-type">ExpressServerManager</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_server_http_server_.servermanager.html">ServerManager</a>.<a href="_server_http_server_.servermanager.html#constructor">constructor</a></p>
+								<p>Overrides <a href="_server_http_server_.servermanager.html">ServerManager</a>.<a href="_server_http_server_.servermanager.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/dcd9c93/src/server/http-server.ts#L146">server/http-server.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/622dfe6/src/server/express-server.ts#L52">server/express-server.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Constructs a new ServerManager and applies any additional configurations.</p>
+									<p>Constructs a new ExpressServerManager.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">unknown</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../modules/_server_express_server_.html#expressservermanagerconfig" class="tsd-signature-type">ExpressServerManagerConfig</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_server_express_server_.expressservermanager.html" class="tsd-signature-type">ExpressServerManager</a></h4>
@@ -175,7 +175,7 @@
 					<div class="tsd-signature tsd-kind-icon">http<wbr>Handlers<span class="tsd-signature-symbol">:</span> <a href="../modules/_interface_http_interface_.html#httphandlers" class="tsd-signature-type">HttpHandlers</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">, </span><a href="../modules/_server_express_server_.html#handlerctx" class="tsd-signature-type">HandlerCtx</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">API</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/dcd9c93/src/server/express-server.ts#L37">server/express-server.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/622dfe6/src/server/express-server.ts#L37">server/express-server.ts:37</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -198,7 +198,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_server_http_server_.servermanager.html">ServerManager</a>.<a href="_server_http_server_.servermanager.html#configure">configure</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/dcd9c93/src/server/express-server.ts#L57">server/express-server.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/622dfe6/src/server/express-server.ts#L64">server/express-server.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -227,7 +227,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_http_server_.servermanager.html">ServerManager</a>.<a href="_server_http_server_.servermanager.html#getpeer">getPeer</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/dcd9c93/src/server/http-server.ts#L167">server/http-server.ts:167</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/622dfe6/src/server/http-server.ts#L167">server/http-server.ts:167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -257,7 +257,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_server_http_server_.servermanager.html">ServerManager</a>.<a href="_server_http_server_.servermanager.html#setup">setup</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/dcd9c93/src/server/express-server.ts#L66">server/express-server.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/622dfe6/src/server/express-server.ts#L73">server/express-server.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -286,7 +286,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_server_http_server_.servermanager.html">ServerManager</a>.<a href="_server_http_server_.servermanager.html#takedown">takedown</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/dcd9c93/src/server/express-server.ts#L107">server/express-server.ts:107</a></li>
+									<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/622dfe6/src/server/express-server.ts#L114">server/express-server.ts:114</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -308,7 +308,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="_server_http_server_.servermanager.html">ServerManager</a>.<a href="_server_http_server_.servermanager.html#config">config</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/dcd9c93/src/server/express-server.ts#L42">server/express-server.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/622dfe6/src/server/express-server.ts#L42">server/express-server.ts:42</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -322,7 +322,7 @@
 						<div class="tsd-signature tsd-kind-icon">serve<wbr>Static<wbr>Dir<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> =&nbsp;null</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/dcd9c93/src/server/express-server.ts#L51">server/express-server.ts:51</a></li>
+								<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/622dfe6/src/server/express-server.ts#L51">server/express-server.ts:51</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -336,7 +336,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/dcd9c93/src/server/express-server.ts#L43">server/express-server.ts:43</a></li>
+										<li>Defined in <a href="https://github.com/tannerntannern/table-talk/blob/622dfe6/src/server/express-server.ts#L43">server/express-server.ts:43</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -406,7 +406,7 @@
 					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="_server_express_server_.expressservermanager.html" class="tsd-kind-icon">Express<wbr>Server<wbr>Manager</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="_server_express_server_.expressservermanager.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">

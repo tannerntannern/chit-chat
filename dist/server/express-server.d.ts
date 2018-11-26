@@ -40,6 +40,10 @@ export declare abstract class ExpressServerManager<API extends HttpInterface> ex
         serveStaticDir: any;
     };
     /**
+     * Constructs a new ExpressServerManager.
+     */
+    constructor(options?: ExpressServerManagerConfig<API>);
+    /**
      * Configures the ExpressServerManager.
      */
     configure(options: ExpressServerManagerConfig<API>): this;

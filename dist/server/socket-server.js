@@ -29,8 +29,11 @@ var ts_mixer_1 = require("ts-mixer");
 // @ts-ignore: abstract class, but it's ok
 var SocketServerManager = /** @class */ (function (_super) {
     __extends(SocketServerManager, _super);
-    function SocketServerManager() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    /**
+     * Constructs a new SocketServerManager.
+     */
+    function SocketServerManager(options) {
+        var _this = _super.call(this, options) || this;
         /**
          * Socket.io server instance for managing socket communication.
          */
