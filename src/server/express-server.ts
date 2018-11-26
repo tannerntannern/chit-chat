@@ -52,6 +52,13 @@ export abstract class ExpressServerManager<API extends HttpInterface> extends Se
 	};
 
 	/**
+	 * Constructs a new ExpressServerManager.
+	 */
+	constructor(options?: ExpressServerManagerConfig<API>) {
+		super(options);
+	}
+
+	/**
 	 * Configures the ExpressServerManager.
 	 */
 	public configure(options: ExpressServerManagerConfig<API>): this {
