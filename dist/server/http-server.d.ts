@@ -69,10 +69,10 @@ export declare class HttpServer {
  */
 export declare abstract class ServerManager {
     /**
-     * Contains a reference to the other ServerManagers on the HttpServer that this manager is attached to.  (only
-     * available after it has been attached)
+     * Contains a reference to the HttpServer that this manager is attached to.  (only available after it has been
+     * attached)
      */
-    private peers;
+    protected httpServer: HttpServer;
     /**
      * Where configs specific to the ServerManager are stored.
      */
@@ -85,6 +85,10 @@ export declare abstract class ServerManager {
      * Modifies the internal config object.
      */
     configure(options: any): this;
+    /**
+     * Gets the HttpServer that this ServerManager is attached to.  (only available after it has been attached)
+     */
+    getServer(): HttpServer;
     /**
      * Since there can be multiple managers on an HttpServer, one manager may wish to communicate with another.  This
      * function will return one of the other managers by name.
