@@ -162,6 +162,13 @@ export abstract class ServerManager {
 	}
 
 	/**
+	 * Gets the HttpServer that this ServerManager is attached to.  (only available after it has been attached)
+	 */
+	public getServer(): HttpServer {
+		return this.httpServer;
+	}
+
+	/**
 	 * Since there can be multiple managers on an HttpServer, one manager may wish to communicate with another.  This
 	 * function will return one of the other managers by name.
 	 */
