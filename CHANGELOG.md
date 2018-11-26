@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-alpha.1"></a>
+# [2.0.0-alpha.1](https://github.com/tannerntannern/table-talk/compare/v2.0.0-alpha.0...v2.0.0-alpha.1) (2018-11-26)
+
+
+### Bug Fixes
+
+* added forgotten files to tsconfig ([1e6fbad](https://github.com/tannerntannern/table-talk/commit/1e6fbad))
+* removed forgotten import ([dcd9c93](https://github.com/tannerntannern/table-talk/commit/dcd9c93))
+
+
+### Features
+
+* added separate client and server exports to hopefully make tree-shaking work properly ([635648b](https://github.com/tannerntannern/table-talk/commit/635648b))
+
+
+
 <a name="2.0.0-alpha.0"></a>
 # [2.0.0-alpha.0](https://github.com/tannerntannern/table-talk/compare/v1.0.0-beta.5...v2.0.0-alpha.0) (2018-11-26)
 
