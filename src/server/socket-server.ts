@@ -1,6 +1,6 @@
 import * as http from 'http';
 import * as socketio from 'socket.io';
-import {HttpServer, HttpServerConfig, ServerManager} from './http-server';
+import {ServerManager} from './http-server';
 import {SocketHandlers, SocketInterface} from '../interface/socket-interface';
 import {SocketMixin} from '../lib/socket-mixin';
 import {MixinDecorator} from 'ts-mixer';

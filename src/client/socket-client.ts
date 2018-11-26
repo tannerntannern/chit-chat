@@ -1,7 +1,9 @@
-import * as socketio from 'socket.io-client';
 import {SocketHandlers, SocketInterface} from '../interface/socket-interface';
 import {SocketMixin} from '../lib/socket-mixin';
 import {Socket, ConnectOpts} from '../lib/types';
+import * as _io from 'socket.io-client';
+
+declare let window: any;
 
 /**
  * Describes the shape of the `this` context that will be available in every SocketClient handler.
@@ -16,6 +18,12 @@ export type HandlerCtx<API extends SocketInterface> = {
  */
 export abstract class SocketClient<API extends SocketInterface> extends SocketMixin<API, 'client'> {
 	/**
+	 * Reference to the socket.io-client library.  If the client is running in the browser, it is assumed that `io` will
+	 * be available on `window`.
+	 */
+	public static io: typeof _io = (typeof window !== 'undefined') && window.axios ? window.axios : null;
+
+	/**
 	 * Socket.io Socket instance for internal use.
 	 */
 	protected socket: Socket = null;
@@ -25,6 +33,20 @@ export abstract class SocketClient<API extends SocketInterface> extends SocketMi
 	 * SocketServer that implements the same API.
 	 */
 	protected abstract socketHandlers: SocketHandlers<API, 'client', HandlerCtx<API>>;
+
+	/**
+	 * Constructs a new SocketClient.
+	 */
+	constructor() {
+		super();
+
+		// Make sure we have a valid io reference
+		if (!SocketClient.io) throw new Error(
+			"Socket.io reference not detected.  If you are running in the browser, be sure to include the " +
+			"socket.io-client library beforehand.  If you are running under Node.js, you must assign the " +
+			"SocketClient.io property manually before instantiating a SocketClient."
+		)
+	}
 
 	/**
 	 * Sets up the socket handlers for the client.
@@ -69,7 +91,7 @@ export abstract class SocketClient<API extends SocketInterface> extends SocketMi
 			autoConnect: false
 		});
 
-		this.socket = socketio(url, options);
+		this.socket = SocketClient.io(url, options);
 		this.attachSocketHandlers();
 		this.socket.open();
 

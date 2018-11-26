@@ -2,7 +2,7 @@ import * as http from 'http';
 import * as express from 'express';
 import * as core from 'express-serve-static-core';
 import * as bodyParser from 'body-parser';
-import {HttpServer, HttpServerConfig, ServerManager} from './http-server';
+import {ServerManager} from './http-server';
 import {HttpHandlers, HttpInterface} from '../interface/http-interface';
 
 /**

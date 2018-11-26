@@ -1,11 +1,19 @@
-import axios, {AxiosRequestConfig} from 'axios';
 import {HttpInterface, Methods} from '../interface/http-interface';
+import _axios, {AxiosRequestConfig} from 'axios';
+
+declare let window: any;
 
 /**
  * Basic AJAX class than can be used in Node or the browser.  Essentially just wraps around some axios methods and
  * provides the proper typing based on the given HttpInterface, so that no requests are malformed.
  */
 export class ExpressClient<API extends HttpInterface> {
+	/**
+	 * Reference to the axios library.  If the client is running in the browser, it is assumed that axios will be
+	 * available on `window`.
+	 */
+	public static axios: typeof _axios = (typeof window !== 'undefined') && window.axios ? window.axios : null;
+
 	/**
 	 * The base hostname/URL that the client should send its requests to.
 	 */
@@ -16,6 +24,13 @@ export class ExpressClient<API extends HttpInterface> {
 	 */
 	constructor(host: string = ''){
 		this.host = host;
+
+		// Make sure we have a valid axios reference
+		if (!ExpressClient.axios) throw new Error(
+			"Axios reference not detected.  If you are running in the browser, be sure to include the axios " +
+			"library beforehand.  If you are running under Node.js, you must assign the ExpressClient.axios property " +
+			"manually before instantiating an ExpressClient."
+		)
 	}
 
 	/**
@@ -29,7 +44,7 @@ export class ExpressClient<API extends HttpInterface> {
 			url: this.host + endpoint
 		});
 
-		return axios.request(config);
+		return ExpressClient.axios.request(config);
 	}
 
 	/**
@@ -40,7 +55,7 @@ export class ExpressClient<API extends HttpInterface> {
 		if (config === undefined) config = {};
 		config.params = args;
 
-		return axios.get(this.host + endpoint, config);
+		return ExpressClient.axios.get(this.host + endpoint, config);
 	}
 
 	/**
@@ -51,27 +66,27 @@ export class ExpressClient<API extends HttpInterface> {
 		if (config === undefined) config = {};
 		config.params = args;
 
-		return axios.delete(this.host + endpoint, config);
+		return ExpressClient.axios.delete(this.host + endpoint, config);
 	}
 
 	/**
 	 * Sends a POST request to the given endpoint with the given arguments.
 	 */
 	public post<EP extends keyof API['post']>(endpoint: EP, args: API['post'][EP]['args'], config?: AxiosRequestConfig): Promise<API['post'][EP]['return']> {
-		return axios.post(this.host + endpoint, args, config);
+		return ExpressClient.axios.post(this.host + endpoint, args, config);
 	}
 
 	/**
 	 * Sends a PUT request to the given endpoint with the given arguments.
 	 */
 	public put<EP extends keyof API['put']>(endpoint: EP, args: API['put'][EP]['args'], config?: AxiosRequestConfig): Promise<API['put'][EP]['return']> {
-		return axios.put(this.host + endpoint, args, config);
+		return ExpressClient.axios.put(this.host + endpoint, args, config);
 	}
 
 	/**
 	 * Sends a PATCH request to the given endpoint with the given arguments.
 	 */
 	public patch<EP extends keyof API['patch']>(endpoint: EP, args: API['patch'][EP]['args'], config?: AxiosRequestConfig): Promise<API['patch'][EP]['return']> {
-		return axios.patch(this.host + endpoint, args, config);
+		return ExpressClient.axios.patch(this.host + endpoint, args, config);
 	}
 }

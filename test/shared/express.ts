@@ -1,6 +1,10 @@
 import {HttpHandlers, HttpInterface} from '../../src/interface/http-interface';
 import {ExpressServerManager, HandlerCtx} from '../../src/server/express-server';
 import {ExpressClient} from '../../src/client/express-client';
+import axios from 'axios';
+
+// Load axios library since we are running in Node.js
+ExpressClient.axios = axios;
 
 export type User = {
 	name: string,

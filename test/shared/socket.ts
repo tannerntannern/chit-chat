@@ -2,6 +2,9 @@ import {SocketClient, SocketServerManager} from '../../src';
 import {SocketHandlers} from '../../src/interface/socket-interface';
 import {HandlerCtx as ServerCtx} from '../../src/server/socket-server';
 import {HandlerCtx as ClientCtx} from '../../src/client/socket-client';
+import * as socketio from 'socket.io-client';
+
+SocketClient.io = socketio;
 
 export interface API {
 	server: {
