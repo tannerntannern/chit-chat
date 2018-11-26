@@ -42,10 +42,10 @@ export abstract class SocketClient<API extends SocketInterface> extends SocketMi
 
 		// Make sure we have a valid io reference
 		if (!SocketClient.io) throw new Error(
-			"Socket.io reference not detected.  If you are running in the browser, be sure to include the " +
-			"socket.io-client library beforehand.  If you are running under Node.js, you must assign the " +
-			"SocketClient.io property manually before instantiating a SocketClient."
-		)
+			'Socket.io reference not detected.  If you are running in the browser, be sure to include the ' +
+			'socket.io-client library beforehand.  If you are running under Node.js, you must assign the ' +
+			'SocketClient.io property manually before instantiating a SocketClient.'
+		);
 	}
 
 	/**

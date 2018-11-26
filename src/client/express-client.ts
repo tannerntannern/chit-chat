@@ -27,10 +27,10 @@ export class ExpressClient<API extends HttpInterface> {
 
 		// Make sure we have a valid axios reference
 		if (!ExpressClient.axios) throw new Error(
-			"Axios reference not detected.  If you are running in the browser, be sure to include the axios " +
-			"library beforehand.  If you are running under Node.js, you must assign the ExpressClient.axios property " +
-			"manually before instantiating an ExpressClient."
-		)
+			'Axios reference not detected.  If you are running in the browser, be sure to include the axios ' +
+			'library beforehand.  If you are running under Node.js, you must assign the ExpressClient.axios property ' +
+			'manually before instantiating an ExpressClient.'
+		);
 	}
 
 	/**
