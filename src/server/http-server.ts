@@ -44,7 +44,7 @@ export class HttpServer {
 	public attach(managers: {[key: string]: ServerManager}): this;
 	public attach(p1: string | {[key: string]: ServerManager}, p2?: ServerManager): this {
 		// Force the overloads into a single case
-		let managers;
+		let managers: {[key: string]: ServerManager};
 		if (typeof p1 === 'string') {
 			managers = {};
 			managers[p1] = p2;
@@ -55,7 +55,8 @@ export class HttpServer {
 		// Add the managers and assign their internal `peers` property
 		for (let key in managers) {
 			let manager = managers[key];
-			manager.peers = this.serverManagers;
+			// @ts-ignore: httpServer is protected and we want it to stay that way
+			manager.httpServer = this;
 			this.serverManagers[key] = manager;
 		}
 
@@ -135,10 +136,10 @@ export class HttpServer {
  */
 export abstract class ServerManager {
 	/**
-	 * Contains a reference to the other ServerManagers on the HttpServer that this manager is attached to.  (only
-	 * available after it has been attached)
+	 * Contains a reference to the HttpServer that this manager is attached to.  (only available after it has been
+	 * attached)
 	 */
-	private peers: {[key: string]: ServerManager};
+	protected httpServer: HttpServer;
 
 	/**
 	 * Where configs specific to the ServerManager are stored.
@@ -165,7 +166,7 @@ export abstract class ServerManager {
 	 * function will return one of the other managers by name.
 	 */
 	public getPeer(name: string): ServerManager {
-		return this.peers[name];
+		return this.httpServer.getManager(name);
 	}
 
 	/**
