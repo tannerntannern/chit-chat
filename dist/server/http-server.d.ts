@@ -69,10 +69,10 @@ export declare class HttpServer {
  */
 export declare abstract class ServerManager {
     /**
-     * Contains a reference to the HttpServer that this manager is attached to.  (only available after it has been
-     * attached)
+     * Contains a reference to the other ServerManagers on the HttpServer that this manager is attached to.  (only
+     * available after it has been attached)
      */
-    protected httpServer: HttpServer;
+    private peers;
     /**
      * Where configs specific to the ServerManager are stored.
      */
