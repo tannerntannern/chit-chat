@@ -1,20 +1,21 @@
 import 'mocha';
 import {expect} from 'chai';
 import {ServerManager as ExpressServerManager, Client as ExpressClient} from '../shared/express';
-import {ServerManager as SocketServerManager} from '../shared/socket';
+import {ServerManager as SocketServerManager, Client as SocketClient} from '../shared/socket';
 import {HttpServer} from '../../src';
 
 describe('SocketServerManager + ExpressServerManager + HttpServer', function(){
-	let s, sm, em, ec;
+	let s, sm, em, ec, sc;
 	beforeEach(() => {
 		s = new HttpServer().with({
-			socket: new SocketServerManager(),
+			socket: new SocketServerManager({}),
 			express: new ExpressServerManager()
 		});
 		sm = s.getManager('socket');
 		em = s.getManager('express');
 
 		ec = new ExpressClient('http://localhost:3000');
+		sc = new SocketClient();
 	});
 
 	describe('Using both managers on the same server', function(){
@@ -26,12 +27,12 @@ describe('SocketServerManager + ExpressServerManager + HttpServer', function(){
 			await s.stop();
 		});
 
-		it('should be able to process the default GET / request without errors', async function(){
-			await s.start();
-
-			expect(async () => {await ec.get('/')}).to.not.throw;
-
-			await s.stop();
-		});
+		// it('should be able to open socket connections without errors', async function(){
+		// 	await s.start();
+		//
+		// 	await sc.connect('http://localhost:3000', 'connected');
+		//
+		// 	await s.stop();
+		// });
 	});
 });
