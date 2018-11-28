@@ -28,7 +28,7 @@ describe('ExpressServer', function(){
 		it('should properly serve a static directory', async function(){
 			m.configure({
 				expressConfig: () => null,
-				serveStaticDir: path.resolve('./test/unit/serve')
+				serveStaticDir: path.resolve('./test/shared/serve')
 			});
 
 			await s.start();
