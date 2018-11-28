@@ -122,7 +122,7 @@ var SocketClient = /** @class */ (function (_super) {
      * Reference to the socket.io-client library.  If the client is running in the browser, it is assumed that `io` will
      * be available on `window`.
      */
-    SocketClient.io = (typeof window !== 'undefined') && window.axios ? window.axios : null;
+    SocketClient.io = (typeof window !== 'undefined') && window.io ? window.io : null;
     return SocketClient;
 }(socket_mixin_1.SocketMixin));
 exports.SocketClient = SocketClient;

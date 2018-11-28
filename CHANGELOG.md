@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-beta.1"></a>
+# [2.0.0-beta.1](https://github.com/tannerntannern/table-talk/compare/v2.0.0-beta.0...v2.0.0-beta.1) (2018-11-28)
+
+
+### Bug Fixes
+
+* fixed major typo in the SocketClient that prevented proper connections ([b3d19bc](https://github.com/tannerntannern/table-talk/commit/b3d19bc))
+
+
+
 <a name="2.0.0-beta.0"></a>
 # [2.0.0-beta.0](https://github.com/tannerntannern/table-talk/compare/v2.0.0-alpha.4...v2.0.0-beta.0) (2018-11-26)
 
