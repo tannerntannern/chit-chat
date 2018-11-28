@@ -21,7 +21,7 @@ export abstract class SocketClient<API extends SocketInterface> extends SocketMi
 	 * Reference to the socket.io-client library.  If the client is running in the browser, it is assumed that `io` will
 	 * be available on `window`.
 	 */
-	public static io: typeof _io = (typeof window !== 'undefined') && window.axios ? window.axios : null;
+	public static io: typeof _io = (typeof window !== 'undefined') && window.io ? window.io : null;
 
 	/**
 	 * Socket.io Socket instance for internal use.
