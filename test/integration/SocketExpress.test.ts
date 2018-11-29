@@ -27,12 +27,13 @@ describe('SocketServerManager + ExpressServerManager + HttpServer', function(){
 			await s.stop();
 		});
 
-		// it('should be able to open socket connections without errors', async function(){
-		// 	await s.start();
-		//
-		// 	await sc.connect('http://localhost:3000', 'connected');
-		//
-		// 	await s.stop();
-		// });
+		it('should be able to open socket connections without errors', async function(){
+			await s.start();
+
+			expect(async () => await sc.connect('http://localhost:3000', 'connected')).to.not.throw;
+			sc.disconnect();
+
+			await s.stop();
+		});
 	});
 });
