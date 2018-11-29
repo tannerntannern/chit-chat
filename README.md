@@ -52,7 +52,7 @@ interface API {
 }
 ```
 
-Then create a ServerManager and Client class that implement the API.  The typings will
+Then create a ServerManager class that implement the API.  The typings will
 ensure that all the `httpHandlers` are implemented properly:
 ```typescript
 import {ExpressServerManager, ExpressClient} from 'table-talk';
@@ -88,10 +88,6 @@ class ServerManager extends ExpressServerManager<API> {
 		}
 	};
 }
-
-class Client extends ExpressClient<API> {
-	// Nothing to implement here
-}
 ```
 
 Then create an `HttpServer` and attach the manager you just implemented.
@@ -105,13 +101,19 @@ let server = new HttpServer({port: 3000})
 await server.start();
 ```
 
-When the client connects to the server, it will only be able to make requests that make sense.
-For example:
+When the client connects to the server, it will only be able to make requests described by the
+API, which helps prevent mistakes.
 
 ```typescript
+import {ExpressClient} from 'table-talk';
+
+class Client extends ExpressClient<API> {
+	// Nothing to implement here
+}
+
 let client = new Client('http://localhost:3000');
 
-// This works because the GET route exists and is passed the proper arguments
+// The compiler accepts this because the GET route exists and is passed the proper arguments
 // Note that the Promise value is also properly typed according to the API
 let user: User = await client.get('/user', {id: 0});
 
@@ -122,7 +124,15 @@ await client.post('/user', {name: 'Josh'});
 await client.PUT('/users', {foo: 'bar'})
 ```
 
+**Note:** The ExpressClient is intended to be used within the browser, and it requires the
+[axios request library](https://github.com/axios/axios).  It is not bundled by default to avoid
+unnecessary bloat and give the option of using axios's CDN.  Simply include the CDN
+\<script> before the other client code for this to work properly.
+
 ### Creating a Socket Server/Client
+Coming soon...
+
+### A Note on Bundling
 Coming soon...
 
 # Author
