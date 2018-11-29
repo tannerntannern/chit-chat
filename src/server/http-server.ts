@@ -1,4 +1,6 @@
 import * as http from 'http';
+import {SocketServerManager} from './socket-server';
+import {ExpressServerManager} from './express-server';
 
 /**
  * Defines how an HttpServer may be configured.
@@ -74,6 +76,28 @@ export class HttpServer {
 	}
 
 	/**
+	 * ExpressServerManagers MUST be added before SocketServerManagers, so this function sorts the keys of
+	 * serverManagers so that the ExpressServerManagers come first.
+	 */
+	private getOrderedServerManagerKeys(): string[] {
+		return Object.keys(this.serverManagers).sort((a, b) => {
+			if (
+				!(this.serverManagers[a] instanceof ExpressServerManager) &&
+				this.serverManagers[b] instanceof ExpressServerManager
+			) {
+				return 1;
+			} else if (
+				this.serverManagers[a] instanceof ExpressServerManager &&
+				!(this.serverManagers[b] instanceof ExpressServerManager)
+			) {
+				return -1;
+			} else {
+				return 0;
+			}
+		});
+	}
+
+	/**
 	 * Returns the ServerManager with the given name.
 	 */
 	public getManager(key: string): ServerManager {
@@ -105,7 +129,7 @@ export class HttpServer {
 		return new Promise<boolean>((resolve, reject) => {
 			this.httpServer = http.createServer();
 
-			for (let name in this.serverManagers)
+			for (let name of this.getOrderedServerManagerKeys())
 				this.serverManagers[name].setup(this.httpServer);
 
 			this.httpServer.listen(this.config.port, () => {
