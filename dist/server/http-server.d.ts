@@ -44,6 +44,11 @@ export declare class HttpServer {
         [key: string]: ServerManager;
     }): this;
     /**
+     * ExpressServerManagers MUST be added before SocketServerManagers, so this function sorts the keys of
+     * serverManagers so that the ExpressServerManagers come first.
+     */
+    private getOrderedServerManagerKeys;
+    /**
      * Returns the ServerManager with the given name.
      */
     getManager(key: string): ServerManager;
