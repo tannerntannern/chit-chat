@@ -1,6 +1,6 @@
 import * as http from 'http';
 import * as socketio from 'socket.io';
-import {ServerManager} from './http-server';
+import {ServerManager, ServerManagerConfig} from './http-server';
 import {SocketHandlers, SocketInterface} from '../interface/socket-interface';
 import {SocketMixin} from '../lib/socket-mixin';
 import {MixinDecorator} from 'ts-mixer';
@@ -8,7 +8,7 @@ import {MixinDecorator} from 'ts-mixer';
 /**
  * Defines how SocketServer may be configured.
  */
-export type SocketServerManagerConfig<API extends SocketInterface> = {
+export type SocketServerManagerConfig<API extends SocketInterface> = ServerManagerConfig & {
 	ioOptions?: socketio.ServerOptions,
 	namespaceConfig?: (namespace: socketio.Namespace, manager: SocketServerManager<API>) => void
 };
@@ -29,17 +29,19 @@ export type HandlerCtx<API extends SocketInterface> = {
 @MixinDecorator(SocketMixin)
 abstract class SocketServerManager<API extends SocketInterface> extends ServerManager {
 	/**
+	 * Returns the default configuration for a SocketServerManager.
+	 */
+	protected static getDefaultConfig(): ServerManagerConfig {
+		return Object.assign(super.getDefaultConfig(), {
+			ioOptions: {},
+			namespaceConfig: function(namespace, server) {}
+		});
+	}
+
+	/**
 	 * Socket.io server instance for managing socket communication.
 	 */
 	protected io: socketio.Server = null;
-
-	/**
-	 * Default configuration values for all SocketServers.
-	 */
-	protected config: SocketServerManagerConfig<API> = {
-		ioOptions: {},
-		namespaceConfig: function(namespace, server) {}
-	};
 
 	/**
 	 * Contains implementations for the events described by the API.  This guarantees compatibility with any

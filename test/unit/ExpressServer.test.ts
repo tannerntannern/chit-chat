@@ -25,6 +25,12 @@ describe('ExpressServer', function(){
 			await s.stop();
 		});
 
+		it('should accept new configurations from the constructor', function(){
+			m = new ServerManager({serveStaticDir: 'test'});
+
+			expect(m.config.serveStaticDir).to.equal('test');
+		});
+
 		it('should properly serve a static directory', async function(){
 			m.configure({
 				expressConfig: () => null,

@@ -2,13 +2,13 @@ import * as http from 'http';
 import * as express from 'express';
 import * as core from 'express-serve-static-core';
 import * as bodyParser from 'body-parser';
-import {ServerManager} from './http-server';
+import {ServerManager, ServerManagerConfig} from './http-server';
 import {HttpHandlers, HttpInterface} from '../interface/http-interface';
 
 /**
  * Defines how an ExpressServer may be configured.
  */
-export type ExpressServerManagerConfig<API extends HttpInterface> = {
+export type ExpressServerManagerConfig<API extends HttpInterface> = ServerManagerConfig & {
 	expressConfig?: (expressApp: core.Express, server: ExpressServerManager<API>) => void,
 	serveStaticDir?: string | null
 };
@@ -32,24 +32,27 @@ export type HandlerCtx<API extends HttpInterface> = {
  */
 export abstract class ExpressServerManager<API extends HttpInterface> extends ServerManager {
 	/**
+	 * Returns the default configuration for an ExpressServerManager.
+	 */
+	protected static getDefaultConfig(): ServerManagerConfig {
+		return Object.assign(super.getDefaultConfig(), {
+			priority: 1,
+			expressConfig: function(expressApp, manager) {
+				expressApp.get('/', function(req, res){
+					res.send(
+						'<h1>It Works!</h1>' +
+						'<p>The next step is to configure the server for your needs.</p>'
+					);
+				});
+			},
+			serveStaticDir: null
+		});
+	}
+
+	/**
 	 * Defines how the server should react to each request.
 	 */
 	protected abstract httpHandlers: HttpHandlers<API, HandlerCtx<API>>;
-
-	/**
-	 * Default configuration values for all ExpressServers.
-	 */
-	protected config = {
-		expressConfig: function(expressApp, manager) {
-			expressApp.get('/', function(req, res){
-				res.send(
-					'<h1>It Works!</h1>' +
-					'<p>The next step is to configure the server for your needs.</p>'
-				);
-			});
-		},
-		serveStaticDir: null
-	};
 
 	/**
 	 * Constructs a new ExpressServerManager.

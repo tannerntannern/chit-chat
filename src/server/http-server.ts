@@ -1,6 +1,4 @@
 import * as http from 'http';
-import {SocketServerManager} from './socket-server';
-import {ExpressServerManager} from './express-server';
 
 /**
  * Defines how an HttpServer may be configured.
@@ -8,6 +6,13 @@ import {ExpressServerManager} from './express-server';
 export type HttpServerConfig = {
 	host?: string,
 	port?: number
+};
+
+/**
+ * Defines how ServerManagers may be configured.
+ */
+export type ServerManagerConfig = {
+	priority?: number
 };
 
 /**
@@ -76,24 +81,18 @@ export class HttpServer {
 	}
 
 	/**
-	 * ExpressServerManagers MUST be added before SocketServerManagers, so this function sorts the keys of
-	 * serverManagers so that the ExpressServerManagers come first.
+	 * Gets the keys of all the ServerManagers in order of priority.
 	 */
 	private getOrderedServerManagerKeys(): string[] {
-		return Object.keys(this.serverManagers).sort((a, b) => {
-			if (
-				!(this.serverManagers[a] instanceof ExpressServerManager) &&
-				this.serverManagers[b] instanceof ExpressServerManager
-			) {
-				return 1;
-			} else if (
-				this.serverManagers[a] instanceof ExpressServerManager &&
-				!(this.serverManagers[b] instanceof ExpressServerManager)
-			) {
-				return -1;
-			} else {
-				return 0;
-			}
+		let m = this.serverManagers;
+		return Object.keys(m).sort((a, b) => {
+			// @ts-ignore: we don't want to expose config, but we still need to access it
+			if (m[a].config.priority > m[b].config.priority) return -1;
+
+			// @ts-ignore: we don't want to expose config, but we still need to access it
+			else if (m[b].config.priority > m[a].config.priority) return 1;
+
+			else return 0;
 		});
 	}
 
@@ -160,6 +159,15 @@ export class HttpServer {
  */
 export abstract class ServerManager {
 	/**
+	 * Returns the default configuration for a ServerManager.
+	 */
+	protected static getDefaultConfig(): ServerManagerConfig {
+		return {
+			priority: 0
+		};
+	}
+
+	/**
 	 * Contains a reference to the HttpServer that this manager is attached to.  (only available after it has been
 	 * attached)
 	 */
@@ -168,12 +176,13 @@ export abstract class ServerManager {
 	/**
 	 * Where configs specific to the ServerManager are stored.
 	 */
-	protected config = {};
+	protected config;
 
 	/**
 	 * Constructs a new ServerManager and applies any additional configurations.
 	 */
-	constructor(options?: unknown) {
+	constructor(options?: ServerManagerConfig) {
+		this.config = (<typeof ServerManager> this.constructor).getDefaultConfig();
 		this.configure(options);
 	}
 
