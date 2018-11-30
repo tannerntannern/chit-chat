@@ -8,6 +8,12 @@ export declare type HttpServerConfig = {
     port?: number;
 };
 /**
+ * Defines how ServerManagers may be configured.
+ */
+export declare type ServerManagerConfig = {
+    priority?: number;
+};
+/**
  * Defines the common interface and shared functionality that all Servers should have.
  */
 export declare class HttpServer {
@@ -44,8 +50,7 @@ export declare class HttpServer {
         [key: string]: ServerManager;
     }): this;
     /**
-     * ExpressServerManagers MUST be added before SocketServerManagers, so this function sorts the keys of
-     * serverManagers so that the ExpressServerManagers come first.
+     * Gets the keys of all the ServerManagers in order of priority.
      */
     private getOrderedServerManagerKeys;
     /**
@@ -74,6 +79,10 @@ export declare class HttpServer {
  */
 export declare abstract class ServerManager {
     /**
+     * Returns the default configuration for a ServerManager.
+     */
+    protected static getDefaultConfig(): ServerManagerConfig;
+    /**
      * Contains a reference to the HttpServer that this manager is attached to.  (only available after it has been
      * attached)
      */
@@ -81,11 +90,11 @@ export declare abstract class ServerManager {
     /**
      * Where configs specific to the ServerManager are stored.
      */
-    protected config: {};
+    protected config: any;
     /**
      * Constructs a new ServerManager and applies any additional configurations.
      */
-    constructor(options?: unknown);
+    constructor(options?: ServerManagerConfig);
     /**
      * Modifies the internal config object.
      */

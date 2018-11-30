@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var http = require("http");
-var express_server_1 = require("./express-server");
 /**
  * Defines the common interface and shared functionality that all Servers should have.
  */
@@ -51,23 +50,19 @@ var HttpServer = /** @class */ (function () {
         return this.attach(p1, p2);
     };
     /**
-     * ExpressServerManagers MUST be added before SocketServerManagers, so this function sorts the keys of
-     * serverManagers so that the ExpressServerManagers come first.
+     * Gets the keys of all the ServerManagers in order of priority.
      */
     HttpServer.prototype.getOrderedServerManagerKeys = function () {
-        var _this = this;
-        return Object.keys(this.serverManagers).sort(function (a, b) {
-            if (!(_this.serverManagers[a] instanceof express_server_1.ExpressServerManager) &&
-                _this.serverManagers[b] instanceof express_server_1.ExpressServerManager) {
-                return 1;
-            }
-            else if (_this.serverManagers[a] instanceof express_server_1.ExpressServerManager &&
-                !(_this.serverManagers[b] instanceof express_server_1.ExpressServerManager)) {
+        var m = this.serverManagers;
+        return Object.keys(m).sort(function (a, b) {
+            // @ts-ignore: we don't want to expose config, but we still need to access it
+            if (m[a].config.priority > m[b].config.priority)
                 return -1;
-            }
-            else {
+            // @ts-ignore: we don't want to expose config, but we still need to access it
+            else if (m[b].config.priority > m[a].config.priority)
+                return 1;
+            else
                 return 0;
-            }
         });
     };
     /**
@@ -132,12 +127,17 @@ var ServerManager = /** @class */ (function () {
      * Constructs a new ServerManager and applies any additional configurations.
      */
     function ServerManager(options) {
-        /**
-         * Where configs specific to the ServerManager are stored.
-         */
-        this.config = {};
+        this.config = this.constructor.getDefaultConfig();
         this.configure(options);
     }
+    /**
+     * Returns the default configuration for a ServerManager.
+     */
+    ServerManager.getDefaultConfig = function () {
+        return {
+            priority: 0
+        };
+    };
     /**
      * Modifies the internal config object.
      */

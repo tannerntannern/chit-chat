@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -38,15 +38,17 @@ var SocketServerManager = /** @class */ (function (_super) {
          * Socket.io server instance for managing socket communication.
          */
         _this.io = null;
-        /**
-         * Default configuration values for all SocketServers.
-         */
-        _this.config = {
-            ioOptions: {},
-            namespaceConfig: function (namespace, server) { }
-        };
         return _this;
     }
+    /**
+     * Returns the default configuration for a SocketServerManager.
+     */
+    SocketServerManager.getDefaultConfig = function () {
+        return Object.assign(_super.getDefaultConfig.call(this), {
+            ioOptions: {},
+            namespaceConfig: function (namespace, server) { }
+        });
+    };
     /**
      * Configures the SocketServerManager.
      */

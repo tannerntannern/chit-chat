@@ -1,13 +1,13 @@
 /// <reference types="node" />
 import * as http from 'http';
 import * as socketio from 'socket.io';
-import { ServerManager } from './http-server';
+import { ServerManager, ServerManagerConfig } from './http-server';
 import { SocketHandlers, SocketInterface } from '../interface/socket-interface';
 import { SocketMixin } from '../lib/socket-mixin';
 /**
  * Defines how SocketServer may be configured.
  */
-export declare type SocketServerManagerConfig<API extends SocketInterface> = {
+export declare type SocketServerManagerConfig<API extends SocketInterface> = ServerManagerConfig & {
     ioOptions?: socketio.ServerOptions;
     namespaceConfig?: (namespace: socketio.Namespace, manager: SocketServerManager<API>) => void;
 };
@@ -24,13 +24,13 @@ export declare type HandlerCtx<API extends SocketInterface> = {
  */
 declare abstract class SocketServerManager<API extends SocketInterface> extends ServerManager {
     /**
+     * Returns the default configuration for a SocketServerManager.
+     */
+    protected static getDefaultConfig(): ServerManagerConfig;
+    /**
      * Socket.io server instance for managing socket communication.
      */
     protected io: socketio.Server;
-    /**
-     * Default configuration values for all SocketServers.
-     */
-    protected config: SocketServerManagerConfig<API>;
     /**
      * Contains implementations for the events described by the API.  This guarantees compatibility with any
      * SocketClient that implements the same API.

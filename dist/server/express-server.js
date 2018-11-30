@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || (function () {
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
             function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
-    }
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -30,11 +30,14 @@ var ExpressServerManager = /** @class */ (function (_super) {
      * Constructs a new ExpressServerManager.
      */
     function ExpressServerManager(options) {
-        var _this = _super.call(this, options) || this;
-        /**
-         * Default configuration values for all ExpressServers.
-         */
-        _this.config = {
+        return _super.call(this, options) || this;
+    }
+    /**
+     * Returns the default configuration for an ExpressServerManager.
+     */
+    ExpressServerManager.getDefaultConfig = function () {
+        return Object.assign(_super.getDefaultConfig.call(this), {
+            priority: 1,
             expressConfig: function (expressApp, manager) {
                 expressApp.get('/', function (req, res) {
                     res.send('<h1>It Works!</h1>' +
@@ -42,9 +45,8 @@ var ExpressServerManager = /** @class */ (function (_super) {
                 });
             },
             serveStaticDir: null
-        };
-        return _this;
-    }
+        });
+    };
     /**
      * Configures the ExpressServerManager.
      */

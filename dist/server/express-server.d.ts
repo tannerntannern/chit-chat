@@ -2,12 +2,12 @@
 import * as http from 'http';
 import * as express from 'express';
 import * as core from 'express-serve-static-core';
-import { ServerManager } from './http-server';
+import { ServerManager, ServerManagerConfig } from './http-server';
 import { HttpHandlers, HttpInterface } from '../interface/http-interface';
 /**
  * Defines how an ExpressServer may be configured.
  */
-export declare type ExpressServerManagerConfig<API extends HttpInterface> = {
+export declare type ExpressServerManagerConfig<API extends HttpInterface> = ServerManagerConfig & {
     expressConfig?: (expressApp: core.Express, server: ExpressServerManager<API>) => void;
     serveStaticDir?: string | null;
 };
@@ -29,16 +29,13 @@ export declare type HandlerCtx<API extends HttpInterface> = {
  */
 export declare abstract class ExpressServerManager<API extends HttpInterface> extends ServerManager {
     /**
+     * Returns the default configuration for an ExpressServerManager.
+     */
+    protected static getDefaultConfig(): ServerManagerConfig;
+    /**
      * Defines how the server should react to each request.
      */
     protected abstract httpHandlers: HttpHandlers<API, HandlerCtx<API>>;
-    /**
-     * Default configuration values for all ExpressServers.
-     */
-    protected config: {
-        expressConfig: (expressApp: any, manager: any) => void;
-        serveStaticDir: any;
-    };
     /**
      * Constructs a new ExpressServerManager.
      */

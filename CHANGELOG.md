@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.1.0-beta.0"></a>
+# [2.1.0-beta.0](https://github.com/tannerntannern/table-talk/compare/v2.0.0-beta.2...v2.1.0-beta.0) (2018-11-30)
+
+
+### Features
+
+* made ServerManagers' setup priorities configurable ([9cbda87](https://github.com/tannerntannern/table-talk/commit/9cbda87))
+
+
+
 <a name="2.0.0-beta.2"></a>
 # [2.0.0-beta.2](https://github.com/tannerntannern/table-talk/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2018-11-29)
 
