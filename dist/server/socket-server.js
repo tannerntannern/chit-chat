@@ -88,7 +88,10 @@ var SocketServerManager = /** @class */ (function (_super) {
                 nsp: namespace
             };
             // Call the connect event right away
-            if ('connect' in handlers) {
+            // Note that if the client wishes to connect directly to a namespace (not '/'), the connection event on the
+            // '/' namespace will still be called (socket.io's fault), which may not be desired.  This can be avoided by
+            // passing a '?nsp_connect=true' parameter when connecting.
+            if ('connect' in handlers && !(namespace.name === '/' && socket.handshake.query.nsp_connect)) {
                 _this.handleEvent(ctx, 'connect');
             }
             var _loop_1 = function (event) {
