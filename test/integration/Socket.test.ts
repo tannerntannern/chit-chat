@@ -5,12 +5,12 @@ import {HttpServer} from '../../src';
 
 describe('SocketServer + SocketClient', function(){
 	let s, m, c;
-	beforeEach(() => {
+	beforeEach(async () => {
 		s = new HttpServer({port: 3000}).with('socket', new ServerManager());
 		m = s.getManager('socket');
 		c = new Client();
 
-		s.start();
+		await s.start();
 	});
 
 	afterEach(async () => {
@@ -24,6 +24,19 @@ describe('SocketServer + SocketClient', function(){
 
 		it('should not throw an error if the client connects to the correct address', function(){
 			expect(async () => { await c.connect('http://localhost:3000', 'connected') }).to.not.throw;
+		});
+
+		it('should be able to connect to other namespaces', async function(){
+			m.addNamespace('TEST');
+
+			await c.connect('http://localhost:3000/TEST', 'connected');
+
+			c.emit('what-is-my-nsp');
+			await c.blockEvent('your-nsp-is');
+
+			expect(c.myNsp).to.equal('/TEST');
+
+			c.disconnect();
 		});
 
 		it('should give proper results for isConnected()', async function(){

@@ -10,9 +10,11 @@ export interface API {
 	server: {
 		'patch-data': {args: [string, string]},
 		'reset-data': {args: [{}]},
-		'connected': {args: [string], responseTo: 'connect'}
+		'connected': {args: [string], responseTo: 'connect'},
+		'your-nsp-is': {args: [string]}
 	},
 	client: {
+		'what-is-my-nsp': {args: [], expect: 'your-nsp-is'},
 		'get-data': {args: [string], expect: 'patch-data'},
 		'put-data': {args: [string, string], expect: 'patch-data'}
 	}
@@ -27,6 +29,12 @@ export class ServerManager extends SocketServerManager<API> {
 				name: 'connected',
 				args: [this.socket.id]
 			};
+		},
+		'what-is-my-nsp': function() {
+			return {
+				name: 'your-nsp-is',
+				args: [this.nsp.name]
+			}
 		},
 		'get-data': (key: string) => {
 			return {
@@ -47,10 +55,14 @@ export class ServerManager extends SocketServerManager<API> {
 
 export class Client extends SocketClient<API> {
 	protected data = {};
+	protected myNsp: string = null;
 
 	protected socketHandlers: SocketHandlers<API, 'client', ClientCtx<API>> = {
 		'connected': (id: string) => {
 			// console.log(id, 'has connected!');
+		},
+		'your-nsp-is': (nsp: string) => {
+			this.myNsp = nsp;
 		},
 		'patch-data': (key: string, value: string) => {
 			this.data[key] = value;
